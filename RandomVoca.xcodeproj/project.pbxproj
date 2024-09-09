@@ -51,6 +51,7 @@
 		135BBF532C8E673800F3A27D /* RandomVoca */ = {
 			isa = PBXGroup;
 			children = (
+				135BBF622C8E678900F3A27D /* Views */,
 				135BBF542C8E673800F3A27D /* RandomVocaApp.swift */,
 				135BBF562C8E673800F3A27D /* ContentView.swift */,
 				135BBF582C8E673900F3A27D /* Assets.xcassets */,
@@ -65,6 +66,13 @@
 				135BBF5B2C8E673900F3A27D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		135BBF622C8E678900F3A27D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
