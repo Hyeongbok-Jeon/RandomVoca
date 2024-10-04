@@ -11,9 +11,11 @@ import Foundation
 class Word: Codable, Identifiable, Equatable {
     var id = UUID()  // List에서 고유 식별자로 사용
     var name: String
+    var meaning: String
     
-    init(name: String) {
+    init(name: String, meaning: String) {
         self.name = name
+        self.meaning = meaning
     }
     
     // Equatable 채택을 위한 메서드
