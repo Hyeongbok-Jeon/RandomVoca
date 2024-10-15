@@ -9,173 +9,197 @@ struct VocaList: View {
     @State private var showWordMeaningEmptyError = false
     @State private var showAlert = false
     
-    var sortedWords: [Word] {
-        words.sorted { $0.name < $1.name }
-    }
+    @FocusState private var focusedField: UUID?  // 포커스 관리용 변수
     
     var body: some View {
         ZStack {
             NavigationStack {
-                HStack {
-                    Text("단어 그룹 1")
-                        .font(.largeTitle)
-                    
-                    Spacer()
-                    
-                    NavigationLink {
-                        Play(words: words)
-                    } label: {
-                        if !words.isEmpty {
-                            Text("Play")
-                        } else {
-                            Button("Play") {
-                                showAlert = true
-                            }
-                            .alert(isPresented: $showAlert) {
-                                Alert(
-                                    title: Text(""),
-                                    message: Text("단어를 추가해주세요.")
-                                )
-                            }
-                        }
-                    }
-                }
-                .padding()
-                
                 List {
-                    ForEach(sortedWords) { word in
+                    ForEach($words) { $word in
                         HStack {
-                            Text(word.name)
-                                .frame(maxWidth: .infinity, alignment: .leading)  // 왼쪽 정렬 및 최대 너비 설정
-                            Text(word.meaning)
-                                .frame(maxWidth: .infinity, alignment: .leading)  // 왼쪽 정렬 및 최대 너비 설정
+                            TextField("단어", text: $word.name)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                .focused($focusedField, equals: word.id)  // 포커스 설정
+                                .onSubmit {  // 엔터를 누르면 저장
+                                    saveWords()
+                                }
+                                .onChange(of: word.name) {
+                                    saveWords()  // 단어 이름 변경 시 저장
+                                }
+
+                            TextField("뜻", text: $word.meaning)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                .onSubmit {  // 엔터를 누르면 저장
+                                    saveWords()
+                                }
+                                .onChange(of: word.name) {
+                                    saveWords()  // 단어 이름 변경 시 저장
+                                }
                         }
                     }
                     .onDelete(perform: deleteWord)
                 }
-                .listStyle(PlainListStyle())
                 .onAppear(perform: loadWords)
+                .listStyle(PlainListStyle())
+                .navigationBarTitle("단어 목록", displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            words.removeAll()
+                            saveWords()
+                        } label: {
+                            Text("모두 삭제")
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            Play(words: words)
+                        } label: {
+                            if !words.isEmpty {
+                                Text("Play")
+                            } else {
+                                Button("Play") {
+                                    showAlert = true
+                                }
+                                .alert(isPresented: $showAlert) {
+                                    Alert(
+                                        title: Text(""),
+                                        message: Text("단어를 추가해주세요.")
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: addWord) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+                .onTapGesture {
+                    // 빈 단어 또는 뜻이 있는지 확인하고 삭제
+                    if let lastWord = words.last, lastWord.name.isEmpty && lastWord.meaning.isEmpty {
+                        words.removeLast()
+                    }
+                }
                 
                 Spacer()
             }
             
-            // Floating Button
-            Button(action: {
-                showPopup = true
-            }) {
-                Image(systemName: "plus.circle.fill")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .foregroundColor(.blue)
-                    .padding()
-            }
-            .position(x: UIScreen.main.bounds.width - 70, y: UIScreen.main.bounds.height - 140)
-            
-            // Custom Popup View
-            if showPopup {
-                Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all) // 화면 전체에 반투명 배경 적용
-                
-                VStack {
-                    Text("단어 추가")
-                        .font(.title)
-                        .padding()
-                    
-                    TextField("단어", text: $wordName)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                    
-                    if (showWordNameEmptyError) {
-                        Text("단어를 입력해주세요.")
-                            .foregroundColor(.red)
-                    }
-                    
-                    TextField("뜻", text: $wordMeaning)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                    
-                    if (showWordMeaningEmptyError) {
-                        Text("뜻을 입력해주세요.")
-                            .foregroundColor(.red)
-                    }
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button(action: {
-                            showPopup = false // 팝업 닫기
-                            wordName = ""
-                            wordMeaning = ""
-                            showWordNameEmptyError = false
-                            showWordMeaningEmptyError = false
-                        }) {
-                            Text("취소")
-                                .font(.title2)
-                        }
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            showWordNameEmptyError = wordName.isEmpty
-                            showWordMeaningEmptyError = wordMeaning.isEmpty
-                            
-                            if !wordName.isEmpty && !wordMeaning.isEmpty {
-                                let newWord = Word(name: wordName, meaning: wordMeaning)
-                                words.insert(newWord, at: 0)  // 단어 리스트에 추가
-                                saveWords()                 // 로컬 저장
-                                wordName = ""                   // 입력 필드 초기화
-                                wordMeaning = ""
-                                showPopup = false // 팝업 닫기
-                                showWordNameEmptyError = false
-                                showWordMeaningEmptyError = false
-                            }
-                        }) {
-                            Text("추가")
-                                .font(.title2)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
-                }
-                .frame(width: UIScreen.main.bounds.width * 0.8)
-                .background(Color.white)
-                .cornerRadius(20)
-                .shadow(radius: 10)
-                .transition(.scale) // 팝업 등장 애니메이션
-                .padding()
-            }
+//            // Custom Popup View
+//            if showPopup {
+//                Color.black.opacity(0.4)
+//                    .edgesIgnoringSafeArea(.all) // 화면 전체에 반투명 배경 적용
+//                
+//                VStack {
+//                    Text("단어 추가")
+//                        .font(.title)
+//                        .padding()
+//                    
+//                    TextField("단어", text: $wordName)
+//                        .padding()
+//                        .background(Color(.systemGray6))
+//                        .cornerRadius(10)
+//                        .padding(.horizontal)
+//                    
+//                    if (showWordNameEmptyError) {
+//                        Text("단어를 입력해주세요.")
+//                            .foregroundColor(.red)
+//                    }
+//                    
+//                    TextField("뜻", text: $wordMeaning)
+//                        .padding()
+//                        .background(Color(.systemGray6))
+//                        .cornerRadius(10)
+//                        .padding(.horizontal)
+//                    
+//                    if (showWordMeaningEmptyError) {
+//                        Text("뜻을 입력해주세요.")
+//                            .foregroundColor(.red)
+//                    }
+//                    
+//                    HStack {
+//                        Spacer()
+//                        
+//                        Button(action: {
+//                            closePopup()
+//                        }) {
+//                            Text("취소")
+//                                .font(.title2)
+//                        }
+//                        
+//                        Spacer()
+//                        
+//                        Button(action: {
+//                            showWordNameEmptyError = wordName.isEmpty
+//                            showWordMeaningEmptyError = wordMeaning.isEmpty
+//                            
+//                            if !showWordNameEmptyError && !showWordMeaningEmptyError {
+//                                let newWord = Word(
+//                                    name: wordName
+//                                    , meaning: wordMeaning
+//                                )
+//                                words.insert(newWord, at: 0)  // 단어 리스트에 추가
+//                                saveWords()                 // 로컬 저장
+//                                closePopup()
+//                            }
+//                        }) {
+//                            Text("추가")
+//                                .font(.title2)
+//                        }
+//                        
+//                        Spacer()
+//                    }
+//                    .padding()
+//                }
+//                .frame(width: UIScreen.main.bounds.width * 0.8)
+//                .background(Color.white)
+//                .cornerRadius(20)
+//                .shadow(radius: 10)
+//                .transition(.scale) // 팝업 등장 애니메이션
+//                .padding()
+//            }
         }
         .animation(.easeInOut, value: showPopup) // 애니메이션 적용
     }
     
-    // 단어 저장 함수 (UserDefaults 사용)
+    // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
+    func addWord() {
+        let newWord = Word(name: "", meaning: "")
+        words.append(newWord)  // 새 단어를 맨 아래에 추가
+        focusedField = newWord.id  // 방금 추가된 단어에 포커스
+    }
+    
     func saveWords() {
+        let key = "SavedWords"  // 그룹 이름을 키에 추가
         if let encoded = try? JSONEncoder().encode(words) {
-            UserDefaults.standard.set(encoded, forKey: "SavedWords")
+            UserDefaults.standard.set(encoded, forKey: key)
+        }
+    }
+
+    func loadWords() {
+        let key = "SavedWords"  // 그룹 이름을 키에 추가
+        if let savedData = UserDefaults.standard.data(forKey: key),
+           let decodedWords = try? JSONDecoder().decode([Word].self, from: savedData) {
+            words = decodedWords.sorted { $0.name < $1.name }
         }
     }
     
-    // 로컬 저장된 단어 불러오기
-    func loadWords() {
-        if let savedData = UserDefaults.standard.data(forKey: "SavedWords"),
-           let decodedWords = try? JSONDecoder().decode([Word].self, from: savedData) {
-            words = decodedWords
-        }
+    func closePopup() {
+        showPopup = false
+        wordName = ""
+        wordMeaning = ""
+        showWordNameEmptyError = false
+        showWordMeaningEmptyError = false
     }
     
     // 단어 삭제 함수
     func deleteWord(at offsets: IndexSet) {
-        let sortedOffsets = offsets.map { sortedWords[$0] } // Get the actual Word objects from sortedWords
-        for word in sortedOffsets {
-            if let index = words.firstIndex(where: { $0.id == word.id }) {
-                words.remove(at: index) // Remove from original words array
-            }
-        }
+        words.remove(atOffsets: offsets) // 기본 리스트에서 삭제
         saveWords() // Save the updated list after deletion
     }
 }

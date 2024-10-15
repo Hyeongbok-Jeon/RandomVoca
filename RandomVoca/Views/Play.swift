@@ -52,8 +52,6 @@ struct Play: View {
     }
 
     private func showRandomWord() {
-        print(shownWords)
-        
         showMeaning = false
         
         let availableWords = words.filter { !shownWords.contains($0) } // 아직 보여주지 않은 단어들만 선택
