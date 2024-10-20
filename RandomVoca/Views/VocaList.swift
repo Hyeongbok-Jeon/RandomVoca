@@ -36,6 +36,9 @@ struct VocaList: View {
                                     .onSubmit {  // 엔터를 누르면 저장
                                         saveWords()
                                     }
+                                    .onChange(of: word.name) {
+                                        saveWords()
+                                    }
 
                                 TextField("뜻", text: $word.meaning)
                                     .textFieldStyle(.roundedBorder)
@@ -43,6 +46,9 @@ struct VocaList: View {
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                     .onSubmit {  // 엔터를 누르면 저장
+                                        saveWords()
+                                    }
+                                    .onChange(of: word.meaning) {
                                         saveWords()
                                     }
                             }
@@ -83,7 +89,7 @@ struct VocaList: View {
                         NavigationLink {
                             Play(words: words)
                         } label: {
-                            if !words.isEmpty && !words.contains(where: { $0.name.isEmpty && $0.meaning.isEmpty }) {
+                            if !words.isEmpty && !words.contains(where: { $0.name.isEmpty }) {
                                 Text("Play")
                             } else {
                                 Button("Play") {
@@ -119,7 +125,7 @@ struct VocaList: View {
         
         DispatchQueue.main.async {
             words.removeAll { word in
-                word.name.isEmpty && word.meaning.isEmpty
+                word.name.isEmpty
             }
             saveWords()
         }
@@ -127,7 +133,7 @@ struct VocaList: View {
     
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord() {
-        if let lastWord = words.last, lastWord.name.isEmpty && lastWord.meaning.isEmpty {
+        if let lastWord = words.last, lastWord.name.isEmpty {
             // 이미 빈 단어가 있을 경우 그 단어에 포커스 맞추기
             focusedField = .word(lastWord.id)
         } else {
