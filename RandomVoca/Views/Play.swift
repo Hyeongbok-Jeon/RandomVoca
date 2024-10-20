@@ -90,6 +90,7 @@ struct Play: View {
         displayWordMeaning = randomWord.meaning
         currentIndex = words.firstIndex(of: randomWord) ?? 0
         shownWords.append(randomWord) // 선택된 단어를 기록
+        
      }
 }
 

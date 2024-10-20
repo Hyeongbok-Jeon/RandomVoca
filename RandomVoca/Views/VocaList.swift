@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct VocaList: View {
-    enum Field: Hashable {
+    enum FocusField: Hashable {
         case word(UUID)
         case meaning(UUID)
     }
@@ -10,11 +10,9 @@ struct VocaList: View {
     @State private var wordMeaning: String = ""
     @State private var words: [Word] = []         // 저장된 단어 리스트
     @State private var showPopup = false          // 팝업창 제어 상태 변수
-    @State private var showWordNameEmptyError = false
-    @State private var showWordMeaningEmptyError = false
     @State private var showAlert = false
     
-    @FocusState private var focusedField: Field?  // 포커스 관리용 변수
+    @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
     var body: some View {
         ZStack {
@@ -38,9 +36,6 @@ struct VocaList: View {
                                     .onSubmit {  // 엔터를 누르면 저장
                                         saveWords()
                                     }
-                                    .onChange(of: word.name) {
-                                        saveWords()  // 단어 이름 변경 시 저장
-                                    }
 
                                 TextField("뜻", text: $word.meaning)
                                     .textFieldStyle(.roundedBorder)
@@ -49,9 +44,6 @@ struct VocaList: View {
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                     .onSubmit {  // 엔터를 누르면 저장
                                         saveWords()
-                                    }
-                                    .onChange(of: word.name) {
-                                        saveWords()  // 단어 이름 변경 시 저장
                                     }
                             }
                             .listRowSeparator(.hidden)
@@ -91,7 +83,7 @@ struct VocaList: View {
                         NavigationLink {
                             Play(words: words)
                         } label: {
-                            if !words.isEmpty && !words.contains(where: { $0.name.isEmpty || $0.meaning.isEmpty }) {
+                            if !words.isEmpty && !words.contains(where: { $0.name.isEmpty && $0.meaning.isEmpty }) {
                                 Text("Play")
                             } else {
                                 Button("Play") {
@@ -119,7 +111,6 @@ struct VocaList: View {
                 Spacer()
             }
         }
-        .animation(.easeInOut, value: showPopup) // 애니메이션 적용
     }
     
     // 빈 단어 제거 함수
@@ -160,14 +151,6 @@ struct VocaList: View {
            let decodedWords = try? JSONDecoder().decode([Word].self, from: savedData) {
             words = decodedWords.sorted { $0.name < $1.name }
         }
-    }
-    
-    func closePopup() {
-        showPopup = false
-        wordName = ""
-        wordMeaning = ""
-        showWordNameEmptyError = false
-        showWordMeaningEmptyError = false
     }
     
     // 단어 삭제 함수
