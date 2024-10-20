@@ -20,34 +20,44 @@ struct VocaList: View {
         ZStack {
             NavigationStack {
                 List {
-                    ForEach($words) { $word in
+                    if words.isEmpty {
                         HStack {
-                            TextField("단어", text: $word.name)
-                                .textFieldStyle(.roundedBorder)
-                                .frame(maxWidth: .infinity)
-                                .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
-                                .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-                                .onSubmit {  // 엔터를 누르면 저장
-                                    saveWords()
-                                }
-                                .onChange(of: word.name) {
-                                    saveWords()  // 단어 이름 변경 시 저장
-                                }
-
-                            TextField("뜻", text: $word.meaning)
-                                .textFieldStyle(.roundedBorder)
-                                .frame(maxWidth: .infinity)
-                                .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
-                                .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                .onSubmit {  // 엔터를 누르면 저장
-                                    saveWords()
-                                }
-                                .onChange(of: word.name) {
-                                    saveWords()  // 단어 이름 변경 시 저장
-                                }
+                            Spacer()
+                            Text("단어를 추가해주세요.")
+                            Spacer()
                         }
+                        .listRowSeparator(.hidden)
+                    } else {
+                        ForEach($words) { $word in
+                            HStack {
+                                TextField("단어", text: $word.name)
+                                    .textFieldStyle(.roundedBorder)
+                                    .frame(maxWidth: .infinity)
+                                    .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                    .focused($focusedField, equals: .word(word.id))  // 포커스 설정
+                                    .onSubmit {  // 엔터를 누르면 저장
+                                        saveWords()
+                                    }
+                                    .onChange(of: word.name) {
+                                        saveWords()  // 단어 이름 변경 시 저장
+                                    }
+
+                                TextField("뜻", text: $word.meaning)
+                                    .textFieldStyle(.roundedBorder)
+                                    .frame(maxWidth: .infinity)
+                                    .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                    .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
+                                    .onSubmit {  // 엔터를 누르면 저장
+                                        saveWords()
+                                    }
+                                    .onChange(of: word.name) {
+                                        saveWords()  // 단어 이름 변경 시 저장
+                                    }
+                            }
+                            .listRowSeparator(.hidden)
+                        }
+                        .onDelete(perform: deleteWord)
                     }
-                    .onDelete(perform: deleteWord)
                 }
                 .onAppear(perform: loadWords)
                 .listStyle(PlainListStyle())
@@ -62,14 +72,26 @@ struct VocaList: View {
                             ]
                             saveWords()
                         } label: {
-                            Text("초기화")
+                            Text("샘플")
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            focusedField = nil
+                            
+                            DispatchQueue.main.async {
+                                words.removeAll()
+                                saveWords()
+                            }
+                        } label: {
+                            Text("모두 삭제")
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
                             Play(words: words)
                         } label: {
-                            if !words.isEmpty {
+                            if !words.isEmpty && !words.contains(where: { $0.name.isEmpty || $0.meaning.isEmpty }) {
                                 Text("Play")
                             } else {
                                 Button("Play") {
