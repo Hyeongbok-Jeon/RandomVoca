@@ -14,6 +14,7 @@ struct Play: View {
     @State private var displayWordMeaning: String = ""
     @State private var showMeaning: Bool = false  // 뜻을 표시할지 여부를 관리하는 상태
     @State private var shownWords: [Word] = [] // 이미 보여준 단어를 추적하는 배열
+    @State private var isReallyKnowWord: Bool = false
     
     var body: some View {
         Spacer()
@@ -43,24 +44,33 @@ struct Play: View {
         HStack {
             Spacer()
             
-            Button {
-                showRandomWord()
-            } label: {
-                Text("모르는 단어")
+            if isReallyKnowWord {
+                Button("사실 모르는 단어") {
+                    showRandomWord()
+                }
+                
+                Spacer()
+                
+                Button("아는 단어가 맞음") {
+                    showRandomWord()
+                    isReallyKnowWord = false
+                }
+            } else {
+                Button("모르는 단어") {
+                    showRandomWord()
+                }
+                
+                Spacer()
+                
+                Button("아는 단어") {
+                    showMeaning = true
+                    isReallyKnowWord = true
+                }
             }
-            
-            Spacer()
-            
-            Button {
-                showRandomWord()
-            } label: {
-                Text("아는 단어")
-            }
-            
+
             Spacer()
         }
 
-        
         Spacer()
     }
 

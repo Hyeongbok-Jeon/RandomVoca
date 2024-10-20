@@ -105,10 +105,10 @@ struct VocaList: View {
         focusedField = nil
         
         DispatchQueue.main.async {
-            saveWords()
             words.removeAll { word in
                 word.name.isEmpty && word.meaning.isEmpty
             }
+            saveWords()
         }
     }
     
