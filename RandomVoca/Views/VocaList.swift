@@ -55,10 +55,14 @@ struct VocaList: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
-                            words.removeAll()
+                            words = [
+                                Word(name: "betray", meaning: "배신하다")
+                                , Word(name: "apply", meaning: "지원하다")
+                                , Word(name: "focus", meaning: "집중하다")
+                            ]
                             saveWords()
                         } label: {
-                            Text("모두 삭제")
+                            Text("초기화")
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -92,80 +96,6 @@ struct VocaList: View {
                 
                 Spacer()
             }
-            
-//            // Custom Popup View
-//            if showPopup {
-//                Color.black.opacity(0.4)
-//                    .edgesIgnoringSafeArea(.all) // 화면 전체에 반투명 배경 적용
-//                
-//                VStack {
-//                    Text("단어 추가")
-//                        .font(.title)
-//                        .padding()
-//                    
-//                    TextField("단어", text: $wordName)
-//                        .padding()
-//                        .background(Color(.systemGray6))
-//                        .cornerRadius(10)
-//                        .padding(.horizontal)
-//                    
-//                    if (showWordNameEmptyError) {
-//                        Text("단어를 입력해주세요.")
-//                            .foregroundColor(.red)
-//                    }
-//                    
-//                    TextField("뜻", text: $wordMeaning)
-//                        .padding()
-//                        .background(Color(.systemGray6))
-//                        .cornerRadius(10)
-//                        .padding(.horizontal)
-//                    
-//                    if (showWordMeaningEmptyError) {
-//                        Text("뜻을 입력해주세요.")
-//                            .foregroundColor(.red)
-//                    }
-//                    
-//                    HStack {
-//                        Spacer()
-//                        
-//                        Button(action: {
-//                            closePopup()
-//                        }) {
-//                            Text("취소")
-//                                .font(.title2)
-//                        }
-//                        
-//                        Spacer()
-//                        
-//                        Button(action: {
-//                            showWordNameEmptyError = wordName.isEmpty
-//                            showWordMeaningEmptyError = wordMeaning.isEmpty
-//                            
-//                            if !showWordNameEmptyError && !showWordMeaningEmptyError {
-//                                let newWord = Word(
-//                                    name: wordName
-//                                    , meaning: wordMeaning
-//                                )
-//                                words.insert(newWord, at: 0)  // 단어 리스트에 추가
-//                                saveWords()                 // 로컬 저장
-//                                closePopup()
-//                            }
-//                        }) {
-//                            Text("추가")
-//                                .font(.title2)
-//                        }
-//                        
-//                        Spacer()
-//                    }
-//                    .padding()
-//                }
-//                .frame(width: UIScreen.main.bounds.width * 0.8)
-//                .background(Color.white)
-//                .cornerRadius(20)
-//                .shadow(radius: 10)
-//                .transition(.scale) // 팝업 등장 애니메이션
-//                .padding()
-//            }
         }
         .animation(.easeInOut, value: showPopup) // 애니메이션 적용
     }
@@ -175,8 +105,9 @@ struct VocaList: View {
         focusedField = nil
         
         DispatchQueue.main.async {
-            if let lastWord = words.last, lastWord.name.isEmpty && lastWord.meaning.isEmpty {
-                words.removeLast()
+            saveWords()
+            words.removeAll { word in
+                word.name.isEmpty && word.meaning.isEmpty
             }
         }
     }

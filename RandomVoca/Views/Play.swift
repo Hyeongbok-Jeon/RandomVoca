@@ -30,23 +30,36 @@ struct Play: View {
         
         Spacer()
         
-        if showMeaning {
-            Text(displayWordMeaning)
-        } else {
-            Button {
-                showMeaning = true // 뜻을 표시하도록 상태 업데이트
-            } label: {
-                Text("뜻 보기")
-            }
-        }
+        RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
+            .stroke(Color.blue, lineWidth: 2) // 테두리 색과 두께 설정
+            .frame(width: 200, height: 50)    // 사각형 크기 설정
+            .overlay(
+                // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
+                showMeaning ? AnyView(Text(displayWordMeaning).foregroundColor(.black)) : AnyView(EmptyView())
+            )
         
         Spacer()
         
-        Button {
-            showRandomWord()
-        } label: {
-            Text("다음 단어")
+        HStack {
+            Spacer()
+            
+            Button {
+                showRandomWord()
+            } label: {
+                Text("모르는 단어")
+            }
+            
+            Spacer()
+            
+            Button {
+                showRandomWord()
+            } label: {
+                Text("아는 단어")
+            }
+            
+            Spacer()
         }
+
         
         Spacer()
     }
