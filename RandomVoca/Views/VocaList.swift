@@ -33,10 +33,8 @@ struct VocaList: View {
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-//                                    .onSubmit {  // 엔터를 누르면 저장
-//                                        saveWords()
-//                                    }
                                     .onChange(of: focusedField) { oldFocus, newFocus in
+                                        saveWords()
                                         // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
                                         if newFocus != .word(word.id) && word.name.isEmpty {
                                             words.removeAll { $0.id == word.id }
@@ -49,14 +47,8 @@ struct VocaList: View {
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-//                                    .onSubmit {  // 엔터를 누르면 저장
-//                                        saveWords()
-//                                    }
                                     .onChange(of: focusedField) { oldFocus, newFocus in
-                                        // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
-                                        if newFocus != .meaning(word.id) {
-                                            saveWords()
-                                        }
+                                        saveWords()
                                     }
                             }
                             .listRowSeparator(.hidden)
@@ -119,7 +111,7 @@ struct VocaList: View {
                     }
                 }
                 .onTapGesture {
-                    removeEmptyWord() // 빈 단어 제거
+                    focusedField = nil
                 }
                 
                 Spacer()
