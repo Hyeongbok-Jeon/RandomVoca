@@ -1,0 +1,24 @@
+#
+ToolbarItem(placement: .navigationBarTrailing) {
+    if !words.isEmpty && !words.contains(where: { $0.name.isEmpty }) {
+        NavigationLink(destination: Play(words: words)) {
+            Text("Play")
+        }
+    } else {
+        Button("Play") {
+            showAlert = true
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text(""),
+                message: Text("단어를 추가해주세요.")
+            )
+        }
+    }
+}
+
+#
+OnSubmit 제거
+
+#
+Word 객체에 아는단어 bool 변수 추가
