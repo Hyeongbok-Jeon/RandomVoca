@@ -36,11 +36,12 @@ struct VocaList: View {
 //                                    .onSubmit {  // 엔터를 누르면 저장
 //                                        saveWords()
 //                                    }
-                                    .onChange(of: word.name) {
-                                        words.removeAll { word in
-                                            word.name.isEmpty
+                                    .onChange(of: focusedField) { oldFocus, newFocus in
+                                        // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
+                                        if newFocus != .word(word.id) && word.name.isEmpty {
+                                            words.removeAll { $0.id == word.id }
+                                            saveWords()
                                         }
-                                        saveWords()
                                     }
 
                                 TextField("뜻", text: $word.meaning)
@@ -51,8 +52,11 @@ struct VocaList: View {
 //                                    .onSubmit {  // 엔터를 누르면 저장
 //                                        saveWords()
 //                                    }
-                                    .onChange(of: word.meaning) {
-                                        saveWords()
+                                    .onChange(of: focusedField) { oldFocus, newFocus in
+                                        // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
+                                        if newFocus != .meaning(word.id) {
+                                            saveWords()
+                                        }
                                     }
                             }
                             .listRowSeparator(.hidden)
