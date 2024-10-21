@@ -33,10 +33,13 @@ struct VocaList: View {
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-                                    .onSubmit {  // 엔터를 누르면 저장
-                                        saveWords()
-                                    }
+//                                    .onSubmit {  // 엔터를 누르면 저장
+//                                        saveWords()
+//                                    }
                                     .onChange(of: word.name) {
+                                        words.removeAll { word in
+                                            word.name.isEmpty
+                                        }
                                         saveWords()
                                     }
 
@@ -45,9 +48,9 @@ struct VocaList: View {
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                    .onSubmit {  // 엔터를 누르면 저장
-                                        saveWords()
-                                    }
+//                                    .onSubmit {  // 엔터를 누르면 저장
+//                                        saveWords()
+//                                    }
                                     .onChange(of: word.meaning) {
                                         saveWords()
                                     }
@@ -86,21 +89,22 @@ struct VocaList: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            Play(words: words)
-                        } label: {
-                            if !words.isEmpty && !words.contains(where: { $0.name.isEmpty }) {
+                        if !words.isEmpty && !words.contains(where: { $0.name.isEmpty }) {
+                            NavigationLink(destination: Play(words: words)) {
                                 Text("Play")
-                            } else {
-                                Button("Play") {
-                                    showAlert = true
-                                }
-                                .alert(isPresented: $showAlert) {
-                                    Alert(
-                                        title: Text(""),
-                                        message: Text("단어를 추가해주세요.")
-                                    )
-                                }
+                            }
+                            .simultaneousGesture(TapGesture().onEnded {
+                                focusedField = nil  // Play 버튼 누를 때 포커스 해제
+                            })
+                        } else {
+                            Button("Play") {
+                                showAlert = true
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text(""),
+                                    message: Text("단어를 추가해주세요.")
+                                )
                             }
                         }
                     }
