@@ -1,17 +1,10 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-Storage for model data.
-*/
-
 import Foundation
+import SwiftUI
 
 @Observable
 class ModelData {
     var words: [Word] = load("words.json")
 }
-
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
