@@ -50,6 +50,8 @@ struct VocaList: View {
                                     .onChange(of: focusedField) { oldFocus, newFocus in
                                         saveWords()
                                     }
+                                
+                                Text(word.isKnowWord ? "Y" : "N")
                             }
                             .listRowSeparator(.hidden)
                         }
@@ -63,9 +65,9 @@ struct VocaList: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
                             words = [
-                                Word(name: "betray", meaning: "배신하다")
-                                , Word(name: "apply", meaning: "지원하다")
-                                , Word(name: "focus", meaning: "집중하다")
+                                Word(name: "betray", meaning: "배신하다", isKnowWord: false)
+                                , Word(name: "apply", meaning: "지원하다", isKnowWord: false)
+                                , Word(name: "focus", meaning: "집중하다", isKnowWord: false)
                             ]
                             saveWords()
                         } label: {
@@ -138,7 +140,7 @@ struct VocaList: View {
             focusedField = .word(lastWord.id)
         } else {
             // 새 단어 추가
-            let newWord = Word(name: "", meaning: "")
+            let newWord = Word(name: "", meaning: "", isKnowWord: false)
             words.append(newWord)
             focusedField = .word(newWord.id)
         }

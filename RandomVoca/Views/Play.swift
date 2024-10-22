@@ -52,6 +52,15 @@ struct Play: View {
                 Spacer()
                 
                 Button("아는 단어가 맞음") {
+                    if currentIndex < words.count {
+                        // 현재 단어의 isKnowWord 값을 true로 설정
+                        words[currentIndex].isKnowWord = true
+                        let key = "SavedWords"  // 그룹 이름을 키에 추가
+                        if let encoded = try? JSONEncoder().encode(words) {
+                            UserDefaults.standard.set(encoded, forKey: key)
+                        }
+                    }
+                    
                     showRandomWord()
                     isReallyKnowWord = false
                 }
@@ -80,8 +89,8 @@ struct Play: View {
         let availableWords = words.filter { !shownWords.contains($0) } // 아직 보여주지 않은 단어들만 선택
 
         guard !availableWords.isEmpty else {
-            shownWords.removeAll() // 모든 단어를 보여줬다면, 기록 초기화
-            showRandomWord() // 다시 처음부터 시작
+//            shownWords.removeAll() // 모든 단어를 보여줬다면, 기록 초기화
+//            showRandomWord() // 다시 처음부터 시작
             return
         }
 
@@ -90,14 +99,13 @@ struct Play: View {
         displayWordMeaning = randomWord.meaning
         currentIndex = words.firstIndex(of: randomWord) ?? 0
         shownWords.append(randomWord) // 선택된 단어를 기록
-        
      }
 }
 
 #Preview {
     Play(words: [
-        Word(name: "vanish", meaning: "사라지다"),
-        Word(name: "order", meaning: "주문하다"),
-        Word(name: "hold", meaning: "유지하다")
+        Word(name: "vanish", meaning: "사라지다", isKnowWord: false),
+        Word(name: "order", meaning: "주문하다", isKnowWord: false),
+        Word(name: "hold", meaning: "유지하다", isKnowWord: false)
     ])
 }

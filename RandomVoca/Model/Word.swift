@@ -12,10 +12,12 @@ class Word: Codable, Identifiable, Equatable {
     var id = UUID()  // List에서 고유 식별자로 사용
     var name: String
     var meaning: String
+    var isKnowWord: Bool
     
-    init(name: String, meaning: String) {
+    init(name: String, meaning: String, isKnowWord: Bool) {
         self.name = name
         self.meaning = meaning
+        self.isKnowWord = isKnowWord
     }
     
     // Equatable 채택을 위한 메서드
