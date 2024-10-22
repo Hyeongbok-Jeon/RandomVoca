@@ -1,24 +1,16 @@
 #
-ToolbarItem(placement: .navigationBarTrailing) {
-    if !words.isEmpty && !words.contains(where: { $0.name.isEmpty }) {
-        NavigationLink(destination: Play(words: words)) {
-            Text("Play")
-        }
-    } else {
-        Button("Play") {
-            showAlert = true
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text(""),
-                message: Text("단어를 추가해주세요.")
-            )
-        }
-    }
-}
-
-#
-OnSubmit 제거
-
-#
 Word 객체에 아는단어 bool 변수 추가
+
+#
+초시계 표출
+알고있다 누르면 초시계 스탑
+
+#
+리스트 다 돌리고 마지막 통계팝업 표출
+알고 있는 단어 / 총 단어
+
+#
+리스트에서 각 단어 맞힌 여부, 소요 시간 표시
+
+#
+맞힌 단어 제외 플레이 기능 추가
