@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "apple",
+        "meaning": "사과",
+        "isKnowWord": false
+    },
+    {
+        "id": 2,
+        "name": "banana",
+        "meaning": "바나나",
+        "isKnowWord": false
+    },
+    {
+        "id": 3,
+        "name": "mango",
+        "meaning": "망고",
+        "isKnowWord": false
+    }
+]

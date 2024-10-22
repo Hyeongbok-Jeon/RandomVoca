@@ -6,6 +6,7 @@ struct VocaList: View {
         case meaning(UUID)
     }
     
+    @Environment(ModelData.self) var modelData
     @State private var wordName: String = ""      // 입력한 단어 이름
     @State private var wordMeaning: String = ""
     @State private var words: [Word] = []         // 저장된 단어 리스트
@@ -170,4 +171,5 @@ struct VocaList: View {
 
 #Preview {
     VocaList()
+        .environment(ModelData())
 }
