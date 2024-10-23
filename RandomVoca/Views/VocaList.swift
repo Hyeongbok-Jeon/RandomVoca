@@ -6,24 +6,15 @@ struct VocaList: View {
         case meaning(UUID)
     }
     
-    @Environment(ModelData.self) var modelData
     @State private var wordName: String = ""      // 입력한 단어 이름
     @State private var wordMeaning: String = ""
+    @State private var words: [Word] = []         // 저장된 단어 리스트
     @State private var showPopup = false          // 팝업창 제어 상태 변수
     @State private var showAlert = false
+    
     @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
-//    var words: [Word] = modelData.words
-    
-    var words: [Word] {
-        modelData.words.filter { word in
-            !word.name.isEmpty
-        }
-    }
-    
     var body: some View {
-        @Bindable var modelData = modelData
-        
         ZStack {
             NavigationStack {
                 List {
@@ -35,7 +26,7 @@ struct VocaList: View {
                         }
                         .listRowSeparator(.hidden)
                     } else {
-                        ForEach($modelData) { $word in
+                        ForEach($words) { $word in
                             HStack {
                                 TextField("단어", text: $word.name)
                                     .textFieldStyle(.roundedBorder)
@@ -179,5 +170,4 @@ struct VocaList: View {
 
 #Preview {
     VocaList()
-        .environment(ModelData())
 }
