@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Play: View {
     var words: [Word]
+    
     @State private var currentIndex: Int = 0
     @State private var displayWordName: String = ""
     @State private var displayWordMeaning: String = ""
@@ -103,9 +104,5 @@ struct Play: View {
 }
 
 #Preview {
-    Play(words: [
-        Word(name: "vanish", meaning: "사라지다", isKnowWord: false),
-        Word(name: "order", meaning: "주문하다", isKnowWord: false),
-        Word(name: "hold", meaning: "유지하다", isKnowWord: false)
-    ])
+    Play(words: ModelData.shared.loadWords())
 }

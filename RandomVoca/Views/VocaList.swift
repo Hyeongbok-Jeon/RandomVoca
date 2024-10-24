@@ -24,7 +24,6 @@ struct VocaList: View {
                             Text("단어를 추가해주세요.")
                             Spacer()
                         }
-                        .listRowSeparator(.hidden)
                     } else {
                         ForEach($words) { $word in
                             HStack {
@@ -53,14 +52,17 @@ struct VocaList: View {
                                 
                                 Text(word.isKnowWord ? "Y" : "N")
                             }
-                            .listRowSeparator(.hidden)
                         }
                         .onDelete(perform: deleteWord)
                     }
                 }
-                .onAppear(perform: loadWords)
-                .listStyle(PlainListStyle())
-                .navigationBarTitle("단어 목록", displayMode: .inline)
+                .onAppear {
+                    words = ModelData.shared.loadWords()
+                }
+                .onTapGesture {
+                    focusedField = nil
+                }
+                .navigationBarTitle("단어 목록")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -69,7 +71,8 @@ struct VocaList: View {
                                 , Word(name: "apply", meaning: "지원하다", isKnowWord: false)
                                 , Word(name: "focus", meaning: "집중하다", isKnowWord: false)
                             ]
-                            saveWords()
+                            ModelData.shared.saveWords(words)
+                            words = ModelData.shared.loadWords()
                         } label: {
                             Text("샘플")
                         }
@@ -111,9 +114,6 @@ struct VocaList: View {
                             Image(systemName: "plus")
                         }
                     }
-                }
-                .onTapGesture {
-                    focusedField = nil
                 }
                 
                 Spacer()
