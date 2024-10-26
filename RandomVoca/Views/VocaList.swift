@@ -56,9 +56,7 @@ struct VocaList: View {
                         .onDelete(perform: deleteWord)
                     }
                 }
-                .onAppear {
-                    words = ModelData.shared.loadWords()
-                }
+                .onAppear(perform: loadWords)
                 .onTapGesture {
                     focusedField = nil
                 }
@@ -71,8 +69,8 @@ struct VocaList: View {
                                 , Word(name: "apply", meaning: "지원하다", isKnowWord: false)
                                 , Word(name: "focus", meaning: "집중하다", isKnowWord: false)
                             ]
-                            ModelData.shared.saveWords(words)
-                            words = ModelData.shared.loadWords()
+                            saveWords()
+                            loadWords()
                         } label: {
                             Text("샘플")
                         }

@@ -104,5 +104,9 @@ struct Play: View {
 }
 
 #Preview {
-    Play(words: ModelData.shared.loadWords())
+    Play(words: [
+        Word(name: "vanish", meaning: "사라지다", isKnowWord: false),
+        Word(name: "order", meaning: "주문하다", isKnowWord: false),
+        Word(name: "hold", meaning: "유지하다", isKnowWord: false)
+    ])
 }
