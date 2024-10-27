@@ -37,11 +37,9 @@ struct VocaList: View {
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
                                     .onChange(of: focusedField) { oldFocus, newFocus in
-                                        modelData.saveWords()
                                         // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
                                         if newFocus != .word(word.id) && word.name.isEmpty {
-                                            modelData.words.removeAll { $0.id == word.id }
-                                            modelData.saveWords()
+                                            removeEmptyWord()
                                         }
                                     }
 
@@ -50,9 +48,6 @@ struct VocaList: View {
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                    .onChange(of: focusedField) { oldFocus, newFocus in
-                                        modelData.saveWords()
-                                    }
                                 
                                 Text(word.isKnowWord ? "Y" : "N")
                             }
@@ -73,8 +68,6 @@ struct VocaList: View {
                                 , Word(name: "apply", meaning: "지원하다", isKnowWord: false)
                                 , Word(name: "focus", meaning: "집중하다", isKnowWord: false)
                             ]
-                            modelData.saveWords()
-                            modelData.loadWords()
                         } label: {
                             Text("샘플")
                         }
@@ -85,7 +78,6 @@ struct VocaList: View {
                             
                             DispatchQueue.main.async {
                                 modelData.words.removeAll()
-                                modelData.saveWords()
                             }
                         } label: {
                             Text("모두 삭제")
@@ -131,7 +123,6 @@ struct VocaList: View {
             modelData.words.removeAll { word in
                 word.name.isEmpty
             }
-            modelData.saveWords()
         }
     }
     
@@ -148,27 +139,9 @@ struct VocaList: View {
         }
     }
     
-//    func saveWords() {
-//        let key = "SavedWords"  // 그룹 이름을 키에 추가
-//        if let encoded = try? JSONEncoder().encode(modelData.words) {
-//            UserDefaults.standard.set(encoded, forKey: key)
-//        }
-//    }
-//
-//    func loadWords() {
-//        modelData.words = ModelData().words
-//        
-////        let key = "SavedWords"  // 그룹 이름을 키에 추가
-////        if let savedData = UserDefaults.standard.data(forKey: key),
-////           let decodedWords = try? JSONDecoder().decode([Word].self, from: savedData) {
-////            words = decodedWords.sorted { $0.name < $1.name }
-////        }
-//    }
-    
     // 단어 삭제 함수
     func deleteWord(at offsets: IndexSet) {
         modelData.words.remove(atOffsets: offsets) // 기본 리스트에서 삭제
-        modelData.saveWords() // Save the updated list after deletion
     }
 }
 
