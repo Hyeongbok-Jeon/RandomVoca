@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct VocaList: View {
-    @EnvironmentObject var modelData: ModelData
+    @Environment(ModelData.self) var modelData
     
     enum FocusField: Hashable {
         case word(UUID)
@@ -17,6 +17,8 @@ struct VocaList: View {
     @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
     var body: some View {
+        @Bindable var modelData = modelData
+        
         ZStack {
             NavigationStack {
                 List {
@@ -172,5 +174,5 @@ struct VocaList: View {
 
 #Preview {
     VocaList()
-        .environmentObject(ModelData())
+        .environment(ModelData())
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Play: View {
-    @EnvironmentObject var modelData: ModelData
+    @Environment(ModelData.self) var modelData
     
     @State private var currentIndex: Int = 0
     @State private var displayWordName: String = ""
@@ -18,6 +18,8 @@ struct Play: View {
     @State private var isReallyKnowWord: Bool = false
     
     var body: some View {
+        @Bindable var modelData = modelData
+        
         Spacer()
         
         VStack {
@@ -103,5 +105,5 @@ struct Play: View {
 
 #Preview {
     Play()
-        .environmentObject(ModelData())
+        .environment(ModelData())
 }

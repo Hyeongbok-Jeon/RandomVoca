@@ -1,15 +1,8 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-Storage for model data.
-*/
-
 import Foundation
 
-// ObservableObject로 선언된 ModelData 클래스
-class ModelData: ObservableObject {
-    @Published var words: [Word] = [] {
+@Observable
+class ModelData {
+    var words: [Word] = [] {
         didSet { saveWords() }
     }
 
