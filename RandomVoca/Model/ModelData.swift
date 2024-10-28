@@ -1,11 +1,12 @@
 import Foundation
 
-@Observable
-class ModelData {
-    var words: [Word] = [] {
-        didSet { saveWords() }
+class ModelData: ObservableObject {
+    @Published var words: [Word] = [] {
+        didSet {
+            saveWords() // words가 변경될 때마다 자동으로 저장
+        }
     }
-
+    
     init() {
         loadWords()
     }

@@ -49,7 +49,9 @@ struct VocaList: View {
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                 
-                                Text(word.isKnowWord ? "Y" : "N")
+                                Circle()
+                                    .fill(word.isKnowWord ? Color.green : Color.red)
+                                    .frame(width: 10, height: 10)
                             }
                         }
                         .onDelete(perform: deleteWord)
@@ -59,7 +61,7 @@ struct VocaList: View {
                 .onTapGesture {
                     focusedField = nil
                 }
-                .navigationBarTitle("단어 목록")
+                .navigationBarTitle("단어 목록", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -139,7 +141,7 @@ struct VocaList: View {
         }
     }
     
-    // 단어 삭제 함수
+    // 단어 삭제 함수`
     func deleteWord(at offsets: IndexSet) {
         modelData.words.remove(atOffsets: offsets) // 기본 리스트에서 삭제
     }
@@ -147,5 +149,5 @@ struct VocaList: View {
 
 #Preview {
     VocaList()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }
