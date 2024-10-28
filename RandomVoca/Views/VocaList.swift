@@ -64,9 +64,9 @@ struct VocaList: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
                             modelData.words = [
-                                Word(name: "betray", meaning: "배신하다", isKnowWord: false)
-                                , Word(name: "apply", meaning: "지원하다", isKnowWord: false)
-                                , Word(name: "focus", meaning: "집중하다", isKnowWord: false)
+                                Word(name: "betray", meaning: "배신하다", isKnowWord: false, knowTime: 0)
+                                , Word(name: "apply", meaning: "지원하다", isKnowWord: false, knowTime: 0)
+                                , Word(name: "focus", meaning: "집중하다", isKnowWord: false, knowTime: 0)
                             ]
                         } label: {
                             Text("샘플")
@@ -133,7 +133,7 @@ struct VocaList: View {
             focusedField = .word(lastWord.id)
         } else {
             // 새 단어 추가
-            let newWord = Word(name: "", meaning: "", isKnowWord: false)
+            let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
             modelData.words.append(newWord)
             focusedField = .word(newWord.id)
         }

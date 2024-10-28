@@ -13,11 +13,13 @@ class Word: Codable, Identifiable, Equatable {
     var name: String
     var meaning: String
     var isKnowWord: Bool
+    var knowTime: Double
     
-    init(name: String, meaning: String, isKnowWord: Bool) {
+    init(name: String, meaning: String, isKnowWord: Bool, knowTime: Double) {
         self.name = name
         self.meaning = meaning
         self.isKnowWord = isKnowWord
+        self.knowTime = knowTime
     }
     
     // Equatable 채택을 위한 메서드
