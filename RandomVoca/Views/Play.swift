@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Play: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     
     @State private var currentIndex: Int = 0
     @State private var displayWordName: String = ""
@@ -56,7 +56,6 @@ struct Play: View {
             if isReallyKnowWord {
                 Button("사실 모르는 단어") {
                     showRandomWord()
-                    isReallyKnowWord = false
                 }
                 
                 Spacer()
@@ -68,7 +67,6 @@ struct Play: View {
                     }
                     
                     showRandomWord()
-                    isReallyKnowWord = false
                 }
             } else {
                 Button("모르는 단어") {
@@ -104,8 +102,6 @@ struct Play: View {
     }
 
     private func showRandomWord() {
-        showMeaning = false
-        
         let availableWords = modelData.words.filter { !shownWords.contains($0) } // 아직 보여주지 않은 단어들만 선택
 
         guard !availableWords.isEmpty else {
@@ -120,6 +116,8 @@ struct Play: View {
         currentIndex = modelData.words.firstIndex(of: randomWord) ?? 0
         shownWords.append(randomWord) // 선택된 단어를 기록
         startTimer()
+        isReallyKnowWord = false
+        showMeaning = false
      }
 }
 

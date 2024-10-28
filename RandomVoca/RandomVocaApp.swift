@@ -14,7 +14,7 @@ struct RandomVocaApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(modelData)
+                .environmentObject(modelData)
         }
     }
 }
