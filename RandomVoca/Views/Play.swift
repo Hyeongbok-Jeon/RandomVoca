@@ -23,7 +23,7 @@ struct Play: View {
         Spacer()
         
         Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
-            .font(.headline)
+            .font(.largeTitle)
             .onAppear {
                 startTimer()
             }
@@ -64,6 +64,8 @@ struct Play: View {
                     if currentIndex < modelData.words.count {
                         // 현재 단어의 isKnowWord 값을 true로 설정
                         modelData.words[currentIndex].isKnowWord = true
+                        modelData.words[currentIndex].knowTime = Double(timerMilliseconds) / 100
+                        modelData.words = modelData.words
                     }
                     
                     showRandomWord()

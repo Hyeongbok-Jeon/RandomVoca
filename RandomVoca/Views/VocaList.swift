@@ -10,7 +10,6 @@ struct VocaList: View {
     
     @State private var wordName: String = ""      // 입력한 단어 이름
     @State private var wordMeaning: String = ""
-//    @State private var words: [Word] = []         // 저장된 단어 리스트
     @State private var showPopup = false          // 팝업창 제어 상태 변수
     @State private var showAlert = false
     
@@ -47,9 +46,13 @@ struct VocaList: View {
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                 
+                                Text(String(word.knowTime))
+                                    .frame(maxWidth: .infinity)
+                                
                                 Circle()
                                     .fill(word.isKnowWord ? Color.green : Color.red)
                                     .frame(width: 10, height: 10)
+//                                    .frame(maxWidth: .infinity)
                             }
                         }
                         .onDelete(perform: deleteWord)
