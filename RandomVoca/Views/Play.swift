@@ -124,6 +124,10 @@ struct Play: View {
 }
 
 #Preview {
+    var modelData = ModelData()
+    if modelData.words.isEmpty {
+        modelData.words = modelData.getSampleWords()
+    }
     Play()
-        .environmentObject(ModelData())
+        .environmentObject(modelData)
 }

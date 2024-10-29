@@ -27,4 +27,12 @@ class ModelData: ObservableObject {
             words = decodedWords.sorted { $0.name < $1.name }
         }
     }
+    
+    func getSampleWords() -> [Word] {
+        return [
+            Word(name: "betray", meaning: "배신하다", isKnowWord: false, knowTime: 0)
+            , Word(name: "apply", meaning: "지원하다", isKnowWord: false, knowTime: 0)
+            , Word(name: "focus", meaning: "집중하다", isKnowWord: false, knowTime: 0)
+        ]
+    }
 }

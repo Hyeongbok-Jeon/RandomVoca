@@ -70,15 +70,12 @@ struct VocaList: View {
                 .onTapGesture {
                     focusedField = nil
                 }
-                .navigationBarTitle("랜덤 단어장")
+                .navigationBarTitle("단어 목록")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
-                            modelData.words = [
-                                Word(name: "betray", meaning: "배신하다", isKnowWord: false, knowTime: 0)
-                                , Word(name: "apply", meaning: "지원하다", isKnowWord: false, knowTime: 0)
-                                , Word(name: "focus", meaning: "집중하다", isKnowWord: false, knowTime: 0)
-                            ]
+                            modelData.words = modelData.getSampleWords()
+                            modelData.loadWords()
                         } label: {
                             Text("샘플")
                         }
