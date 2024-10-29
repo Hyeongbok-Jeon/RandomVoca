@@ -32,4 +32,4 @@ struct MyApp: App {
     }
 }
 
-@StateObject 로 변경
+@StateObject 로 변경하고 나머지 뷰에서 제거
