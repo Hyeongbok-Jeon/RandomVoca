@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct VocaList: View {
-    @EnvironmentObject var modelData: ModelData
-    
     enum FocusField: Hashable {
         case word(UUID)
         case meaning(UUID)
     }
+
+    @EnvironmentObject var modelData: ModelData
     
     @State private var wordName: String = ""      // 입력한 단어 이름
     @State private var wordMeaning: String = ""
@@ -39,14 +39,22 @@ struct VocaList: View {
                                             removeEmptyWord()
                                         }
                                     }
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color.black, lineWidth: 1)
+                                    )
 
                                 TextField("뜻", text: $word.meaning)
                                     .textFieldStyle(.roundedBorder)
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color.black, lineWidth: 1)
+                                    )
                                 
-                                Text(String(word.knowTime))
+                                Text("\(String(word.knowTime)) 초")
                                     .frame(maxWidth: .infinity)
                                 
                                 Circle()
@@ -62,7 +70,7 @@ struct VocaList: View {
                 .onTapGesture {
                     focusedField = nil
                 }
-                .navigationBarTitle("단어 목록", displayMode: .inline)
+                .navigationBarTitle("랜덤 단어장")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -87,7 +95,7 @@ struct VocaList: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        if !modelData.words.isEmpty && !modelData.words.contains(where: { $0.name.isEmpty }) {
+                        if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
                             NavigationLink(destination: Play()) {
                                 Text("Play")
                             }
