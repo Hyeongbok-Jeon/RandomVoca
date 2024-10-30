@@ -128,6 +128,6 @@ struct Play: View {
     if modelData.words.isEmpty {
         modelData.words = modelData.getSampleWords()
     }
-    Play()
+    return Play()
         .environmentObject(modelData)
 }
