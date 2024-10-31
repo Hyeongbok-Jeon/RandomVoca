@@ -64,17 +64,12 @@ struct Play: View {
                         Spacer()
                         
                         Button("아는 단어가 맞음") {
-                            if currentIndex < modelData.words.count {
-                                // 현재 단어의 isKnowWord 값을 true로 설정
-                                modelData.words[currentIndex].isKnowWord = true
-                                modelData.words[currentIndex].knowTime = Double(timerMilliseconds) / 100
-                                modelData.words = modelData.words
-                            }
-                            
+                            setIsKnowWord(isKnowWord: true)
                             showRandomWord()
                         }
                     } else {
                         Button("모르는 단어") {
+                            setIsKnowWord(isKnowWord: false)
                             showRandomWord()
                         }
                         
@@ -97,13 +92,16 @@ struct Play: View {
                 Color.black.opacity(0.4) // 어두운 반투명 배경
                     .ignoresSafeArea()
                 
+                let knownWordCount = modelData.words.filter { $0.isKnowWord }.count // 아는 단어 개수 계산
+                let totalWordCount = modelData.words.count // 총 단어 개수 계산
+                
                 VStack(spacing: 20) {
                     Text("단어를 모두 보셨습니다!")
                         .font(.title)
                         .padding(.top, 20)
                     
-                    Text("다시 시작합니다.")
-                        .padding(.horizontal)
+                    Text("아는 단어: \(knownWordCount) / \(totalWordCount)")
+                        .font(.headline)
                     
                     Button("확인") {
                         showPopup = false // 팝업 닫기
@@ -143,7 +141,6 @@ struct Play: View {
         guard !availableWords.isEmpty else {
             timer?.invalidate()
             shownWords.removeAll() // 모든 단어를 보여줬다면, 기록 초기화
-//            showRandomWord() // 다시 처음부터 시작
             showPopup = true
             return
         }
@@ -157,6 +154,12 @@ struct Play: View {
         isReallyKnowWord = false
         showMeaning = false
      }
+    
+    private func setIsKnowWord(isKnowWord: Bool) {
+        modelData.words[currentIndex].isKnowWord = isKnowWord
+        modelData.words[currentIndex].knowTime = isKnowWord ? Double(timerMilliseconds) / 100 : 0
+        modelData.saveWords() // 속성 변경 할때는 didset이 호출되지 않으므로 따로 호출
+    }
 }
 
 #Preview {
