@@ -16,100 +16,98 @@ struct VocaList: View {
     @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
     var body: some View {
-        ZStack {
-            NavigationStack {
-                List {
-                    if modelData.words.isEmpty {
+        NavigationStack {
+            List {
+                if modelData.words.isEmpty {
+                    HStack {
+                        Spacer()
+                        Text("단어를 추가해주세요.")
+                        Spacer()
+                    }
+                } else {
+                    ForEach($modelData.words) { $word in
                         HStack {
-                            Spacer()
-                            Text("단어를 추가해주세요.")
-                            Spacer()
-                        }
-                    } else {
-                        ForEach($modelData.words) { $word in
-                            HStack {
-                                TextField("단어", text: $word.name)
-                                    .textFieldStyle(.roundedBorder)
-                                    .frame(maxWidth: .infinity)
-                                    .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
-                                    .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-                                    .onChange(of: focusedField) { oldFocus, newFocus in
-                                        // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
-                                        if newFocus != .word(word.id) && word.name.isEmpty {
-                                            removeEmptyWord()
-                                        }
+                            TextField("단어", text: $word.name)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                .focused($focusedField, equals: .word(word.id))  // 포커스 설정
+                                .onChange(of: focusedField) { oldFocus, newFocus in
+                                    // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
+                                    if newFocus != .word(word.id) && word.name.isEmpty {
+                                        removeEmptyWord()
                                     }
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1)
-                                    )
-
-                                TextField("뜻", text: $word.meaning)
-                                    .textFieldStyle(.roundedBorder)
-                                    .frame(maxWidth: .infinity)
-                                    .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
-                                    .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1)
-                                    )
-                                
-                                Text("\(String(word.knowTime)) 초")
-                                    .frame(maxWidth: .infinity)
-                                
-                                Circle()
-                                    .fill(word.isKnowWord ? Color.green : Color.red)
-                                    .frame(width: 10, height: 10)
-//                                    .frame(maxWidth: .infinity)
-                            }
-                        }
-                        .onDelete(perform: deleteWord)
-                    }
-                }
-                .onAppear(perform: modelData.loadWords)
-                .onTapGesture {
-                    focusedField = nil
-                }
-                .navigationBarTitle("단어 목록")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            modelData.words = modelData.getSampleWords()
-                            modelData.loadWords()
-                        } label: {
-                            Text("샘플")
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            focusedField = nil
-                            
-                            DispatchQueue.main.async {
-                                modelData.words.removeAll()
-                            }
-                        } label: {
-                            Text("모두 삭제")
-                        }
-                    }
-                    if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                NavigationLink(destination: Play()) {
-                                    Image(systemName: "play.fill")
                                 }
-                                .simultaneousGesture(TapGesture().onEnded {
-                                    focusedField = nil  // Play 버튼 누를 때 포커스 해제
-                                })
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
+
+                            TextField("뜻", text: $word.meaning)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
+                            
+                            Text("\(String(word.knowTime)) 초")
+                                .frame(maxWidth: .infinity)
+                            
+                            Circle()
+                                .fill(word.isKnowWord ? Color.green : Color.red)
+                                .frame(width: 10, height: 10)
+//                                    .frame(maxWidth: .infinity)
                         }
                     }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: addWord) {
-                            Image(systemName: "plus")
-                        }
+                    .onDelete(perform: deleteWord)
+                }
+            }
+            .onAppear(perform: modelData.loadWords)
+            .onTapGesture {
+                focusedField = nil
+            }
+            .navigationBarTitle("단어 목록")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        modelData.words = modelData.getSampleWords()
+                        modelData.loadWords()
+                    } label: {
+                        Text("샘플")
                     }
                 }
-                
-                Spacer()
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        focusedField = nil
+                        
+                        DispatchQueue.main.async {
+                            modelData.words.removeAll()
+                        }
+                    } label: {
+                        Text("모두 삭제")
+                    }
+                }
+                if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            NavigationLink(destination: Play()) {
+                                Image(systemName: "play.fill")
+                            }
+                            .simultaneousGesture(TapGesture().onEnded {
+                                focusedField = nil  // Play 버튼 누를 때 포커스 해제
+                            })
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: addWord) {
+                        Image(systemName: "plus")
+                    }
+                }
             }
+            
+            Spacer()
         }
     }
     
