@@ -44,7 +44,7 @@ struct Play: View {
                     
                     VStack {
                         Text(displayWordName)
-                            .font(.system(size: 100)) // 원하는 크기로 설정
+                            .font(.system(size: 80)) // 원하는 크기로 설정
                     }
                     .onAppear {
                         showRandomWord()
@@ -53,8 +53,8 @@ struct Play: View {
                     Spacer()
                     
                     RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
-                        .stroke(Color.blue, lineWidth: 2) // 테두리 색과 두께 설정
-                        .frame(width: 300, height: 100)    // 사각형 크기 설정
+                        .stroke(lineWidth: 2) // 테두리 색과 두께 설정
+                        .frame(width: 250, height: 100)    // 사각형 크기 설정
                         .overlay(
                             // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
                             showMeaning ? AnyView(Text(displayWordMeaning)
