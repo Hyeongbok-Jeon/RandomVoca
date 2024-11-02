@@ -19,73 +19,85 @@ struct Play: View {
     @State private var timerMilliseconds: Int = 0 // 초 단위 타이머를 위한 상태 변수
     @State private var timer: Timer? // 타이머 객체 저장
     @State private var showPopup: Bool = false
+    @State private var countdown: Int = 3
+    @State private var showCountdown: Bool = true
     
     var body: some View {
         ZStack {
-            VStack {
-                Spacer()
-                
-                Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
-                    .font(.largeTitle)
+            if showCountdown {
+                Text("\(countdown)")
+                    .font(.system(size: 100)) // 원하는 크기로 설정
                     .onAppear {
-                        startTimer()
+                        startCountdown()
                     }
-                
-                Spacer()
-                
+            } else {
                 VStack {
-                    Text(displayWordName)
-                        .font(.largeTitle)
-                }
-                .onAppear {
-                    showRandomWord()
-                }
-                
-                Spacer()
-                
-                RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
-                    .stroke(Color.blue, lineWidth: 2) // 테두리 색과 두께 설정
-                    .frame(width: 200, height: 50)    // 사각형 크기 설정
-                    .overlay(
-                        // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
-                        showMeaning ? AnyView(Text(displayWordMeaning).foregroundColor(.black)) : AnyView(EmptyView())
-                    )
-                
-                Spacer()
-                
-                HStack {
                     Spacer()
                     
-                    if isReallyKnowWord {
-                        Button("사실 모르는 단어") {
-                            showRandomWord()
+                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
+                        .font(.largeTitle)
+                        .onAppear {
+                            startTimer()
+                        }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text(displayWordName)
+                            .font(.system(size: 100)) // 원하는 크기로 설정
+                    }
+                    .onAppear {
+                        showRandomWord()
+                    }
+                    
+                    Spacer()
+                    
+                    RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
+                        .stroke(Color.blue, lineWidth: 2) // 테두리 색과 두께 설정
+                        .frame(width: 300, height: 100)    // 사각형 크기 설정
+                        .overlay(
+                            // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
+                            showMeaning ? AnyView(Text(displayWordMeaning)
+                                .foregroundColor(.black)
+                                .font(.system(size: 30))) : AnyView(EmptyView())
+                        )
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        
+                        if isReallyKnowWord {
+                            Button("사실 모르는 단어") {
+                                showRandomWord()
+                            }
+                            
+                            Spacer()
+                            
+                            Button("아는 단어가 맞음") {
+                                setIsKnowWord(isKnowWord: true)
+                                showRandomWord()
+                            }
+                        } else {
+                            Button("모르는 단어") {
+                                setIsKnowWord(isKnowWord: false)
+                                showRandomWord()
+                            }
+                            
+                            Spacer()
+                            
+                            Button("아는 단어") {
+                                showMeaning = true
+                                isReallyKnowWord = true
+                                stopTimer()
+                            }
                         }
                         
                         Spacer()
-                        
-                        Button("아는 단어가 맞음") {
-                            setIsKnowWord(isKnowWord: true)
-                            showRandomWord()
-                        }
-                    } else {
-                        Button("모르는 단어") {
-                            setIsKnowWord(isKnowWord: false)
-                            showRandomWord()
-                        }
-                        
-                        Spacer()
-                        
-                        Button("아는 단어") {
-                            showMeaning = true
-                            isReallyKnowWord = true
-                            stopTimer()
-                        }
                     }
                     
                     Spacer()
                 }
-                
-                Spacer()
             }
             
             if showPopup {
@@ -160,6 +172,18 @@ struct Play: View {
         modelData.words[currentIndex].knowTime = isKnowWord ? Double(timerMilliseconds) / 100 : 0
         modelData.saveWords() // 속성 변경 할때는 didset이 호출되지 않으므로 따로 호출
     }
+    
+    private func startCountdown() {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if countdown > 1 {
+                countdown -= 1
+            } else {
+                timer.invalidate()
+                showCountdown = false
+            }
+        }
+    }
+
 }
 
 #Preview {

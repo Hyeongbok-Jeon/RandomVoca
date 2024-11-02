@@ -91,24 +91,14 @@ struct VocaList: View {
                             Text("모두 삭제")
                         }
                     }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
-                            NavigationLink(destination: Play()) {
-                                Text("Play")
-                            }
-                            .simultaneousGesture(TapGesture().onEnded {
-                                focusedField = nil  // Play 버튼 누를 때 포커스 해제
-                            })
-                        } else {
-                            Button("Play") {
-                                showAlert = true
-                            }
-                            .alert(isPresented: $showAlert) {
-                                Alert(
-                                    title: Text(""),
-                                    message: Text("단어를 추가해주세요.")
-                                )
-                            }
+                    if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                NavigationLink(destination: Play()) {
+                                    Image(systemName: "play.fill")
+                                }
+                                .simultaneousGesture(TapGesture().onEnded {
+                                    focusedField = nil  // Play 버튼 누를 때 포커스 해제
+                                })
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
