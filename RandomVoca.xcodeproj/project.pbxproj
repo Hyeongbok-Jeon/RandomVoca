@@ -17,6 +17,7 @@
 		135BBF6F2C917BD900F3A27D /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6E2C917BD900F3A27D /* Word.swift */; };
 		139119762CCD195C0015799D /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119752CCD195C0015799D /* UserDefaultManager.swift */; };
 		139119782CCD1EE60015799D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119772CCD1EE60015799D /* ModelData.swift */; };
+		13BE45582CD83BA3006C17B3 /* CommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BE45572CD83BA3006C17B3 /* CommonView.swift */; };
 		13D42BBE2CAFEE0C00301053 /* VocaGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42BBD2CAFEE0C00301053 /* VocaGroupList.swift */; };
 		13D42BC22CB353A200301053 /* WordGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42BC12CB353A200301053 /* WordGroup.swift */; };
 		13E08ACD2CC7AF710092D765 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = 13E08ACC2CC7AF710092D765 /* words.json */; };
@@ -34,6 +35,7 @@
 		135BBF6E2C917BD900F3A27D /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		139119752CCD195C0015799D /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		139119772CCD1EE60015799D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		13BE45572CD83BA3006C17B3 /* CommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonView.swift; sourceTree = "<group>"; };
 		13D42BBD2CAFEE0C00301053 /* VocaGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroupList.swift; sourceTree = "<group>"; };
 		13D42BC12CB353A200301053 /* WordGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordGroup.swift; sourceTree = "<group>"; };
 		13E08ACC2CC7AF710092D765 /* words.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = words.json; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				135BBF662C8EF87200F3A27D /* AddVoca.swift */,
 				135BBF682C8EF9F600F3A27D /* VocaList.swift */,
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
+				13BE45572CD83BA3006C17B3 /* CommonView.swift */,
 				13D42BBD2CAFEE0C00301053 /* VocaGroupList.swift */,
 			);
 			path = Views;
@@ -190,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				135BBF572C8E673800F3A27D /* ContentView.swift in Sources */,
+				13BE45582CD83BA3006C17B3 /* CommonView.swift in Sources */,
 				135BBF6F2C917BD900F3A27D /* Word.swift in Sources */,
 				135BBF672C8EF87200F3A27D /* AddVoca.swift in Sources */,
 				139119762CCD195C0015799D /* UserDefaultManager.swift in Sources */,

@@ -144,4 +144,5 @@
     #Preview {
         VocaList()
             .environmentObject(ModelData())
+            .preferredColorScheme(.dark)
     }

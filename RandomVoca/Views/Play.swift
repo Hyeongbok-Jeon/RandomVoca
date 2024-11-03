@@ -20,7 +20,7 @@ struct Play: View {
     @State private var timer: Timer? // 타이머 객체 저장
     @State private var showPopup: Bool = false
     @State private var countdown: Int = 3
-    @State private var showCountdown: Bool = true
+    @State private var showCountdown: Bool = false
     
     var body: some View {
         ZStack {
@@ -58,46 +58,41 @@ struct Play: View {
                         .overlay(
                             // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
                             showMeaning ? AnyView(Text(displayWordMeaning)
-                                .foregroundColor(.black)
+                                .foregroundColor(.primary)
                                 .font(.system(size: 30))) : AnyView(EmptyView())
                         )
                     
                     Spacer()
                     
-                    HStack {
-                        Spacer()
-                        
-                        if isReallyKnowWord {
-                            Button("사실 모르는 단어") {
-                                showRandomWord()
-                            }
-                            
-                            Spacer()
-                            
-                            Button("아는 단어가 맞음") {
-                                setIsKnowWord(isKnowWord: true)
-                                showRandomWord()
-                            }
-                        } else {
-                            Button {
-                                setIsKnowWord(isKnowWord: false)
-                                showRandomWord()
-                            } label: {
-                                Text("모르는 단어")
-                                    .foregroundColor(Color.primary)
-                            }
-                            
-                            Spacer()
-                            
-                            Button("아는 단어") {
-                                showMeaning = true
-                                isReallyKnowWord = true
-                                stopTimer()
-                            }
-                        }
+//                    Spacer()
+                    
+                    if !isReallyKnowWord {
+                        CommonButton(action: {
+                            showMeaning = true
+                            isReallyKnowWord = true
+                            stopTimer()
+                        }, buttonText: "아는 단어")
                         
                         Spacer()
+                        
+                        CommonButton(action: {
+                            setIsKnowWord(isKnowWord: false)
+                            showRandomWord()
+                        }, buttonText: "모르는 단어")
+                    } else {
+                        CommonButton(action: {
+                            setIsKnowWord(isKnowWord: true)
+                            showRandomWord()
+                        }, buttonText: "아는 단어가 맞음")
+                        
+                        Spacer()
+                        
+                        CommonButton(action: {
+                            showRandomWord()
+                        }, buttonText: "사실 모르는 단어")
                     }
+                    
+//                    Spacer()
                     
                     Spacer()
                 }
@@ -194,4 +189,20 @@ struct Play: View {
     }
     return Play()
         .environmentObject(modelData)
+        .preferredColorScheme(.dark)
+}
+
+struct CommonButton: View {
+    let action: () -> Void
+    let buttonText: String
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Text(buttonText)
+                .font(.title)
+                .foregroundColor(Color.primary)
+        }
+    }
 }
