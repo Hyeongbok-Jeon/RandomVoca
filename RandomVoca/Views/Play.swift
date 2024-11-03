@@ -79,9 +79,12 @@ struct Play: View {
                                 showRandomWord()
                             }
                         } else {
-                            Button("모르는 단어") {
+                            Button {
                                 setIsKnowWord(isKnowWord: false)
                                 showRandomWord()
+                            } label: {
+                                Text("모르는 단어")
+                                    .foregroundColor(Color.primary)
                             }
                             
                             Spacer()
@@ -111,19 +114,17 @@ struct Play: View {
                     Text("단어를 모두 보셨습니다!")
                         .font(.title)
                         .padding(.top, 20)
+                        .padding(.top, 20)
                     
                     Text("아는 단어: \(knownWordCount) / \(totalWordCount)")
                         .font(.headline)
                     
-                    Button("확인") {
+                    Button {
                         showPopup = false // 팝업 닫기
                         showRandomWord()   // 새로운 단어 보여주기
+                    } label: {
+                        Text("확인")
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
                 }
                 .frame(width: 300, height: 400)
                 .background(Color.white)
