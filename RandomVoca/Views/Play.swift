@@ -21,6 +21,7 @@ struct Play: View {
     @State private var showPopup: Bool = false
     @State private var countdown: Int = 3
     @State private var showCountdown: Bool = false
+    @State private var showStatistics: Bool = false
     
     var body: some View {
         ZStack {
@@ -30,6 +31,13 @@ struct Play: View {
                     .onAppear {
                         startCountdown()
                     }
+            } else if showStatistics {
+                Button {
+                    showStatistics = false // 팝업 닫기
+                    showCountdown = true
+                } label: {
+                    Text("재시작")
+                }
             } else {
                 VStack {
                     Spacer()
@@ -99,7 +107,7 @@ struct Play: View {
             }
             
             if showPopup {
-                Color.black.opacity(0.4) // 어두운 반투명 배경
+                Color.primary.opacity(0.4) // 어두운 반투명 배경
                     .ignoresSafeArea()
                 
                 let knownWordCount = modelData.words.filter { $0.isKnowWord }.count // 아는 단어 개수 계산
@@ -122,7 +130,7 @@ struct Play: View {
                     }
                 }
                 .frame(width: 300, height: 400)
-                .background(Color.white)
+                .background(Color.primary)
                 .cornerRadius(20)
                 .shadow(radius: 10)
                 .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray.opacity(0.3), lineWidth: 1))
@@ -149,7 +157,7 @@ struct Play: View {
         guard !availableWords.isEmpty else {
             timer?.invalidate()
             shownWords.removeAll() // 모든 단어를 보여줬다면, 기록 초기화
-            showPopup = true
+            showStatistics = true
             return
         }
 
