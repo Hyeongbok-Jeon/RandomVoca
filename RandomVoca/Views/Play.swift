@@ -184,6 +184,7 @@ struct Play: View {
             } else {
                 timer.invalidate()
                 showCountdown = false
+                countdown = 3
             }
         }
     }
