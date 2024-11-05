@@ -10,6 +10,8 @@ import SwiftUI
 struct Play: View {
     @EnvironmentObject var modelData: ModelData
     
+    @Environment(\.presentationMode) var presentationMode // presentationMode 추가
+    
     @State private var currentIndex: Int = 0
     @State private var displayWordName: String = ""
     @State private var displayWordMeaning: String = ""
@@ -21,7 +23,6 @@ struct Play: View {
     @State private var showPopup: Bool = false
     @State private var countdown: Int = 3
     @State private var showCountdown: Bool = false
-    @State private var showStatistics: Bool = false
     
     var body: some View {
         ZStack {
@@ -31,13 +32,6 @@ struct Play: View {
                     .onAppear {
                         startCountdown()
                     }
-            } else if showStatistics {
-                Button {
-                    showStatistics = false // 팝업 닫기
-                    showCountdown = true
-                } label: {
-                    Text("재시작")
-                }
             } else {
                 VStack {
                     Spacer()
@@ -155,11 +149,13 @@ struct Play: View {
         let availableWords = modelData.words.filter { !shownWords.contains($0) } // 아직 보여주지 않은 단어들만 선택
 
         guard !availableWords.isEmpty else {
-            timer?.invalidate()
-            shownWords.removeAll() // 모든 단어를 보여줬다면, 기록 초기화
-            showStatistics = true
+            presentationMode.wrappedValue.dismiss()
             return
         }
+        
+//        if availableWords.isEmpty {
+//            presentationMode.wrappedValue.dismiss()
+//        }
 
         let randomWord = availableWords.randomElement()! // 아직 보여주지 않은 단어 중에서 랜덤 선택
         displayWordName = randomWord.name
