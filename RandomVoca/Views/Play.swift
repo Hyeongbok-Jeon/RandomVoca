@@ -17,7 +17,8 @@ struct Play: View {
     @State private var displayWordMeaning: String = ""
     @State private var showMeaning: Bool = false  // 뜻을 표시할지 여부를 관리하는 상태
     @State private var shownWords: [Word] = [] // 이미 보여준 단어를 추적하는 배열
-    @State private var isReallyKnowWord: Bool = false
+    @State private var showKnowWordView: Bool = false
+    @State private var showDontKnowWordView: Bool = false
     @State private var timerMilliseconds: Int = 0 // 초 단위 타이머를 위한 상태 변수
     @State private var timer: Timer? // 타이머 객체 저장
     @State private var showPopup: Bool = false
@@ -47,10 +48,13 @@ struct Play: View {
                     VStack {
                         Text(displayWordName)
                             .font(.system(size: 80)) // 원하는 크기로 설정
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                     }
                     .onAppear {
                         showRandomWord()
                     }
+                    .padding(.horizontal)
                     
                     Spacer()
                     
@@ -68,20 +72,7 @@ struct Play: View {
                     
 //                    Spacer()
                     
-                    if !isReallyKnowWord {
-                        CommonButton(action: {
-                            showMeaning = true
-                            isReallyKnowWord = true
-                            stopTimer()
-                        }, buttonText: "아는 단어")
-                        
-                        Spacer()
-                        
-                        CommonButton(action: {
-                            setIsKnowWord(isKnowWord: false)
-                            showRandomWord()
-                        }, buttonText: "모르는 단어")
-                    } else {
+                    if showKnowWordView {
                         CommonButton(action: {
                             setIsKnowWord(isKnowWord: true)
                             showRandomWord()
@@ -90,8 +81,29 @@ struct Play: View {
                         Spacer()
                         
                         CommonButton(action: {
+                            setIsKnowWord(isKnowWord: false)
                             showRandomWord()
                         }, buttonText: "사실 모르는 단어")
+                    } else if showDontKnowWordView {
+                        CommonButton(action: {
+                            showRandomWord()
+                            showDontKnowWordView = false
+                        }, buttonText: "다음 단어")
+                    } else {
+                        CommonButton(action: {
+                            showMeaning = true
+                            showKnowWordView = true
+                            stopTimer()
+                        }, buttonText: "아는 단어")
+                        
+                        Spacer()
+                        
+                        CommonButton(action: {
+                            setIsKnowWord(isKnowWord: false)
+                            showDontKnowWordView = true
+                            showMeaning = true
+                            stopTimer()
+                        }, buttonText: "모르는 단어")
                     }
                     
 //                    Spacer()
@@ -152,10 +164,6 @@ struct Play: View {
             presentationMode.wrappedValue.dismiss()
             return
         }
-        
-//        if availableWords.isEmpty {
-//            presentationMode.wrappedValue.dismiss()
-//        }
 
         let randomWord = availableWords.randomElement()! // 아직 보여주지 않은 단어 중에서 랜덤 선택
         displayWordName = randomWord.name
@@ -163,7 +171,7 @@ struct Play: View {
         currentIndex = modelData.words.firstIndex(of: randomWord) ?? 0
         shownWords.append(randomWord) // 선택된 단어를 기록
         startTimer()
-        isReallyKnowWord = false
+        showKnowWordView = false
         showMeaning = false
      }
     
