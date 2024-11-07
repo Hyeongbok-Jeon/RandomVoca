@@ -37,26 +37,21 @@ struct Play: View {
                 VStack {
                     VStack {
                         Spacer()
+                        
                         Text(displayWordName)
                             .font(.system(size: 80)) // 원하는 크기로 설정
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             .padding()
-//                            .overlay(borderOverlay)
-                        
-                        Text(showMeaning ? displayWordMeaning : " ")
-                            .foregroundColor(.primary)
-                            .font(.system(size: 30))
-//                            .overlay(borderOverlay)
-                            .padding()
+                            .overlay(borderOverlay)
                     }
                     .onAppear {
                         showRandomWord()
                     }
                     .frame(height: UIScreen.main.bounds.height / 3) // 화면 높이의 절반으로 고정
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
-//                    .overlay(borderOverlay)
+//                    .padding(.horizontal)
+                    .overlay(borderOverlay)
                     
 //                    RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
 //                        .stroke(lineWidth: 2) // 테두리 색과 두께 설정
@@ -68,49 +63,67 @@ struct Play: View {
 //                        .frame(maxWidth: .infinity)
 //                        .frame(height: 100)
                     
+                    Text(showMeaning ? displayWordMeaning : " ")
+                        .foregroundColor(.primary)
+                        .font(.system(size: 30))
+                            .overlay(borderOverlay)
+                        .padding()
+                    
+                    Divider()
+                        .background(.primary)
+                        .frame(height: 1)
+                    
                     Spacer()
                     
-                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
-                        .font(.largeTitle)
-                        .onAppear {
-                            startTimer()
+//                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
+//                        .font(.largeTitle)
+//                        .onAppear {
+//                            startTimer()
+//                        }
+                    
+                    HStack {
+                        if showKnowWordButton {
+                            CommonButton(action: {
+                                setIsKnowWord(isKnowWord: false)
+                                showRandomWord()
+                            }, buttonText: "사실 모르는 단어")
+                        } else if showDontKnowWordButton {
+                            CommonButton(action: {
+                                showRandomWord()
+                                showDontKnowWordButton = false
+                            }, buttonText: "다음 단어")
+                        } else {
+                            CommonButton(action: {
+                                setIsKnowWord(isKnowWord: false)
+                                showDontKnowWordButton = true
+                                showMeaning = true
+                                stopTimer()
+                            }, buttonText: "모르는 단어")
                         }
-                    
-                    Spacer()
-                    
-                    if showKnowWordButton {
-                        CommonButton(action: {
-                            setIsKnowWord(isKnowWord: true)
-                            showRandomWord()
-                        }, buttonText: "아는 단어가 맞음")
                         
-                        Spacer()
+                        Divider()
+                            .background(.primary)
+                            .frame(width: 30)
                         
-                        CommonButton(action: {
-                            setIsKnowWord(isKnowWord: false)
-                            showRandomWord()
-                        }, buttonText: "사실 모르는 단어")
-                    } else if showDontKnowWordButton {
-                        CommonButton(action: {
-                            showRandomWord()
-                            showDontKnowWordButton = false
-                        }, buttonText: "다음 단어")
-                    } else {
-                        CommonButton(action: {
-                            showMeaning = true
-                            showKnowWordButton = true
-                            stopTimer()
-                        }, buttonText: "아는 단어")
-                        
-                        Spacer()
-                        
-                        CommonButton(action: {
-                            setIsKnowWord(isKnowWord: false)
-                            showDontKnowWordButton = true
-                            showMeaning = true
-                            stopTimer()
-                        }, buttonText: "모르는 단어")
+                        if showKnowWordButton {
+                            CommonButton(action: {
+                                setIsKnowWord(isKnowWord: true)
+                                showRandomWord()
+                            }, buttonText: "아는 단어가 맞음")
+                        } else if showDontKnowWordButton {
+                            CommonButton(action: {
+                                showRandomWord()
+                                showDontKnowWordButton = false
+                            }, buttonText: "다음 단어")
+                        } else {
+                            CommonButton(action: {
+                                showMeaning = true
+                                showKnowWordButton = true
+                                stopTimer()
+                            }, buttonText: "아는 단어")
+                        }
                     }
+                    
                     
 //                    Spacer()
                     
@@ -228,4 +241,4 @@ struct CommonButton: View {
 
 // 테두리 뷰를 따로 변수로 선언
 let borderOverlay = Rectangle()
-    .stroke(Color.white, lineWidth: 2) // 흰색 테두리 설정
+    .stroke(Color.black, lineWidth: 2) // 흰색 테두리 설정
