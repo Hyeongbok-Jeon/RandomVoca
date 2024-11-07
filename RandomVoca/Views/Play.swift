@@ -17,8 +17,8 @@ struct Play: View {
     @State private var displayWordMeaning: String = ""
     @State private var showMeaning: Bool = false  // 뜻을 표시할지 여부를 관리하는 상태
     @State private var shownWords: [Word] = [] // 이미 보여준 단어를 추적하는 배열
-    @State private var showKnowWordView: Bool = false
-    @State private var showDontKnowWordView: Bool = false
+    @State private var showKnowWordButton: Bool = false
+    @State private var showDontKnowWordButton: Bool = false
     @State private var timerMilliseconds: Int = 0 // 초 단위 타이머를 위한 상태 변수
     @State private var timer: Timer? // 타이머 객체 저장
     @State private var showPopup: Bool = false
@@ -35,6 +35,39 @@ struct Play: View {
                     }
             } else {
                 VStack {
+                    VStack {
+                        Spacer()
+                        Text(displayWordName)
+                            .font(.system(size: 80)) // 원하는 크기로 설정
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                            .padding()
+//                            .overlay(borderOverlay)
+                        
+                        Text(showMeaning ? displayWordMeaning : " ")
+                            .foregroundColor(.primary)
+                            .font(.system(size: 30))
+//                            .overlay(borderOverlay)
+                            .padding()
+                    }
+                    .onAppear {
+                        showRandomWord()
+                    }
+                    .frame(height: UIScreen.main.bounds.height / 3) // 화면 높이의 절반으로 고정
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+//                    .overlay(borderOverlay)
+                    
+//                    RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
+//                        .stroke(lineWidth: 2) // 테두리 색과 두께 설정
+////                        .frame(width: 250, height: 100)    // 사각형 크기 설정
+//                        .overlay(
+//                            // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
+//                            showMeaning ? AnyView() : AnyView(EmptyView())
+//                        )
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: 100)
+                    
                     Spacer()
                     
                     Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
@@ -45,34 +78,7 @@ struct Play: View {
                     
                     Spacer()
                     
-                    VStack {
-                        Text(displayWordName)
-                            .font(.system(size: 80)) // 원하는 크기로 설정
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                    }
-                    .onAppear {
-                        showRandomWord()
-                    }
-                    .padding(.horizontal)
-                    
-                    Spacer()
-                    
-                    RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
-                        .stroke(lineWidth: 2) // 테두리 색과 두께 설정
-                        .frame(width: 250, height: 100)    // 사각형 크기 설정
-                        .overlay(
-                            // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
-                            showMeaning ? AnyView(Text(displayWordMeaning)
-                                .foregroundColor(.primary)
-                                .font(.system(size: 30))) : AnyView(EmptyView())
-                        )
-                    
-                    Spacer()
-                    
-//                    Spacer()
-                    
-                    if showKnowWordView {
+                    if showKnowWordButton {
                         CommonButton(action: {
                             setIsKnowWord(isKnowWord: true)
                             showRandomWord()
@@ -84,15 +90,15 @@ struct Play: View {
                             setIsKnowWord(isKnowWord: false)
                             showRandomWord()
                         }, buttonText: "사실 모르는 단어")
-                    } else if showDontKnowWordView {
+                    } else if showDontKnowWordButton {
                         CommonButton(action: {
                             showRandomWord()
-                            showDontKnowWordView = false
+                            showDontKnowWordButton = false
                         }, buttonText: "다음 단어")
                     } else {
                         CommonButton(action: {
                             showMeaning = true
-                            showKnowWordView = true
+                            showKnowWordButton = true
                             stopTimer()
                         }, buttonText: "아는 단어")
                         
@@ -100,7 +106,7 @@ struct Play: View {
                         
                         CommonButton(action: {
                             setIsKnowWord(isKnowWord: false)
-                            showDontKnowWordView = true
+                            showDontKnowWordButton = true
                             showMeaning = true
                             stopTimer()
                         }, buttonText: "모르는 단어")
@@ -171,7 +177,7 @@ struct Play: View {
         currentIndex = modelData.words.firstIndex(of: randomWord) ?? 0
         shownWords.append(randomWord) // 선택된 단어를 기록
         startTimer()
-        showKnowWordView = false
+        showKnowWordButton = false
         showMeaning = false
      }
     
@@ -219,3 +225,7 @@ struct CommonButton: View {
         }
     }
 }
+
+// 테두리 뷰를 따로 변수로 선언
+let borderOverlay = Rectangle()
+    .stroke(Color.white, lineWidth: 2) // 흰색 테두리 설정
