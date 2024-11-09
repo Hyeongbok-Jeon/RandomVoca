@@ -63,6 +63,10 @@ struct Play: View {
 //                        .frame(maxWidth: .infinity)
 //                        .frame(height: 100)
                     
+                    Divider()
+                        .background(.primary)
+                        .frame(height: 1)
+                    
                     Text(showMeaning ? displayWordMeaning : " ")
                         .foregroundColor(.primary)
                         .font(.system(size: 30))
@@ -73,59 +77,75 @@ struct Play: View {
                         .background(.primary)
                         .frame(height: 1)
                     
-                    Spacer()
+                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
+                        .font(.largeTitle)
+                        .onAppear {
+                            startTimer()
+                        }
                     
-//                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
-//                        .font(.largeTitle)
-//                        .onAppear {
-//                            startTimer()
-//                        }
+                    Divider()
+                        .background(.primary)
+                        .frame(height: 1)
                     
-                    HStack {
-                        if showKnowWordButton {
-                            CommonButton(action: {
-                                setIsKnowWord(isKnowWord: false)
-                                showRandomWord()
-                            }, buttonText: "사실 모르는 단어")
-                        } else if showDontKnowWordButton {
+                    if showKnowWordButton {
+                        HStack {
+                            VStack {
+                                CommonButton(action: {
+                                    setIsKnowWord(isKnowWord: false)
+                                    showRandomWord()
+                                }, buttonText: "사실 모르는 단어")
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            Divider()
+                                .background(.primary)
+                                .frame(width: 30)
+                            
+                            VStack {
+                                CommonButton(action: {
+                                    setIsKnowWord(isKnowWord: true)
+                                    showRandomWord()
+                                }, buttonText: "아는 단어가 맞음")
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+
+                    } else if showDontKnowWordButton {
+                        VStack {
+                            Spacer()
                             CommonButton(action: {
                                 showRandomWord()
                                 showDontKnowWordButton = false
                             }, buttonText: "다음 단어")
-                        } else {
-                            CommonButton(action: {
-                                setIsKnowWord(isKnowWord: false)
-                                showDontKnowWordButton = true
-                                showMeaning = true
-                                stopTimer()
-                            }, buttonText: "모르는 단어")
+                            Spacer()
                         }
-                        
-                        Divider()
-                            .background(.primary)
-                            .frame(width: 30)
-                        
-                        if showKnowWordButton {
-                            CommonButton(action: {
-                                setIsKnowWord(isKnowWord: true)
-                                showRandomWord()
-                            }, buttonText: "아는 단어가 맞음")
-                        } else if showDontKnowWordButton {
-                            CommonButton(action: {
-                                showRandomWord()
-                                showDontKnowWordButton = false
-                            }, buttonText: "다음 단어")
-                        } else {
-                            CommonButton(action: {
-                                showMeaning = true
-                                showKnowWordButton = true
-                                stopTimer()
-                            }, buttonText: "아는 단어")
+                    } else {
+                        HStack {
+                            VStack {
+                                CommonButton(action: {
+                                    setIsKnowWord(isKnowWord: false)
+                                    showDontKnowWordButton = true
+                                    showMeaning = true
+                                    stopTimer()
+                                }, buttonText: "모르는 단어")
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            Divider()
+                                .background(.primary)
+                                .frame(width: 30)
+                            
+                            VStack {
+                                CommonButton(action: {
+                                    showMeaning = true
+                                    showKnowWordButton = true
+                                    stopTimer()
+                                }, buttonText: "아는 단어")
+                            }
+                            .frame(maxWidth: .infinity)
                         }
+
                     }
-                    
-                    
-//                    Spacer()
                     
                     Spacer()
                 }
