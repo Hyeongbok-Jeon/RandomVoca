@@ -73,14 +73,13 @@ struct Play: View {
                         .frame(height: 80)
                     
                     Spacer()
-
-                    VStack {
-                        Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
-                            .font(.largeTitle)
-                            .onAppear {
-                                startTimer()
-                            }
-                    }
+                    
+                    // 초시계 텍스트를 정중앙에 배치하기 위해 Spacer로 조정
+                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
+                        .font(.largeTitle)
+                        .onAppear {
+                            startTimer()
+                        }
                     
                     Spacer()
                     
@@ -241,8 +240,8 @@ struct CommonButton: View {
             Text(buttonText)
                 .font(.title2)
                 .foregroundColor(Color.primary)
-                .padding(.vertical)
-                .frame(maxWidth: .infinity)
+                .padding()
+//                .frame(maxWidth: .infinity)
                 .overlay(
                     RoundedRectangle(cornerRadius: 0) // 사각형 모양의 테두리
                         .stroke(Color.primary, lineWidth: 2) // 다크모드와 라이트모드에 대응하는 테두리 색상 및 두께 설정
