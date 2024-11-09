@@ -36,7 +36,7 @@ struct Play: View {
             } else {
                 VStack {
                     VStack {
-                        Spacer()
+//                        Spacer()
                         
                         Text(displayWordName)
                             .font(.system(size: 80)) // 원하는 크기로 설정
@@ -49,7 +49,7 @@ struct Play: View {
                         showRandomWord()
                     }
                     .frame(height: UIScreen.main.bounds.height / 3) // 화면 높이의 절반으로 고정
-                    .frame(maxWidth: .infinity)
+//                    .frame(maxWidth: .infinity)
 //                    .padding(.horizontal)
                     .overlay(borderOverlay)
                     
@@ -72,6 +72,7 @@ struct Play: View {
                         .font(.system(size: 30))
                             .overlay(borderOverlay)
                         .padding()
+                        .frame(height: 80)
                     
                     Divider()
                         .background(.primary)
