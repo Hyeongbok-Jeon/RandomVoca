@@ -36,57 +36,53 @@ struct Play: View {
             } else {
                 VStack {
                     VStack {
-//                        Spacer()
+                        Spacer()
                         
                         Text(displayWordName)
                             .font(.system(size: 80)) // 원하는 크기로 설정
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             .padding()
-                            .overlay(borderOverlay)
+//                            .overlay(borderOverlay)
                     }
                     .onAppear {
                         showRandomWord()
                     }
-                    .frame(height: UIScreen.main.bounds.height / 3) // 화면 높이의 절반으로 고정
+                    .frame(height: UIScreen.main.bounds.height / 4) // 화면 높이의 절반으로 고정
 //                    .frame(maxWidth: .infinity)
 //                    .padding(.horizontal)
-                    .overlay(borderOverlay)
+//                    .overlay(borderOverlay)
                     
 //                    RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
 //                        .stroke(lineWidth: 2) // 테두리 색과 두께 설정
-////                        .frame(width: 250, height: 100)    // 사각형 크기 설정
+//                        .frame(width: 250, height: 100)    // 사각형 크기 설정
 //                        .overlay(
 //                            // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
-//                            showMeaning ? AnyView() : AnyView(EmptyView())
+//                            showMeaning ? AnyView(
+//                                Text(showMeaning ? displayWordMeaning : " ")
+//                                .foregroundColor(.primary)
+//                                .font(.system(size: 40))
+//                                .frame(height: 80)
+//                            ) : AnyView(EmptyView())
 //                        )
-//                        .frame(maxWidth: .infinity)
 //                        .frame(height: 100)
                     
-                    Divider()
-                        .background(.primary)
-                        .frame(height: 1)
-                    
                     Text(showMeaning ? displayWordMeaning : " ")
-                        .foregroundColor(.primary)
-                        .font(.system(size: 30))
-                            .overlay(borderOverlay)
-                        .padding()
+                        .foregroundColor(.orange)
+                        .font(.system(size: 40))
                         .frame(height: 80)
                     
-                    Divider()
-                        .background(.primary)
-                        .frame(height: 1)
+                    Spacer()
+
+                    VStack {
+                        Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
+                            .font(.largeTitle)
+                            .onAppear {
+                                startTimer()
+                            }
+                    }
                     
-                    Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
-                        .font(.largeTitle)
-                        .onAppear {
-                            startTimer()
-                        }
-                    
-                    Divider()
-                        .background(.primary)
-                        .frame(height: 1)
+                    Spacer()
                     
                     if showKnowWordButton {
                         HStack {
@@ -97,10 +93,6 @@ struct Play: View {
                                 }, buttonText: "사실 모르는 단어")
                             }
                             .frame(maxWidth: .infinity)
-                            
-                            Divider()
-                                .background(.primary)
-                                .frame(width: 30)
                             
                             VStack {
                                 CommonButton(action: {
@@ -113,12 +105,10 @@ struct Play: View {
 
                     } else if showDontKnowWordButton {
                         VStack {
-                            Spacer()
                             CommonButton(action: {
                                 showRandomWord()
                                 showDontKnowWordButton = false
                             }, buttonText: "다음 단어")
-                            Spacer()
                         }
                     } else {
                         HStack {
@@ -132,10 +122,6 @@ struct Play: View {
                             }
                             .frame(maxWidth: .infinity)
                             
-                            Divider()
-                                .background(.primary)
-                                .frame(width: 30)
-                            
                             VStack {
                                 CommonButton(action: {
                                     showMeaning = true
@@ -145,7 +131,6 @@ struct Play: View {
                             }
                             .frame(maxWidth: .infinity)
                         }
-
                     }
                     
                     Spacer()
@@ -254,12 +239,14 @@ struct CommonButton: View {
             action()
         } label: {
             Text(buttonText)
-                .font(.title)
+                .font(.title2)
                 .foregroundColor(Color.primary)
+                .padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 0) // 사각형 모양의 테두리
+                        .stroke(Color.primary, lineWidth: 2) // 다크모드와 라이트모드에 대응하는 테두리 색상 및 두께 설정
+                )
         }
     }
 }
-
-// 테두리 뷰를 따로 변수로 선언
-let borderOverlay = Rectangle()
-    .stroke(Color.black, lineWidth: 2) // 흰색 테두리 설정
