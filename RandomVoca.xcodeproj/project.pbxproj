@@ -11,16 +11,12 @@
 		135BBF572C8E673800F3A27D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF562C8E673800F3A27D /* ContentView.swift */; };
 		135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135BBF582C8E673900F3A27D /* Assets.xcassets */; };
 		135BBF5C2C8E673900F3A27D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135BBF5B2C8E673900F3A27D /* Preview Assets.xcassets */; };
-		135BBF672C8EF87200F3A27D /* AddVoca.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF662C8EF87200F3A27D /* AddVoca.swift */; };
 		135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF682C8EF9F600F3A27D /* VocaList.swift */; };
 		135BBF6D2C915A1E00F3A27D /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6C2C915A1E00F3A27D /* Play.swift */; };
 		135BBF6F2C917BD900F3A27D /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6E2C917BD900F3A27D /* Word.swift */; };
-		139119762CCD195C0015799D /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119752CCD195C0015799D /* UserDefaultManager.swift */; };
 		139119782CCD1EE60015799D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119772CCD1EE60015799D /* ModelData.swift */; };
-		13BE45582CD83BA3006C17B3 /* CommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BE45572CD83BA3006C17B3 /* CommonView.swift */; };
 		13D42BBE2CAFEE0C00301053 /* VocaGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42BBD2CAFEE0C00301053 /* VocaGroupList.swift */; };
 		13D42BC22CB353A200301053 /* WordGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42BC12CB353A200301053 /* WordGroup.swift */; };
-		13E08ACD2CC7AF710092D765 /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = 13E08ACC2CC7AF710092D765 /* words.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,16 +25,12 @@
 		135BBF562C8E673800F3A27D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		135BBF582C8E673900F3A27D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		135BBF5B2C8E673900F3A27D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		135BBF662C8EF87200F3A27D /* AddVoca.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVoca.swift; sourceTree = "<group>"; };
 		135BBF682C8EF9F600F3A27D /* VocaList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaList.swift; sourceTree = "<group>"; };
 		135BBF6C2C915A1E00F3A27D /* Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
 		135BBF6E2C917BD900F3A27D /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
-		139119752CCD195C0015799D /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		139119772CCD1EE60015799D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
-		13BE45572CD83BA3006C17B3 /* CommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonView.swift; sourceTree = "<group>"; };
 		13D42BBD2CAFEE0C00301053 /* VocaGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroupList.swift; sourceTree = "<group>"; };
 		13D42BC12CB353A200301053 /* WordGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordGroup.swift; sourceTree = "<group>"; };
-		13E08ACC2CC7AF710092D765 /* words.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = words.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				135BBF542C8E673800F3A27D /* RandomVocaApp.swift */,
-				13E08ACB2CC7AF530092D765 /* Resources */,
 				135BBF622C8E678900F3A27D /* Views */,
 				135BBF652C8EF82400F3A27D /* Model */,
 				135BBF5A2C8E673900F3A27D /* Preview Content */,
@@ -93,10 +84,8 @@
 			isa = PBXGroup;
 			children = (
 				135BBF562C8E673800F3A27D /* ContentView.swift */,
-				135BBF662C8EF87200F3A27D /* AddVoca.swift */,
 				135BBF682C8EF9F600F3A27D /* VocaList.swift */,
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
-				13BE45572CD83BA3006C17B3 /* CommonView.swift */,
 				13D42BBD2CAFEE0C00301053 /* VocaGroupList.swift */,
 			);
 			path = Views;
@@ -107,18 +96,9 @@
 			children = (
 				135BBF6E2C917BD900F3A27D /* Word.swift */,
 				13D42BC12CB353A200301053 /* WordGroup.swift */,
-				139119752CCD195C0015799D /* UserDefaultManager.swift */,
 				139119772CCD1EE60015799D /* ModelData.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		13E08ACB2CC7AF530092D765 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				13E08ACC2CC7AF710092D765 /* words.json */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,7 +159,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13E08ACD2CC7AF710092D765 /* words.json in Resources */,
 				135BBF5C2C8E673900F3A27D /* Preview Assets.xcassets in Resources */,
 				135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */,
 			);
@@ -193,10 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				135BBF572C8E673800F3A27D /* ContentView.swift in Sources */,
-				13BE45582CD83BA3006C17B3 /* CommonView.swift in Sources */,
 				135BBF6F2C917BD900F3A27D /* Word.swift in Sources */,
-				135BBF672C8EF87200F3A27D /* AddVoca.swift in Sources */,
-				139119762CCD195C0015799D /* UserDefaultManager.swift in Sources */,
 				13D42BC22CB353A200301053 /* WordGroup.swift in Sources */,
 				13D42BBE2CAFEE0C00301053 /* VocaGroupList.swift in Sources */,
 				135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */,

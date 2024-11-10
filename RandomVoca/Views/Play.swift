@@ -21,7 +21,6 @@ struct Play: View {
     @State private var showDontKnowWordButton: Bool = false
     @State private var timerMilliseconds: Int = 0 // 초 단위 타이머를 위한 상태 변수
     @State private var timer: Timer? // 타이머 객체 저장
-    @State private var showPopup: Bool = false
     @State private var countdown: Int = 3
     @State private var showCountdown: Bool = false
     
@@ -43,29 +42,11 @@ struct Play: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             .padding()
-//                            .overlay(borderOverlay)
                     }
                     .onAppear {
                         showRandomWord()
                     }
                     .frame(height: UIScreen.main.bounds.height / 4) // 화면 높이의 절반으로 고정
-//                    .frame(maxWidth: .infinity)
-//                    .padding(.horizontal)
-//                    .overlay(borderOverlay)
-                    
-//                    RoundedRectangle(cornerRadius: 10)   // 둥근 모서리
-//                        .stroke(lineWidth: 2) // 테두리 색과 두께 설정
-//                        .frame(width: 250, height: 100)    // 사각형 크기 설정
-//                        .overlay(
-//                            // 뜻을 표시할지 여부에 따라 텍스트 또는 빈 공간을 표시
-//                            showMeaning ? AnyView(
-//                                Text(showMeaning ? displayWordMeaning : " ")
-//                                .foregroundColor(.primary)
-//                                .font(.system(size: 40))
-//                                .frame(height: 80)
-//                            ) : AnyView(EmptyView())
-//                        )
-//                        .frame(height: 100)
                     
                     Text(showMeaning ? displayWordMeaning : " ")
                         .foregroundColor(.orange)
@@ -86,7 +67,7 @@ struct Play: View {
                     if showKnowWordButton {
                         HStack {
                             VStack {
-                                CommonButton(action: {
+                                playViewButton(action: {
                                     setIsKnowWord(isKnowWord: false)
                                     showRandomWord()
                                 }, buttonText: "사실 모르는 단어")
@@ -94,7 +75,7 @@ struct Play: View {
                             .frame(maxWidth: .infinity)
                             
                             VStack {
-                                CommonButton(action: {
+                                playViewButton(action: {
                                     setIsKnowWord(isKnowWord: true)
                                     showRandomWord()
                                 }, buttonText: "아는 단어가 맞음")
@@ -104,7 +85,7 @@ struct Play: View {
 
                     } else if showDontKnowWordButton {
                         VStack {
-                            CommonButton(action: {
+                            playViewButton(action: {
                                 showRandomWord()
                                 showDontKnowWordButton = false
                             }, buttonText: "다음 단어")
@@ -112,7 +93,7 @@ struct Play: View {
                     } else {
                         HStack {
                             VStack {
-                                CommonButton(action: {
+                                playViewButton(action: {
                                     setIsKnowWord(isKnowWord: false)
                                     showDontKnowWordButton = true
                                     showMeaning = true
@@ -122,7 +103,7 @@ struct Play: View {
                             .frame(maxWidth: .infinity)
                             
                             VStack {
-                                CommonButton(action: {
+                                playViewButton(action: {
                                     showMeaning = true
                                     showKnowWordButton = true
                                     stopTimer()
@@ -134,36 +115,6 @@ struct Play: View {
                     
                     Spacer()
                 }
-            }
-            
-            if showPopup {
-                Color.primary.opacity(0.4) // 어두운 반투명 배경
-                    .ignoresSafeArea()
-                
-                let knownWordCount = modelData.words.filter { $0.isKnowWord }.count // 아는 단어 개수 계산
-                let totalWordCount = modelData.words.count // 총 단어 개수 계산
-                
-                VStack(spacing: 20) {
-                    Text("단어를 모두 보셨습니다!")
-                        .font(.title)
-                        .padding(.top, 20)
-                        .padding(.top, 20)
-                    
-                    Text("아는 단어: \(knownWordCount) / \(totalWordCount)")
-                        .font(.headline)
-                    
-                    Button {
-                        showPopup = false // 팝업 닫기
-                        showRandomWord()   // 새로운 단어 보여주기
-                    } label: {
-                        Text("확인")
-                    }
-                }
-                .frame(width: 300, height: 400)
-                .background(Color.primary)
-                .cornerRadius(20)
-                .shadow(radius: 10)
-                .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray.opacity(0.3), lineWidth: 1))
             }
         }
     }
@@ -229,7 +180,7 @@ struct Play: View {
         .preferredColorScheme(.dark)
 }
 
-struct CommonButton: View {
+struct playViewButton: View {
     let action: () -> Void
     let buttonText: String
     
