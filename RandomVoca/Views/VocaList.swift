@@ -92,7 +92,7 @@
                     }
                     if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            NavigationLink(destination: Play()) {
+                            NavigationLink(destination: Play(playMode: "part")) {
                                 Image(systemName: "play.fill")
                             }
                             .simultaneousGesture(TapGesture().onEnded {

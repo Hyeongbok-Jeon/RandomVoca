@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Play: View {
+    var playMode: String
+    
     @EnvironmentObject var modelData: ModelData
     
     @Environment(\.presentationMode) var presentationMode // presentationMode 추가
@@ -44,6 +46,9 @@ struct Play: View {
                             .padding()
                     }
                     .onAppear {
+                        if playMode == "part" {
+                            shownWords = modelData.words.filter { $0.isKnowWord }
+                        }
                         showRandomWord()
                     }
                     .frame(height: UIScreen.main.bounds.height / 4) // 화면 높이의 절반으로 고정
@@ -134,7 +139,8 @@ struct Play: View {
 
     private func showRandomWord() {
         let availableWords = modelData.words.filter { !shownWords.contains($0) } // 아직 보여주지 않은 단어들만 선택
-
+        debugPrint(availableWords)
+        
         guard !availableWords.isEmpty else {
             presentationMode.wrappedValue.dismiss()
             return
@@ -175,7 +181,7 @@ struct Play: View {
     if modelData.words.isEmpty {
         modelData.words = modelData.getSampleWords()
     }
-    return Play()
+    return Play(playMode: "part")
         .environmentObject(modelData)
         .preferredColorScheme(.dark)
 }
