@@ -4,6 +4,7 @@ class ModelData: ObservableObject {
     @Published var words: [Word] = [] {
         didSet {
             saveWords() // words가 변경될 때마다 자동으로 저장
+//            loadWords()
         }
     }
     
@@ -27,6 +28,10 @@ class ModelData: ObservableObject {
             words = decodedWords.sorted { $0.name < $1.name }
         }
     }
+    
+//    func sortWords() -> [W] {
+//        return words.sorted { $0.name < $1.name }
+//    }
     
     func getSampleWords() -> [Word] {
         return [
