@@ -34,7 +34,7 @@
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
                                     .onChange(of: focusedField) { oldFocus, newFocus in
                                         // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
-                                        if newFocus != .word(word.id) {`
+                                        if newFocus != .word(word.id) {
                                             modelData.loadWords()
                                             if word.name.isEmpty {
                                                 removeEmptyWord()
