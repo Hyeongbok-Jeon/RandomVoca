@@ -32,10 +32,6 @@
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-//                                    .onChange(of: word.name) { newValue in
-//                                        print(newValue)
-//                                        word.name = word.name.lowercased()
-//                                    }
                                     .onChange(of: focusedField) { oldFocus, newFocus in
                                         // 단어 필드에서 다른 곳으로 포커스 이동
                                         if oldFocus == .word(word.id) && newFocus != .word(word.id) {
@@ -59,6 +55,7 @@
 //                                            removeEmptyWord()
 //                                        }
                                     }
+                                    .autocapitalization(.none)  // 대문자 자동 입력 비활성화
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 5)
                                             .stroke(Color.black, lineWidth: 1)
