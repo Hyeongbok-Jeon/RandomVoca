@@ -28,48 +28,29 @@
                         ForEach($modelData.words) { $word in
                             HStack {
                                 TextField("단어", text: $word.name)
+                                    .focused($focusedField, equals: .word(word.id))  // 포커스 설정
+                                    .autocapitalization(.none)  // 대문자 자동 입력 비활성화
+                                    .onChange(of: focusedField) { oldFocus, newFocus in
+                                        debugPrint("onChange")
+                                        if newFocus != .word(word.id) && word.name.isEmpty {
+                                            removeEmptyWord()
+                                        } else if newFocus == nil {
+                                            modelData.loadWords()
+                                        }
+                                    }
+                                    .onChange(of: word.name) { newValue in
+                                        word.isKnowWord = false
+                                        word.knowTime = 0
+                                    }
                                     .textFieldStyle(.roundedBorder)
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
-                                    .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-                                    .onChange(of: focusedField) { oldFocus, newFocus in
-                                        // 단어 필드에서 다른 곳으로 포커스 이동
-                                        if oldFocus == .word(word.id) && newFocus != .word(word.id) {
-                                            if word.name.isEmpty {
-                                                removeEmptyWord()
-                                            } else {
-                                                print("else")
-                                                // word.name 값을 변경
-                                                DispatchQueue.main.async {
-                                                    word.name = word.name.lowercased()
-                                                }
-                                            }
-                                        }
-                                        
-                                        
-//                                        if newFocus == nil {
-//                                            modelData.loadWords()
-//                                        }
-//                                        // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
-//                                        if newFocus != .word(word.id) && word.name.isEmpty {
-//                                            removeEmptyWord()
-//                                        }
-                                    }
-                                    .autocapitalization(.none)  // 대문자 자동 입력 비활성화
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1)
-                                    )
                                 
                                 TextField("뜻", text: $word.meaning)
+                                    .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                     .textFieldStyle(.roundedBorder)
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
-                                    .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1)
-                                    )
                                 
                                 Text("\(String(word.knowTime)) 초")
                                     .frame(maxWidth: .infinity)
