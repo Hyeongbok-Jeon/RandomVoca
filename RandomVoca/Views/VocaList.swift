@@ -31,17 +31,16 @@
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
                                     .autocapitalization(.none)  // 대문자 자동 입력 비활성화
                                     .onChange(of: focusedField) { oldFocus, newFocus in
-                                        debugPrint("onChange")
                                         if newFocus != .word(word.id) && word.name.isEmpty {
-                                            removeEmptyWord()
+                                            removeEmptyWord(for: word.id)
                                         } else if newFocus == nil {
                                             modelData.loadWords()
                                         }
                                     }
-                                    .onChange(of: word.name) { newValue in
+                                    .onChange(of: word.name, { oldValue, newValue in
                                         word.isKnowWord = false
                                         word.knowTime = 0
-                                    }
+                                    })
                                     .textFieldStyle(.roundedBorder)
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
@@ -111,13 +110,11 @@
         }
         
         // 빈 단어 제거 함수
-        func removeEmptyWord() {
+        func removeEmptyWord(for id: UUID) {
             focusedField = nil
             
             DispatchQueue.main.async {
-                modelData.words.removeAll { word in
-                    word.name.isEmpty
-                }
+                modelData.words.removeAll { $0.id == id } // 해당 id만 삭제
             }
         }
         
@@ -129,7 +126,7 @@
             } else {
                 // 새 단어 추가
                 let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
-                modelData.words.append(newWord)
+                modelData.words.insert(newWord, at: 0)
                 focusedField = .word(newWord.id)
             }
         }
