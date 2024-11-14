@@ -32,7 +32,13 @@
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
                                     .focused($focusedField, equals: .word(word.id))  // 포커스 설정
+                                    .onChange(of: word.name) { newValue in
+                                        word.name = newValue.lowercased()  // 입력값을 소문자로 변환
+                                    }
                                     .onChange(of: focusedField) { oldFocus, newFocus in
+                                        if newFocus == nil {
+                                            modelData.loadWords()
+                                        }
                                         // 포커스가 사라졌을 때 빈 단어를 삭제하거나 저장하는 로직
                                         if newFocus != .word(word.id) && word.name.isEmpty {
                                             removeEmptyWord()
