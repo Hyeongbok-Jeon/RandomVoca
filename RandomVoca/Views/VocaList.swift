@@ -168,7 +168,7 @@ struct PlayOptionsView: View {
                 onSelect("all")
             } label: {
                 Text("전체 재생")
-                    .font(.largeTitle)
+                    .font(.title)
             }
             
             Spacer()
@@ -180,10 +180,10 @@ struct PlayOptionsView: View {
             Spacer()
             
             Button {
-                onSelect("incorrect")
+                onSelect("part")
             } label: {
-                Text("틀린 것만 재생")
-                    .font(.largeTitle)
+                Text("모르는 단어만 재생")
+                    .font(.title)
             }
             
             Spacer()
