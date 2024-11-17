@@ -144,8 +144,12 @@ struct VocaList: View {
         } else {
             // 새 단어 추가
             let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
-            modelData.words.insert(newWord, at: 0)
+//            modelData.words.insert(newWord, at: 0)
+            modelData.words.append(newWord)
             focusedField = .word(newWord.id)
+        }
+        DispatchQueue.main.async {
+            proxy.scrollTo(modelData.words.last?.id, anchor: .bottom) // 맨 아래로 스크롤
         }
     }
     
