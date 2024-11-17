@@ -139,7 +139,6 @@ struct Play: View {
 
     private func showRandomWord() {
         let availableWords = modelData.words.filter { !shownWords.contains($0) } // 아직 보여주지 않은 단어들만 선택
-        debugPrint(availableWords)
         
         guard !availableWords.isEmpty else {
             presentationMode.wrappedValue.dismiss()
