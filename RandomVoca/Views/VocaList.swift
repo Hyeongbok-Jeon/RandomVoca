@@ -138,16 +138,24 @@ struct VocaList: View {
     
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord(proxy: ScrollViewProxy) {
+//        let lastWord = modelData.words.last
+//        proxy.scrollTo(lastWord?.id, anchor: .bottom)
         if let lastWord = modelData.words.last, lastWord.name.isEmpty {
             // 이미 빈 단어가 있을 경우 그 단어에 포커스 맞추기
             focusedField = .word(lastWord.id)
+            proxy.scrollTo(lastWord.id, anchor: .bottom)
         } else {
             // 새 단어 추가
             let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
 //            modelData.words.insert(newWord, at: 0)
             modelData.words.append(newWord)
             focusedField = .word(newWord.id)
+            if let lastword = modelData.words.last {
+                proxy.scrollTo(lastword.id, anchor: .bottom)
+            }
         }
+//        let emptyWord = modelData.words.first(where: { $0.name.isEmpty })
+//        proxy.scrollTo(emptyWord?.id, anchor: .bottom)
     }
     
     // 단어 삭제 함수
