@@ -148,9 +148,6 @@ struct VocaList: View {
             modelData.words.append(newWord)
             focusedField = .word(newWord.id)
         }
-        DispatchQueue.main.async {
-            proxy.scrollTo(modelData.words.last?.id, anchor: .bottom) // 맨 아래로 스크롤
-        }
     }
     
     // 단어 삭제 함수
