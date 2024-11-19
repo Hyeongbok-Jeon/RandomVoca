@@ -138,9 +138,9 @@ struct VocaList: View {
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord(proxy: ScrollViewProxy) {
         withAnimation {
-            if let lastWord = modelData.words.last {
-                focusedField = .word(lastWord.id)
-                proxy.scrollTo(lastWord.id, anchor: .bottom)
+            if let firstWord = modelData.words.first {
+                focusedField = .word(firstWord.id)
+                proxy.scrollTo(firstWord.id, anchor: .bottom)
             }
         }
         
@@ -150,8 +150,8 @@ struct VocaList: View {
         } else {
             // 새 단어 추가
             let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
-//            modelData.words.insert(newWord, at: 0)
-            modelData.words.append(newWord)
+            modelData.words.insert(newWord, at: 0)
+//            modelData.words.append(newWord)
             focusedField = .word(newWord.id)
         }
     }
