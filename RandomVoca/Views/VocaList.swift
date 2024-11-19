@@ -25,7 +25,7 @@ struct VocaList: View {
                     if modelData.words.isEmpty {
                         HStack {
                             Spacer()
-                            Text("단어를 추가해주세요..")
+                            Text("단어를 추가해주세요.")
                             Spacer()
                         }
                     } else {
@@ -61,7 +61,6 @@ struct VocaList: View {
                                 Circle()
                                     .fill(word.isKnowWord ? Color.green : Color.red)
                                     .frame(width: 10, height: 10)
-                                //                                    .frame(maxWidth: .infinity)
                             }
                         }
                         .onDelete(perform: deleteWord)
