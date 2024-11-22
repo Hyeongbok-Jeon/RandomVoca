@@ -29,7 +29,7 @@ struct VocaList: View {
                         if modelData.words.isEmpty {
                             HStack {
                                 Spacer()
-                                Text("단어를 추가해주세요.")
+                                Text("단어를 추가해주세요..")
                                 Spacer()
                             }
                         } else {
@@ -51,7 +51,7 @@ struct VocaList: View {
                                         .autocapitalization(.none)  // 대문자 자동 입력 비활성화
                                         .onChange(of: focusedField) { oldFocus, newFocus in
                                             if newFocus != .word(word.id) && word.name.isEmpty {
-//                                                removeEmptyWord(for: word.id)
+                                                removeEmptyWord(for: word.id)
                                             } else if newFocus == nil {
                                                 modelData.loadWords()
                                             }
