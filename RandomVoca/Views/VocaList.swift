@@ -191,13 +191,6 @@ struct VocaList: View {
     
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord(proxy: ScrollViewProxy) {
-//        withAnimation {
-//            if let firstWord = modelData.words.first {
-//                focusedField = .word(firstWord.id)
-//                proxy.scrollTo(firstWord.id, anchor: .bottom)
-//            }
-//        }
-        
         if let lastWord = modelData.words.last, lastWord.name.isEmpty {
             // 이미 빈 단어가 있을 경우 그 단어에 포커스 맞추기
             focusedField = .word(lastWord.id)
