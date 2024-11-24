@@ -107,14 +107,17 @@ struct VocaList: View {
                                 Text("모두 삭제")
                             }
                         }
-                        if !modelData.words.isEmpty && modelData.words.contains(where: { !$0.name.isEmpty }) {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button {
-                                    showPlayOptions = true
-                                } label: {
-                                    Image(systemName: "play.fill")
-                                }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                showPlayOptions = true
+                            } label: {
+                                Image(systemName: "play.fill")
                             }
+                            .disabled(
+                                modelData.words.isEmpty
+                                || modelData.words.contains(where: { $0.name.isEmpty })
+                                || isEditing
+                            )
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
