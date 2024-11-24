@@ -29,7 +29,7 @@ struct VocaList: View {
                         if modelData.words.isEmpty {
                             HStack {
                                 Spacer()
-                                Text("단어를 추가해주세요...")
+                                Text("단어를 추가해주세요.")
                                 Spacer()
                             }
                         } else {
