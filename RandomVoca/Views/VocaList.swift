@@ -62,20 +62,21 @@ struct VocaList: View {
                                         })
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                        .multilineTextAlignment(.leading)  // 텍스트 가운데 정렬
                                     
                                     TextField("뜻", text: $word.meaning)
                                         .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.center)  // 텍스트 가운데 정렬
+                                        .multilineTextAlignment(.leading)  // 텍스트 가운데 정렬
                                     
                                     Text("\(String(word.knowTime)) 초")
-                                        .frame(maxWidth: .infinity)
+//                                        .frame(maxWidth: .infinity)
+                                        .foregroundColor(word.isKnowWord ? Color.green : Color.primary)
                                     
-                                    Circle()
-                                        .fill(word.isKnowWord ? Color.green : Color.red)
-                                        .frame(width: 10, height: 10)
+//                                    Circle()
+//                                        .fill(word.isKnowWord ? Color.green : Color.red)
+//                                        .frame(width: 10, height: 10)
                                 }
                                 .padding(.horizontal, 30)
                             }
@@ -152,7 +153,7 @@ struct VocaList: View {
                                 navigateToPlay = true
                             }
                         }
-                        .presentationDetents([.fraction(0.3)]) // 높이를 30% 또는 50%로 설정
+                        .presentationDetents([.fraction(0.25)]) // 높이를 30% 또는 50%로 설정
                         .presentationDragIndicator(.visible) // 드래그 바 표시
                     }
                     .navigationDestination(isPresented: $navigateToPlay) {
@@ -220,7 +221,7 @@ struct PlayOptionsView: View {
             Button {
                 onSelect("all")
             } label: {
-                Text("전체 재생")
+                Text("전체 플레이")
                     .font(.title)
             }
             
@@ -235,7 +236,7 @@ struct PlayOptionsView: View {
             Button {
                 onSelect("part")
             } label: {
-                Text("모르는 단어만 재생")
+                Text("모르는 단어만 플레이")
                     .font(.title)
             }
             
