@@ -155,6 +155,7 @@ struct VocaList: View {
                         }
                         .presentationDetents([.fraction(0.25)]) // 높이를 30% 또는 50%로 설정
                         .presentationDragIndicator(.visible) // 드래그 바 표시
+                        .environmentObject(modelData)
                     }
                     .navigationDestination(isPresented: $navigateToPlay) {
                         Play(playMode: selectedPlayMode)
@@ -212,6 +213,8 @@ struct VocaList: View {
 
 // PlayOptionsView 구현
 struct PlayOptionsView: View {
+    @EnvironmentObject var modelData: ModelData
+    
     var onSelect: (String) -> Void
     
     var body: some View {
@@ -239,6 +242,7 @@ struct PlayOptionsView: View {
                 Text("모르는 단어만 플레이")
                     .font(.title)
             }
+            .disabled(!modelData.words.contains(where: { !$0.isKnowWord }))
             
             Spacer()
         }
