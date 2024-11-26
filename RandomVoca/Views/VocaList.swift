@@ -62,21 +62,24 @@ struct VocaList: View {
                                         })
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.leading)  // 텍스트 가운데 정렬
+                                        .multilineTextAlignment(.leading)
                                     
                                     TextField("뜻", text: $word.meaning)
                                         .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.leading)  // 텍스트 가운데 정렬
+                                        .multilineTextAlignment(.leading)
                                     
-                                    Text("\(String(word.knowTime)) 초")
-//                                        .frame(maxWidth: .infinity)
-                                        .foregroundColor(word.isKnowWord ? Color.green : Color.primary)
+                                    HStack {
+                                        Text("\(String(word.knowTime)) 초")
+                                            .frame(maxWidth: .infinity)
+                                        
+                                        Circle()
+                                            .fill(word.isKnowWord ? Color.green : Color.red)
+                                            .frame(width: 10, height: 10)
+                                    }
+                                    .frame(maxWidth: .infinity)
                                     
-//                                    Circle()
-//                                        .fill(word.isKnowWord ? Color.green : Color.red)
-//                                        .frame(width: 10, height: 10)
                                 }
                                 .padding(.horizontal, 30)
                             }
@@ -87,7 +90,7 @@ struct VocaList: View {
                     .onTapGesture {
                         focusedField = nil
                     }
-                    .navigationBarTitle("단어 목록")
+                    .navigationBarTitle("단어 그룹1")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
