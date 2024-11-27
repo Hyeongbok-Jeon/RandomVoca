@@ -90,7 +90,7 @@ struct VocaList: View {
                     .onTapGesture {
                         focusedField = nil
                     }
-                    .navigationBarTitle("단어 그룹1")
+                    .navigationBarTitle("단어 목록")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
