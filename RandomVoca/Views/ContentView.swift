@@ -16,10 +16,10 @@ struct ContentView: View {
         } else {
             // 스플래시 화면
             VStack {
-                Image(systemName: "star.fill") // 로고 이미지
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.yellow)
+//                Image("SplashIcon") // 로고 이미지
+//                    .resizable()
+//                    .frame(width: 100, height: 100)
+//                    .foregroundColor(.yellow)
                 Text("Random Voca")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -30,7 +30,7 @@ struct ContentView: View {
             .ignoresSafeArea()
             .onAppear {
                 // 몇 초 후에 메인 화면으로 전환
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     withAnimation {
                         isActive = true
                     }
