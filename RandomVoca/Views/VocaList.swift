@@ -189,6 +189,9 @@ struct VocaList: View {
             selectedWords.contains(word.id)
         }
         selectedWords.removeAll() // 삭제 후 선택 초기화
+        if modelData.words.isEmpty {
+            isEditing = false
+        }
     }
     
     // 빈 단어 제거 함수
