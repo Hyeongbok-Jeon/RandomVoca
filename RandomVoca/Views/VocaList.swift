@@ -125,6 +125,8 @@ struct VocaList: View {
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
+                                focusedField = nil
+                                
                                 isEditing.toggle()
                                 if !isEditing {
                                     selectedWords.removeAll() // 편집 종료 시 선택 초기화
@@ -132,6 +134,10 @@ struct VocaList: View {
                             } label: {
                                 Text(isEditing ? "완료" : "편집")
                             }
+                            .disabled(
+                                modelData.words.isEmpty
+                                || modelData.words.contains(where: { $0.name.isEmpty })
+                            )
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             if isEditing {
