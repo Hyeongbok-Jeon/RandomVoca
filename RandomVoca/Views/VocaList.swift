@@ -17,7 +17,6 @@ struct VocaList: View {
     @State private var selectedPlayMode: String = ""
     @State private var isEditing = false // 편집 모드 상태 변수
     @State private var selectedWords = Set<UUID>() // 선택된 단어 ID 저장
-   
     
     @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
