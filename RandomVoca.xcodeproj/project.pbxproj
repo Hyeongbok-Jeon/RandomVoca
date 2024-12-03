@@ -319,7 +319,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.HyeongbokJeon.RandomVoca;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WaterMelon.RandomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -350,7 +350,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.HyeongbokJeon.RandomVoca;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WaterMelon.RandomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

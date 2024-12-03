@@ -175,6 +175,7 @@ struct Play: View {
 
 }
 
+#if DEBUG
 #Preview {
     let modelData = ModelData()
     if modelData.words.isEmpty {
@@ -184,6 +185,7 @@ struct Play: View {
         .environmentObject(modelData)
         .preferredColorScheme(.dark)
 }
+#endif
 
 struct playViewButton: View {
     let action: () -> Void
