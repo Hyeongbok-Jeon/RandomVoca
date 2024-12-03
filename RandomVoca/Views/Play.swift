@@ -176,7 +176,7 @@ struct Play: View {
 }
 
 #Preview {
-    var modelData = ModelData()
+    let modelData = ModelData()
     if modelData.words.isEmpty {
         modelData.words = modelData.getSampleWords()
     }

@@ -28,6 +28,7 @@ class ModelData: ObservableObject {
         }
     }
     
+#if DEBUG
     func getSampleWords() -> [Word] {
         return [
             Word(name: "betray", meaning: "배신하다", isKnowWord: false, knowTime: 0),
@@ -80,4 +81,5 @@ class ModelData: ObservableObject {
             Word(name: "decide", meaning: "결정하다", isKnowWord: false, knowTime: 0)
         ]
     }
+#endif
 }

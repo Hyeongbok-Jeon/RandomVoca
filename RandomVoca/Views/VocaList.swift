@@ -91,7 +91,7 @@ struct VocaList: View {
                     }
                     .navigationBarTitle("단어 목록")
                     .toolbar {
-                        #if DEBUG
+#if DEBUG
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
                                 modelData.words = modelData.getSampleWords()
@@ -100,7 +100,6 @@ struct VocaList: View {
                                 Text("샘플")
                             }
                         }
-                        #endif
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
                                 focusedField = nil
@@ -112,6 +111,7 @@ struct VocaList: View {
                                 Text("모두 삭제")
                             }
                         }
+#endif
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
                                 showPlayOptions = true
