@@ -92,25 +92,25 @@ struct VocaList: View {
                     .navigationBarTitle("단어 목록")
                     .toolbar {
 #if DEBUG
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                modelData.words = modelData.getSampleWords()
-                                modelData.loadWords()
-                            } label: {
-                                Text("샘플")
-                            }
-                        }
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                focusedField = nil
-                                
-                                DispatchQueue.main.async {
-                                    modelData.words.removeAll()
-                                }
-                            } label: {
-                                Text("모두 삭제")
-                            }
-                        }
+//                        ToolbarItem(placement: .navigationBarLeading) {
+//                            Button {
+//                                modelData.words = modelData.getSampleWords()
+//                                modelData.loadWords()
+//                            } label: {
+//                                Text("샘플")
+//                            }
+//                        }
+//                        ToolbarItem(placement: .navigationBarLeading) {
+//                            Button {
+//                                focusedField = nil
+//                                
+//                                DispatchQueue.main.async {
+//                                    modelData.words.removeAll()
+//                                }
+//                            } label: {
+//                                Text("모두 삭제")
+//                            }
+//                        }
 #endif
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {

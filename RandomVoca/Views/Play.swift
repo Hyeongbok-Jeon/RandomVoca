@@ -172,7 +172,6 @@ struct Play: View {
             }
         }
     }
-
 }
 
 #if DEBUG
