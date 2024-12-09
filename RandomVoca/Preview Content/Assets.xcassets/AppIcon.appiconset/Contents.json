@@ -1,30 +1,35 @@
 {
   "images" : [
     {
+      "filename" : "icon_40x40.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "icon_60x60.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
+      "filename" : "icon_58x58.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "icon_87x87.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "icon_76x76.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -37,12 +42,14 @@
       "size" : "38x38"
     },
     {
+      "filename" : "icon_80x80.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
+      "filename" : "dice_icon_120x120 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -56,6 +63,7 @@
       "size" : "60x60"
     },
     {
+      "filename" : "icon_180x180.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -80,6 +88,7 @@
       "size" : "68x68"
     },
     {
+      "filename" : "icon_152x152.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
