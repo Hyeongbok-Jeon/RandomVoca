@@ -16,10 +16,6 @@ struct ContentView: View {
         } else {
             // 스플래시 화면
             VStack {
-//                Image("SplashIcon") // 로고 이미지
-//                    .resizable()
-//                    .frame(width: 100, height: 100)
-//                    .foregroundColor(.yellow)
                 Text("Random Voca")
                     .font(.largeTitle)
                     .fontWeight(.bold)
