@@ -199,10 +199,10 @@ struct playViewButton: View {
                 .foregroundColor(Color.primary)
                 .padding()
 //                .frame(maxWidth: .infinity)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 0) // 사각형 모양의 테두리
-                        .stroke(Color.primary, lineWidth: 2) // 다크모드와 라이트모드에 대응하는 테두리 색상 및 두께 설정
-                )
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 0) // 사각형 모양의 테두리
+//                        .stroke(Color.primary, lineWidth: 2) // 다크모드와 라이트모드에 대응하는 테두리 색상 및 두께 설정
+//                )
         }
     }
 }
