@@ -6,5 +6,7 @@
 	<array>
 		<string>ko</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>랜덤보카</string>
 </dict>
 </plist>
