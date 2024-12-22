@@ -198,10 +198,10 @@ struct playViewButton: View {
                 .foregroundColor(.primary)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.primary, lineWidth: 2)
-                )
+//                .background(
+//                    RoundedRectangle(cornerRadius: 8)
+//                        .stroke(Color.primary, lineWidth: 2)
+//                )
         }
     }
 }
