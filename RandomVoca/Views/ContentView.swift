@@ -16,7 +16,7 @@ struct ContentView: View {
         } else {
             // 스플래시 화면
             VStack {
-                Text("Random Voca")
+                Text(NSLocalizedString("splash", comment: ""))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)

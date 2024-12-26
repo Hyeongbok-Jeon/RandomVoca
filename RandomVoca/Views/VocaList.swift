@@ -61,13 +61,13 @@ struct VocaList: View {
                                         })
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.leading)
+                                        .multilineTextAlignment(.center)
                                     
                                     TextField("뜻", text: $word.meaning)
                                         .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.leading)
+                                        .multilineTextAlignment(.center)
                                     
                                     HStack {
                                         Text("\(String(word.knowTime)) 초")
@@ -89,7 +89,7 @@ struct VocaList: View {
                     .onTapGesture {
                         focusedField = nil
                     }
-                    .navigationBarTitle("단어 목록")
+//                    .navigationBarTitle("단어 목록")
                     .toolbar {
 #if DEBUG
                         ToolbarItem(placement: .navigationBarLeading) {
