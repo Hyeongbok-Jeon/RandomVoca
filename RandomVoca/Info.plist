@@ -7,5 +7,12 @@
 		<string>ko</string>
 		<string>en</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>LaunchScreenLogo</string>
+		<key>UIColorName</key>
+		<string>LaunchScrrenBackground</string>
+	</dict>
 </dict>
 </plist>
