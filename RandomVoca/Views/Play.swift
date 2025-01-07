@@ -75,7 +75,7 @@ struct Play: View {
                                 playViewButton(action: {
                                     setIsKnowWord(isKnowWord: false)
                                     showRandomWord()
-                                }, buttonText: "사실 모르는 단어")
+                                }, buttonText: "Actually, I don't know")
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -83,7 +83,7 @@ struct Play: View {
                                 playViewButton(action: {
                                     setIsKnowWord(isKnowWord: true)
                                     showRandomWord()
-                                }, buttonText: "아는 단어가 맞음")
+                                }, buttonText: "I Know this for sure")
                             }
                             .frame(maxWidth: .infinity)
                         }
@@ -93,7 +93,7 @@ struct Play: View {
                             playViewButton(action: {
                                 showRandomWord()
                                 showDontKnowWordButton = false
-                            }, buttonText: "다음 단어")
+                            }, buttonText: "Next")
                         }
                     } else {
                         HStack {
@@ -103,7 +103,7 @@ struct Play: View {
                                     showDontKnowWordButton = true
                                     showMeaning = true
                                     stopTimer()
-                                }, buttonText: "모르는 단어")
+                                }, buttonText: "I don't know")
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -112,7 +112,7 @@ struct Play: View {
                                     showMeaning = true
                                     showKnowWordButton = true
                                     stopTimer()
-                                }, buttonText: "아는 단어")
+                                }, buttonText: "I Know")
                             }
                             .frame(maxWidth: .infinity)
                         }
