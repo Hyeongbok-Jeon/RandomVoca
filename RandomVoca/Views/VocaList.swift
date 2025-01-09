@@ -31,7 +31,7 @@ struct VocaList: View {
                             
                             HStack {
                                 Spacer()
-                                Text("Empty")
+                                Text("Please Add Word")
                                 Spacer()
                             }
                         } else {

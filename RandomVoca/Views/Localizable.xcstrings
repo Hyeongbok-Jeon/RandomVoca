@@ -1,58 +1,177 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@ 초" : {
-
-    },
-    "%lld" : {
-
-    },
-    "splash" : {
-      "extractionState" : "manual",
+    "%@" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Random Voca"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "랜덤보카"
+            "value" : "%@"
           }
         }
       }
     },
-    "단어" : {
-
+    "%lld" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
-    "단어를 추가해주세요." : {
-
+    "Actually, I don't know" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사실 모르는 단어"
+          }
+        }
+      }
     },
-    "뜻" : {
-
+    "Delete" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제"
+          }
+        }
+      }
     },
-    "모두 삭제" : {
-
+    "Done" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료"
+          }
+        }
+      }
     },
-    "모르는 단어만 플레이" : {
-
+    "Edit" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "편집"
+          }
+        }
+      }
     },
-    "삭제" : {
-
+    "I don't know" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모르는 단어"
+          }
+        }
+      }
     },
-    "샘플" : {
-
+    "I Know" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아는 단어"
+          }
+        }
+      }
     },
-    "완료" : {
-
+    "I Know this for sure" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확실히 아는 단어가 맞다"
+          }
+        }
+      }
     },
-    "전체 플레이" : {
-
+    "init" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "초기화"
+          }
+        }
+      }
     },
-    "편집" : {
-
+    "Meaning" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뜻"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음"
+          }
+        }
+      }
+    },
+    "Play All" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전체 플레이"
+          }
+        }
+      }
+    },
+    "Play Only Words don't know" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모르는 단어만 플레이"
+          }
+        }
+      }
+    },
+    "Please Add Word" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단어를 추가해주세요."
+          }
+        }
+      }
+    },
+    "Sample" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "샘플"
+          }
+        }
+      }
+    },
+    "Word" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단어"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

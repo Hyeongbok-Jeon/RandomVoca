@@ -75,7 +75,7 @@ struct Play: View {
                                 playViewButton(action: {
                                     setIsKnowWord(isKnowWord: false)
                                     showRandomWord()
-                                }, buttonText: "Actually, I don't know")
+                                }, buttonText: NSLocalizedString("Actually, I don't know", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -83,7 +83,7 @@ struct Play: View {
                                 playViewButton(action: {
                                     setIsKnowWord(isKnowWord: true)
                                     showRandomWord()
-                                }, buttonText: "I Know this for sure")
+                                }, buttonText: NSLocalizedString("I Know this for sure", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                         }
@@ -93,7 +93,7 @@ struct Play: View {
                             playViewButton(action: {
                                 showRandomWord()
                                 showDontKnowWordButton = false
-                            }, buttonText: "Next")
+                            }, buttonText: NSLocalizedString("Next", comment: ""))
                         }
                     } else {
                         HStack {
@@ -103,7 +103,7 @@ struct Play: View {
                                     showDontKnowWordButton = true
                                     showMeaning = true
                                     stopTimer()
-                                }, buttonText: "I don't know")
+                                }, buttonText: NSLocalizedString("I don't know", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -112,7 +112,7 @@ struct Play: View {
                                     showMeaning = true
                                     showKnowWordButton = true
                                     stopTimer()
-                                }, buttonText: "I Know")
+                                }, buttonText: NSLocalizedString("I Know", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                         }
