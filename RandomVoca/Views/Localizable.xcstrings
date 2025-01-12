@@ -1,8 +1,14 @@
 {
-  "sourceLanguage" : "en",
+  "sourceLanguage" : "ko",
   "strings" : {
     "%@" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13,6 +19,12 @@
     },
     "%lld" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21,154 +33,152 @@
         }
       }
     },
-    "Actually, I don't know" : {
+    "다음" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "사실 모르는 단어"
+            "value" : "Next"
           }
         }
       }
     },
-    "Delete" : {
+    "단어" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "삭제"
+            "value" : "Word"
           }
         }
       }
     },
-    "Done" : {
+    "단어를 추가해주세요." : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "완료"
+            "value" : "Play Only Words don't know"
           }
         }
       }
     },
-    "Edit" : {
+    "뜻" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "편집"
+            "value" : "Meaning"
           }
         }
       }
     },
-    "I don't know" : {
+    "모르는 단어" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "모르는 단어"
+            "value" : "I don't know"
           }
         }
       }
     },
-    "I Know" : {
+    "모르는 단어만 재생" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "아는 단어"
+            "value" : "Play Only Words don't know"
           }
         }
       }
     },
-    "I Know this for sure" : {
+    "사실 모르는 단어" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "확실히 아는 단어가 맞다"
+            "value" : "Actually, I don't know"
           }
         }
       }
     },
-    "init" : {
-      "extractionState" : "stale",
+    "삭제" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "초기화"
+            "value" : "Delete"
           }
         }
       }
     },
-    "Meaning" : {
+    "샘플" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "뜻"
+            "value" : "Sample"
           }
         }
       }
     },
-    "Next" : {
+    "아는 단어" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "다음"
+            "value" : "I Know"
           }
         }
       }
     },
-    "Play All" : {
+    "아는 단어가 맞음" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "전체 플레이"
+            "value" : "I Know this for sure"
           }
         }
       }
     },
-    "Play Only Words don't know" : {
+    "완료" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "모르는 단어만 플레이"
+            "value" : "Done"
           }
         }
       }
     },
-    "Please Add Word" : {
+    "전체 재생" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "단어를 추가해주세요."
+            "value" : "Play All"
           }
         }
       }
     },
-    "Sample" : {
-      "extractionState" : "stale",
+    "초기화" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "샘플"
+            "value" : "init"
           }
         }
       }
     },
-    "Word" : {
+    "편집" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "단어"
+            "value" : "Edit"
           }
         }
       }

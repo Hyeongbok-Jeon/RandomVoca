@@ -31,7 +31,7 @@ struct VocaList: View {
                             
                             HStack {
                                 Spacer()
-                                Text("Please Add Word")
+                                Text("단어를 추가해주세요.")
                                 Spacer()
                             }
                         } else {
@@ -48,7 +48,7 @@ struct VocaList: View {
                                         }
                                     }
                                     
-                                    TextField("Word", text: $word.name)
+                                    TextField("단어", text: $word.name)
                                         .focused($focusedField, equals: .word(word.id))  // 포커스 설정
                                         .autocapitalization(.none)  // 대문자 자동 입력 비활성화
                                         .onChange(of: focusedField) { oldFocus, newFocus in
@@ -66,7 +66,7 @@ struct VocaList: View {
                                         .frame(maxWidth: .infinity)
                                         .multilineTextAlignment(.center)
                                     
-                                    TextField("Meaning", text: $word.meaning)
+                                    TextField("뜻", text: $word.meaning)
                                         .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
@@ -100,7 +100,7 @@ struct VocaList: View {
                                 modelData.words = modelData.getSampleWords()
                                 modelData.loadWords()
                             } label: {
-                                Text("Sample")
+                                Text("샘플")
                             }
                         }
                         ToolbarItem(placement: .navigationBarLeading) {
@@ -111,7 +111,7 @@ struct VocaList: View {
                                     modelData.words.removeAll()
                                 }
                             } label: {
-                                Text("init")
+                                Text("초기화")
                             }
                         }
 #endif
@@ -136,7 +136,7 @@ struct VocaList: View {
                                     selectedWords.removeAll() // 편집 종료 시 선택 초기화
                                 }
                             } label: {
-                                Text(isEditing ? "Done" : "Edit")
+                                Text(isEditing ? "완료" : "편집")
                             }
                             .disabled(
                                 modelData.words.isEmpty
@@ -146,7 +146,7 @@ struct VocaList: View {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             if isEditing {
                                 Button(action: deleteSelectedWords) {
-                                    Text("Delete")
+                                    Text("삭제")
                                 }
                                 .disabled(selectedWords.isEmpty) // 선택된 항목 없을 시 비활성화
                             } else {
@@ -240,7 +240,7 @@ struct PlayOptionsView: View {
             Button {
                 onSelect("all")
             } label: {
-                Text("Play All")
+                Text("전체 재생")
                     .font(.title)
             }
             
@@ -255,7 +255,7 @@ struct PlayOptionsView: View {
             Button {
                 onSelect("part")
             } label: {
-                Text("Play Only Words don't know")
+                Text("모르는 단어만 재생")
                     .font(.title)
             }
             .disabled(!modelData.words.contains(where: { !$0.isKnowWord }))

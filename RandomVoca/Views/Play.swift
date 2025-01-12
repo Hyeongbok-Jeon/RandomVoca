@@ -75,7 +75,7 @@ struct Play: View {
                                 playViewButton(action: {
                                     setIsKnowWord(isKnowWord: false)
                                     showRandomWord()
-                                }, buttonText: NSLocalizedString("Actually, I don't know", comment: ""))
+                                }, buttonText: NSLocalizedString("사실 모르는 단어", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -83,7 +83,7 @@ struct Play: View {
                                 playViewButton(action: {
                                     setIsKnowWord(isKnowWord: true)
                                     showRandomWord()
-                                }, buttonText: NSLocalizedString("I Know this for sure", comment: ""))
+                                }, buttonText: NSLocalizedString("아는 단어가 맞음", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                         }
@@ -93,7 +93,7 @@ struct Play: View {
                             playViewButton(action: {
                                 showRandomWord()
                                 showDontKnowWordButton = false
-                            }, buttonText: NSLocalizedString("Next", comment: ""))
+                            }, buttonText: NSLocalizedString("다음", comment: ""))
                         }
                     } else {
                         HStack {
@@ -103,7 +103,7 @@ struct Play: View {
                                     showDontKnowWordButton = true
                                     showMeaning = true
                                     stopTimer()
-                                }, buttonText: NSLocalizedString("I don't know", comment: ""))
+                                }, buttonText: NSLocalizedString("모르는 단어", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -112,7 +112,7 @@ struct Play: View {
                                     showMeaning = true
                                     showKnowWordButton = true
                                     stopTimer()
-                                }, buttonText: NSLocalizedString("I Know", comment: ""))
+                                }, buttonText: NSLocalizedString("아는 단어", comment: ""))
                             }
                             .frame(maxWidth: .infinity)
                         }
