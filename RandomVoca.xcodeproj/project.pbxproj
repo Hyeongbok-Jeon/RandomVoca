@@ -15,7 +15,6 @@
 		135BBF6D2C915A1E00F3A27D /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6C2C915A1E00F3A27D /* Play.swift */; };
 		135BBF6F2C917BD900F3A27D /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6E2C917BD900F3A27D /* Word.swift */; };
 		139119782CCD1EE60015799D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119772CCD1EE60015799D /* ModelData.swift */; };
-		13E0D46B2D1E1A7900DFE47B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 13E0D46A2D1E1A7900DFE47B /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		135BBF6E2C917BD900F3A27D /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		139119772CCD1EE60015799D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		13E0D4692D10EA1900DFE47B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		13E0D46A2D1E1A7900DFE47B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +84,6 @@
 				135BBF562C8E673800F3A27D /* ContentView.swift */,
 				135BBF682C8EF9F600F3A27D /* VocaList.swift */,
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
-				13E0D46A2D1E1A7900DFE47B /* Localizable.xcstrings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -140,7 +137,6 @@
 			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				ko,
 			);
@@ -161,7 +157,6 @@
 			files = (
 				135BBF5C2C8E673900F3A27D /* Preview Assets.xcassets in Resources */,
 				135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */,
-				13E0D46B2D1E1A7900DFE47B /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +315,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RandomVoca/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Random Voca";
+				INFOPLIST_KEY_CFBundleDisplayName = "랜덤보카";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -331,7 +326,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.8;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -358,7 +353,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RandomVoca/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Random Voca";
+				INFOPLIST_KEY_CFBundleDisplayName = "랜덤보카";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -369,7 +364,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.8;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";

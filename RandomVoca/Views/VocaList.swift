@@ -111,7 +111,7 @@ struct VocaList: View {
                                     modelData.words.removeAll()
                                 }
                             } label: {
-                                Text("초기화")
+                                Text("모두 삭제")
                             }
                         }
 #endif
