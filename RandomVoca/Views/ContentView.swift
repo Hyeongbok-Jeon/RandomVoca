@@ -11,7 +11,7 @@ struct ContentView: View {
     @State private var isActive = false
     
     var body: some View {
-        VocaList()
+        VocaGroupList()
     }
 }
 

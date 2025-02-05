@@ -12,40 +12,55 @@ struct VocaGroupList: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                    // ForEach 에서 바인딩($modelData.groups)을 사용하면,
-                    // 패턴에서 $group을 사용하여 동적 멤버 접근이 가능해집니다.
-                    ForEach($modelData.groups) { $group in
-                        NavigationLink(destination: VocaList()) {
-                            VStack {
-                                // 동적 멤버 접근을 사용하여 group.name으로 접근 (wrappedValue를 명시하지 않아도 됩니다)
-                                Text(group.name)
-                                    .font(.title2)
-                                    .bold()
-                                    .foregroundColor(.white)
-                                    .padding()
+                if modelData.groups.isEmpty {
+                    Spacer()
+                        .frame(height: 50)
+                    
+                    HStack {
+                        Spacer()
+                        Text("그룹을 추가해주세요.")
+                        Spacer()
+                    }
+                } else {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                        // ForEach 에서 바인딩($modelData.groups)을 사용하면,
+                        // 패턴에서 $group을 사용하여 동적 멤버 접근이 가능해집니다.
+                        ForEach($modelData.groups) { $group in
+                            NavigationLink(destination: VocaList()) {
+                                VStack {
+                                    // 동적 멤버 접근을 사용하여 group.name으로 접근 (wrappedValue를 명시하지 않아도 됩니다)
+                                    Text(group.name)
+                                        .font(.title2)
+                                        .bold()
+                                    // foregroundColor는 상황에 맞게 변경하세요.
+                                        .foregroundColor(.primary)
+                                        .padding()
+                                }
+                                .frame(width: 150, height: 150)
+                                // 배경색은 투명하게 설정하고, 테두리만 표시합니다.
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color.primary, lineWidth: 3)
+                                )
                             }
-                            .frame(width: 150, height: 150)
-                            .background(Color.blue)
-                            .cornerRadius(15)
-                            .shadow(radius: 5)
-                        }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            // 그룹 선택 시, 선택된 그룹은 실제 값(group)로 전달됩니다.
-                            modelData.selectedGroup = group
-                        })
-                        .contextMenu {
-                            Button("그룹명 변경") {
-                                editingGroup = group
-                                newEditedGroupName = group.name
-                            }
-                            Button("그룹 삭제", role: .destructive) {
-                                deleteGroup(group: group)
+                            .simultaneousGesture(TapGesture().onEnded {
+                                // 그룹 선택 시, 선택된 그룹은 실제 값(group)로 전달됩니다.
+                                modelData.selectedGroup = group
+                            })
+                            .contextMenu {
+                                Button("그룹명 변경") {
+                                    editingGroup = group
+                                    newEditedGroupName = group.name
+                                }
+                                Button("그룹 삭제", role: .destructive) {
+                                    deleteGroup(group: group)
+                                }
                             }
                         }
                     }
+                    .padding()
                 }
-                .padding()
             }
             .navigationTitle("단어 그룹")
             .toolbar {
