@@ -174,29 +174,30 @@ struct VocaList: View {
                 }
             }
             
-            if modelData.words.isEmpty
-            || modelData.words.contains(where: { $0.name.isEmpty })
-                || isEditing {
-            } else {
-                // 오른쪽 아래 플로팅 재생 버튼
-                VStack {
+            // 버튼 활성화 여부 계산
+            let isButtonEnabled = !(modelData.words.isEmpty ||
+                                    modelData.words.contains(where: { $0.name.isEmpty }) ||
+                                    isEditing)
+            
+            // 오른쪽 아래 플로팅 재생 버튼
+            VStack {
+                Spacer()
+                HStack {
                     Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            showPlayOptions = true
-                        }) {
-                            Image(systemName: "play.fill")
-                                .foregroundColor(.white)
-                                .font(.system(size: 50)) // 폰트 크기 증가
-                                .padding(20)             // 내부 패딩 증가
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                                .shadow(radius: 6)
-                        }
-                        .padding(.bottom, 50)
-                        .padding(.trailing, 50) // 오른쪽 여백 추가
+                    Button(action: {
+                        showPlayOptions = true
+                    }) {
+                        Image(systemName: "play.fill")
+                            .foregroundColor(.white)
+                            .font(.system(size: 50)) // 폰트 크기 증가
+                            .padding(20)             // 내부 패딩 증가
+                            .background(isButtonEnabled ? Color.blue : Color.gray)
+                            .clipShape(Circle())
+                            .shadow(radius: 6)
                     }
+                    .padding(.bottom, 50)
+                    .padding(.trailing, 50) // 오른쪽 여백 추가
+                    .disabled(!isButtonEnabled)
                 }
             }
         }
@@ -291,7 +292,28 @@ struct PlayOptionsView: View {
 }
 
 #Preview {
-    VocaList()
-        .environmentObject(ModelData())
-        .preferredColorScheme(.dark)
+    previewContent
+}
+
+private var previewContent: some View {
+    // modelData를 설정하는 코드
+    let modelData: ModelData = {
+        let md = ModelData()
+        // groups가 비어 있다면 기본 그룹 생성
+        if md.groups.isEmpty {
+            let defaultGroup = VocaGroup(name: "Default Group", words: md.getSampleWords())
+            md.groups.append(defaultGroup)
+        }
+        // selectedGroup이 nil이면 첫 번째 그룹을 할당
+        if md.selectedGroup == nil {
+            md.selectedGroup = md.groups.first
+        }
+        return md
+    }()
+    
+    return NavigationStack {
+        VocaList()
+            .environmentObject(modelData)
+            .preferredColorScheme(.dark)
+    }
 }
