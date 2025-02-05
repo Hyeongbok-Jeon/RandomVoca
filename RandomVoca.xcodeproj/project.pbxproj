@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130651382D538454005BCDEC /* VocaGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651372D538454005BCDEC /* VocaGroupList.swift */; };
+		1306513A2D538586005BCDEC /* VocaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651392D538586005BCDEC /* VocaGroup.swift */; };
 		135BBF552C8E673800F3A27D /* RandomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF542C8E673800F3A27D /* RandomVocaApp.swift */; };
 		135BBF572C8E673800F3A27D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF562C8E673800F3A27D /* ContentView.swift */; };
 		135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135BBF582C8E673900F3A27D /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		130651372D538454005BCDEC /* VocaGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroupList.swift; sourceTree = "<group>"; };
+		130651392D538586005BCDEC /* VocaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroup.swift; sourceTree = "<group>"; };
 		135BBF512C8E673800F3A27D /* RandomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135BBF542C8E673800F3A27D /* RandomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomVocaApp.swift; sourceTree = "<group>"; };
 		135BBF562C8E673800F3A27D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +88,7 @@
 				135BBF562C8E673800F3A27D /* ContentView.swift */,
 				135BBF682C8EF9F600F3A27D /* VocaList.swift */,
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
+				130651372D538454005BCDEC /* VocaGroupList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 			children = (
 				135BBF6E2C917BD900F3A27D /* Word.swift */,
 				139119772CCD1EE60015799D /* ModelData.swift */,
+				130651392D538586005BCDEC /* VocaGroup.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,9 +173,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1306513A2D538586005BCDEC /* VocaGroup.swift in Sources */,
 				135BBF572C8E673800F3A27D /* ContentView.swift in Sources */,
 				135BBF6F2C917BD900F3A27D /* Word.swift in Sources */,
 				135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */,
+				130651382D538454005BCDEC /* VocaGroupList.swift in Sources */,
 				139119782CCD1EE60015799D /* ModelData.swift in Sources */,
 				135BBF552C8E673800F3A27D /* RandomVocaApp.swift in Sources */,
 				135BBF6D2C915A1E00F3A27D /* Play.swift in Sources */,
@@ -315,7 +323,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RandomVoca/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "랜덤 영단어";
+				INFOPLIST_KEY_CFBundleDisplayName = "랜덤보카";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -326,7 +334,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.11;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,7 +361,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RandomVoca/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "랜덤 영단어";
+				INFOPLIST_KEY_CFBundleDisplayName = "랜덤보카";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -364,7 +372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.11;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";

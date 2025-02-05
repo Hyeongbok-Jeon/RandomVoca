@@ -91,7 +91,7 @@ struct VocaList: View {
                         .onTapGesture {
                             focusedField = nil
                         }
-                        //                    .navigationBarTitle("단어 목록")
+                        .navigationTitle(modelData.selectedGroup?.name ?? "그룹명")
                         .toolbar {
 #if DEBUG
                             ToolbarItem(placement: .navigationBarLeading) {
@@ -175,27 +175,29 @@ struct VocaList: View {
                     }
                 }
                 
-                // 오른쪽 아래 플로팅 재생 버튼
-                VStack {
-                    Spacer()
-                    HStack {
+                if modelData.words.isEmpty
+                || modelData.words.contains(where: { $0.name.isEmpty })
+                    || isEditing {
+                } else {
+                    // 오른쪽 아래 플로팅 재생 버튼
+                    VStack {
                         Spacer()
-                        Button(action: {
-                            showPlayOptions = true
-                        }) {
-                            Image(systemName: "play.fill")
-                                .foregroundColor(.white)
-                                .font(.system(size: 50)) // 폰트 크기 증가
-                                .padding(20)             // 내부 패딩 증가
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                                .shadow(radius: 6)
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                showPlayOptions = true
+                            }) {
+                                Image(systemName: "play.fill")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 50)) // 폰트 크기 증가
+                                    .padding(20)             // 내부 패딩 증가
+                                    .background(Color.blue)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 6)
+                            }
+                            .padding(.bottom, 50)
+                            .padding(.trailing, 50) // 오른쪽 여백 추가
                         }
-                        .padding(.bottom, 30)
-                        .padding(.trailing, 40) // 오른쪽 여백 추가
-                        .disabled(modelData.words.isEmpty ||
-                                  modelData.words.contains(where: { $0.name.isEmpty }) ||
-                                  isEditing)
                     }
                 }
             }
