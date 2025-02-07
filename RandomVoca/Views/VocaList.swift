@@ -172,6 +172,9 @@ struct VocaList: View {
                         Play(playMode: selectedPlayMode)
                     }
                 }
+                
+                BannerAdView() // ✅ 배너 광고 추가
+                    .frame(height: 50)
             }
             
             // 버튼 활성화 여부 계산
@@ -195,7 +198,7 @@ struct VocaList: View {
                             .clipShape(Circle())
                             .shadow(radius: 6)
                     }
-                    .padding(.bottom, 50)
+                    .padding(.bottom, 100)
                     .padding(.trailing, 50) // 오른쪽 여백 추가
                     .disabled(!isButtonEnabled)
                 }
@@ -292,28 +295,9 @@ struct PlayOptionsView: View {
 }
 
 #Preview {
-    previewContent
-}
-
-private var previewContent: some View {
-    // modelData를 설정하는 코드
-    let modelData: ModelData = {
-        let md = ModelData()
-        // groups가 비어 있다면 기본 그룹 생성
-        if md.groups.isEmpty {
-            let defaultGroup = VocaGroup(name: "Default Group", words: md.getSampleWords())
-            md.groups.append(defaultGroup)
-        }
-        // selectedGroup이 nil이면 첫 번째 그룹을 할당
-        if md.selectedGroup == nil {
-            md.selectedGroup = md.groups.first
-        }
-        return md
-    }()
-    
-    return NavigationStack {
+    NavigationStack {
         VocaList()
-            .environmentObject(modelData)
+            .environmentObject(ModelData())
             .preferredColorScheme(.dark)
     }
 }

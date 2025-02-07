@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		130651382D538454005BCDEC /* VocaGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651372D538454005BCDEC /* VocaGroupList.swift */; };
 		1306513A2D538586005BCDEC /* VocaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651392D538586005BCDEC /* VocaGroup.swift */; };
+		135108C42D5651A500EA781F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 135108C32D5651A500EA781F /* GoogleMobileAds */; settings = {ATTRIBUTES = (Required, ); }; };
+		135108C62D5655F600EA781F /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135108C52D5655F600EA781F /* BannerAdView.swift */; };
 		135BBF552C8E673800F3A27D /* RandomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF542C8E673800F3A27D /* RandomVocaApp.swift */; };
 		135BBF572C8E673800F3A27D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF562C8E673800F3A27D /* ContentView.swift */; };
 		135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135BBF582C8E673900F3A27D /* Assets.xcassets */; };
@@ -17,11 +19,13 @@
 		135BBF6D2C915A1E00F3A27D /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6C2C915A1E00F3A27D /* Play.swift */; };
 		135BBF6F2C917BD900F3A27D /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6E2C917BD900F3A27D /* Word.swift */; };
 		139119782CCD1EE60015799D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119772CCD1EE60015799D /* ModelData.swift */; };
+		13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2310C2D56352B00684E92 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		130651372D538454005BCDEC /* VocaGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroupList.swift; sourceTree = "<group>"; };
 		130651392D538586005BCDEC /* VocaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroup.swift; sourceTree = "<group>"; };
+		135108C52D5655F600EA781F /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
 		135BBF512C8E673800F3A27D /* RandomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135BBF542C8E673800F3A27D /* RandomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomVocaApp.swift; sourceTree = "<group>"; };
 		135BBF562C8E673800F3A27D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -31,6 +35,7 @@
 		135BBF6C2C915A1E00F3A27D /* Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
 		135BBF6E2C917BD900F3A27D /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		139119772CCD1EE60015799D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		13A2310C2D56352B00684E92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13E0D4692D10EA1900DFE47B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -39,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				135108C42D5651A500EA781F /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +76,8 @@
 				135BBF652C8EF82400F3A27D /* Model */,
 				135BBF5A2C8E673900F3A27D /* Preview Content */,
 				135BBF582C8E673900F3A27D /* Assets.xcassets */,
+				13A2310C2D56352B00684E92 /* AppDelegate.swift */,
+				135108C52D5655F600EA781F /* BannerAdView.swift */,
 			);
 			path = RandomVoca;
 			sourceTree = "<group>";
@@ -147,6 +155,9 @@
 				ko,
 			);
 			mainGroup = 135BBF482C8E673800F3A27D;
+			packageReferences = (
+				135F33592D564EED002AA8AC /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			productRefGroup = 135BBF522C8E673800F3A27D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -174,8 +185,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1306513A2D538586005BCDEC /* VocaGroup.swift in Sources */,
+				135108C62D5655F600EA781F /* BannerAdView.swift in Sources */,
 				135BBF572C8E673800F3A27D /* ContentView.swift in Sources */,
 				135BBF6F2C917BD900F3A27D /* Word.swift in Sources */,
+				13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */,
 				135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */,
 				130651382D538454005BCDEC /* VocaGroupList.swift in Sources */,
 				139119782CCD1EE60015799D /* ModelData.swift in Sources */,
@@ -334,7 +347,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.12;
+				MARKETING_VERSION = 1.0.13;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -372,7 +385,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.12;
+				MARKETING_VERSION = 1.0.13;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -409,6 +422,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		135F33592D564EED002AA8AC /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		135108C32D5651A500EA781F /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 135BBF492C8E673800F3A27D /* Project object */;
 }

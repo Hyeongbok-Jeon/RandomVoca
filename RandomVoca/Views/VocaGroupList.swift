@@ -101,6 +101,9 @@ struct VocaGroupList: View {
             } message: {
                 Text("새 그룹명을 입력해주세요")
             }
+            
+            BannerAdView() // ✅ 배너 광고 추가
+                .frame(height: 50)
         }
     }
     
