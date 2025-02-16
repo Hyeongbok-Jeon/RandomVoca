@@ -1,0 +1,53 @@
+import Foundation
+import SwiftUI
+
+class ModelDataV2: ObservableObject {
+    @Published var words: [WordEntity] = []
+
+    init() {
+        loadWords()
+    }
+
+    // ✅ Core Data에서 단어 불러오기
+    func loadWords() {
+        words = CoreDataHelper.shared.fetchWords()
+
+        // Core Data에 데이터가 없으면 JSON에서 불러오기
+        if words.isEmpty {
+            print("⚠️ Core Data에 데이터가 없음. JSON에서 불러옵니다.")
+            loadWordsFromJSON()
+        } else {
+            print("✅ Core Data에서 단어 \(words.count)개 불러옴")
+        }
+    }
+
+    // ✅ JSON에서 불러와 Core Data에 저장
+    func loadWordsFromJSON() {
+        guard let url = Bundle.main.url(forResource: "words", withExtension: "json") else {
+            print("❌ JSON 파일을 찾을 수 없음")
+            return
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let decodedWords = try JSONDecoder().decode([[String: String]].self, from: data)
+
+            // ✅ JSON 데이터를 Core Data에 저장
+            let context = CoreDataHelper.shared.context
+            for wordData in decodedWords {
+                let newWord = WordEntity(context: context)
+                newWord.id = UUID()  // ✅ Core Data의 UUID 자동 생성
+                newWord.name = wordData["name"] ?? "Unknown"
+            }
+            
+            // ✅ 저장
+            CoreDataHelper.shared.saveContext()
+
+            // ✅ 다시 Core Data에서 불러오기
+            words = CoreDataHelper.shared.fetchWords()
+            print("✅ JSON에서 단어 \(words.count)개 저장 완료")
+
+        } catch {
+            print("❌ JSON 디코딩 오류:", error)
+        }
+    }
+}
