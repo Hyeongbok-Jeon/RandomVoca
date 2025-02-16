@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		130651382D538454005BCDEC /* VocaGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651372D538454005BCDEC /* VocaGroupList.swift */; };
 		1306513A2D538586005BCDEC /* VocaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651392D538586005BCDEC /* VocaGroup.swift */; };
-		132D202F2D5B924200CE789C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 132D202E2D5B924200CE789C /* Localizable.xcstrings */; };
+		132D20372D5EB77C00CE789C /* PlayV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132D20362D5EB77C00CE789C /* PlayV2.swift */; };
 		135108C42D5651A500EA781F /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 135108C32D5651A500EA781F /* GoogleMobileAds */; settings = {ATTRIBUTES = (Required, ); }; };
 		135108C62D5655F600EA781F /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135108C52D5655F600EA781F /* BannerAdView.swift */; };
 		135BBF552C8E673800F3A27D /* RandomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF542C8E673800F3A27D /* RandomVocaApp.swift */; };
@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		130651372D538454005BCDEC /* VocaGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroupList.swift; sourceTree = "<group>"; };
 		130651392D538586005BCDEC /* VocaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroup.swift; sourceTree = "<group>"; };
-		132D202E2D5B924200CE789C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		132D20362D5EB77C00CE789C /* PlayV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayV2.swift; sourceTree = "<group>"; };
 		135108C52D5655F600EA781F /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
 		135BBF512C8E673800F3A27D /* RandomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135BBF542C8E673800F3A27D /* RandomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomVocaApp.swift; sourceTree = "<group>"; };
@@ -56,7 +56,6 @@
 		135BBF482C8E673800F3A27D = {
 			isa = PBXGroup;
 			children = (
-				132D202E2D5B924200CE789C /* Localizable.xcstrings */,
 				135BBF532C8E673800F3A27D /* RandomVoca */,
 				135BBF522C8E673800F3A27D /* Products */,
 			);
@@ -99,6 +98,7 @@
 				135BBF562C8E673800F3A27D /* ContentView.swift */,
 				135BBF682C8EF9F600F3A27D /* VocaList.swift */,
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
+				132D20362D5EB77C00CE789C /* PlayV2.swift */,
 				130651372D538454005BCDEC /* VocaGroupList.swift */,
 			);
 			path = Views;
@@ -156,7 +156,6 @@
 			knownRegions = (
 				ko,
 				Base,
-				en,
 			);
 			mainGroup = 135BBF482C8E673800F3A27D;
 			packageReferences = (
@@ -178,7 +177,6 @@
 			files = (
 				135BBF5C2C8E673900F3A27D /* Preview Assets.xcassets in Resources */,
 				135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */,
-				132D202F2D5B924200CE789C /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +192,7 @@
 				135BBF572C8E673800F3A27D /* ContentView.swift in Sources */,
 				135BBF6F2C917BD900F3A27D /* Word.swift in Sources */,
 				13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */,
+				132D20372D5EB77C00CE789C /* PlayV2.swift in Sources */,
 				135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */,
 				130651382D538454005BCDEC /* VocaGroupList.swift in Sources */,
 				139119782CCD1EE60015799D /* ModelData.swift in Sources */,
@@ -345,6 +344,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
@@ -352,7 +352,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.18;
+				MARKETING_VERSION = 1.0.21;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -383,6 +383,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
@@ -390,7 +391,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.18;
+				MARKETING_VERSION = 1.0.21;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";

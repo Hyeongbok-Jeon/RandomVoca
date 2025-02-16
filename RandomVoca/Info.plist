@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>ko</string>
-		<string>en</string>
-	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9381709608642362~1060242320</string>
 	<key>UILaunchScreen</key>
