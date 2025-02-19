@@ -57,9 +57,6 @@ class CoreDataHelper {
         do {
             let fetchedWords = try context.fetch(request)
             print("✅ 불러온 단어 개수: \(fetchedWords.count)")
-            for word in fetchedWords {
-                print("👉 단어: \(word.name ?? "이름 없음")")
-            }
             return fetchedWords
         } catch {
             print("❌ 단어 불러오기 실패:", error)

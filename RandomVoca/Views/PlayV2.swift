@@ -2,14 +2,20 @@ import SwiftUI
 
 struct PlayV2: View {
     @EnvironmentObject var modelData: ModelDataV2
-    @Environment(\.presentationMode) var presentationMode
 
     @State private var displayWordName: String = "단어 없음"
-    @State private var displayWordMeaning: String = ""
     @State private var shownWords: [WordEntity] = [] // 이미 보여준 단어를 추적하는 배열
 
     var body: some View {
         ZStack {
+            // ✅ 전체 화면을 터치 가능하게 설정
+            Color.black
+                .ignoresSafeArea()
+                .contentShape(Rectangle()) // 터치 가능 영역을 전체 화면으로 설정
+                .onTapGesture {
+                    showRandomWord()
+                }
+            
             VStack {
                 Spacer()
 
@@ -31,40 +37,26 @@ struct PlayV2: View {
                 Spacer()
             }
         }
-        .gesture(
-            DragGesture()
-                .onEnded { value in
-                    if value.translation.width < -50 {
-                        showRandomWord() // 왼쪽 스와이프 → 다음 단어
-                    } else if value.translation.width > 50 {
-                        showPreviousWord() // 오른쪽 스와이프 → 이전 단어
-                    }
-                }
-        )
         .onAppear {
             showRandomWord()
         }
     }
 
     private func showRandomWord() {
+        // ✅ 모든 단어를 다 보여줬으면 배열 초기화하고 다시 시작
+        if shownWords.count == modelData.words.count {
+            shownWords.removeAll()
+        }
+        
         let availableWords = modelData.words.filter { !shownWords.contains($0) } // 아직 안 나온 단어 선택
 
+        // ✅ guard let 유지, 단어 없으면 "단어 없음" 표시
         guard let randomWord = availableWords.randomElement() else {
-            presentationMode.wrappedValue.dismiss()
             return
         }
 
         displayWordName = randomWord.name ?? "단어 없음"
         shownWords.append(randomWord) // 선택된 단어 기록
-    }
-
-    private func showPreviousWord() {
-        if !shownWords.isEmpty {
-            shownWords.removeLast()
-            if let previousWord = shownWords.last {
-                displayWordName = previousWord.name ?? "단어 없음"
-            }
-        }
     }
 
     // iOS 내장 사전 호출 함수
