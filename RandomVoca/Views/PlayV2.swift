@@ -3,8 +3,13 @@ import SwiftUI
 struct PlayV2: View {
     @EnvironmentObject var modelData: ModelDataV2
 
-    @State private var displayWordName: String = "단어 없음"
+    @State private var displayWordName: String
     @State private var shownWords: [WordEntity] = [] // 이미 보여준 단어를 추적하는 배열
+    
+    // ✅ 초기 단어를 받을 수 있도록 init 추가
+    init(initialWord: String = "단어 없음") {
+        _displayWordName = State(initialValue: initialWord)
+    }
 
     var body: some View {
         ZStack {

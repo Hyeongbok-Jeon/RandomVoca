@@ -25,6 +25,7 @@
 		139119782CCD1EE60015799D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119772CCD1EE60015799D /* ModelData.swift */; };
 		13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2310C2D56352B00684E92 /* AppDelegate.swift */; };
 		13CE173A2D6235C3009CB4F9 /* WordModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13CE17382D6235C3009CB4F9 /* WordModel.xcdatamodeld */; };
+		13CE17412D669C13009CB4F9 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CE17402D669C13009CB4F9 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		139119772CCD1EE60015799D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		13A2310C2D56352B00684E92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13CE17392D6235C3009CB4F9 /* WordModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordModel.xcdatamodel; sourceTree = "<group>"; };
+		13CE17402D669C13009CB4F9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		13E0D4692D10EA1900DFE47B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,9 +66,6 @@
 		135BBF482C8E673800F3A27D = {
 			isa = PBXGroup;
 			children = (
-				132D20432D62293900CE789C /* words.json */,
-				132D20412D6228DA00CE789C /* CoreCoreDataHelper.swift */,
-				13CE17382D6235C3009CB4F9 /* WordModel.xcdatamodeld */,
 				135BBF532C8E673800F3A27D /* RandomVoca */,
 				135BBF522C8E673800F3A27D /* Products */,
 			);
@@ -91,6 +90,10 @@
 				135BBF582C8E673900F3A27D /* Assets.xcassets */,
 				13A2310C2D56352B00684E92 /* AppDelegate.swift */,
 				135108C52D5655F600EA781F /* BannerAdView.swift */,
+				132D20412D6228DA00CE789C /* CoreCoreDataHelper.swift */,
+				13CE17382D6235C3009CB4F9 /* WordModel.xcdatamodeld */,
+				13CE173F2D65DDE4009CB4F9 /* Resources */,
+				13CE17402D669C13009CB4F9 /* NotificationManager.swift */,
 			);
 			path = RandomVoca;
 			sourceTree = "<group>";
@@ -124,6 +127,14 @@
 				130651392D538586005BCDEC /* VocaGroup.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		13CE173F2D65DDE4009CB4F9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				132D20432D62293900CE789C /* words.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +223,7 @@
 				130651382D538454005BCDEC /* VocaGroupList.swift in Sources */,
 				139119782CCD1EE60015799D /* ModelData.swift in Sources */,
 				135BBF552C8E673800F3A27D /* RandomVocaApp.swift in Sources */,
+				13CE17412D669C13009CB4F9 /* NotificationManager.swift in Sources */,
 				135BBF6D2C915A1E00F3A27D /* Play.swift in Sources */,
 				132D20422D6228DA00CE789C /* CoreCoreDataHelper.swift in Sources */,
 			);
@@ -356,7 +368,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RandomVoca/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "랜덤보카";
+				INFOPLIST_KEY_CFBundleDisplayName = "심플 랜덤 영단어";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -368,7 +380,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.21;
+				MARKETING_VERSION = 1.0.22;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -395,7 +407,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RandomVoca/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "랜덤보카";
+				INFOPLIST_KEY_CFBundleDisplayName = "심플 랜덤 영단어";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -407,7 +419,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.21;
+				MARKETING_VERSION = 1.0.22;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
