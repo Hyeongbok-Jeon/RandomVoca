@@ -43,7 +43,10 @@ struct PlayV2: View {
             }
         }
         .onAppear {
-            showRandomWord()
+            // ✅ 푸시에서 전달된 단어가 있을 경우 랜덤 단어 실행 안 함
+            if displayWordName == "단어 없음" {
+                showRandomWord()
+            }
         }
     }
 
