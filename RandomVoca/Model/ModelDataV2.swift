@@ -46,6 +46,8 @@ class ModelDataV2: ObservableObject {
                 let newWord = WordEntity(context: context)
                 newWord.id = UUID()  // ✅ Core Data의 UUID 자동 생성
                 newWord.name = wordData["name"] ?? "Unknown"
+                newWord.pronunciation = wordData["pronunciation"] ?? "Unknown"
+                newWord.meaning = wordData["meaning"] ?? "Unknown"
             }
             
             // ✅ 저장

@@ -4,11 +4,16 @@ struct PlayV2: View {
     @EnvironmentObject var modelData: ModelDataV2
 
     @State private var displayWordName: String
+    @State private var displayWordPronunciation: String
+    @State private var displayWordMeaning: String
     @State private var shownWords: [WordEntity] = [] // 이미 보여준 단어를 추적하는 배열
+    @State private var showMeaning: Bool = false // ✅ 뜻 표시 여부
     
     // ✅ 초기 단어를 받을 수 있도록 init 추가
     init(initialWord: String = "단어 없음") {
         _displayWordName = State(initialValue: initialWord)
+        _displayWordPronunciation = State(initialValue: "")
+        _displayWordMeaning = State(initialValue: "")
     }
 
     var body: some View {
@@ -22,21 +27,49 @@ struct PlayV2: View {
                 }
             
             VStack {
+                VStack {
+                    Spacer()
+                    
+                    Text(displayWordName)
+                        .font(.system(size: 80))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+//                        .padding()
+                    
+                    Text(displayWordPronunciation)
+                        .font(.system(size: 30))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+//                        .padding()
+                    
+                    // ✅ 뜻 (발음기호 아래에 표시)
+//                    if showMeaning {
+//                        Text(displayWordMeaning)
+//                            .font(.title)
+//                            .foregroundColor(.primary)
+//                            .padding(.top, 10) // 발음기호와 간격 조정
+//                            .transition(.opacity) // 부드러운 전환 효과 추가
+//                    }
+                    
+                    Spacer()
+                }
+                .frame(maxHeight: UIScreen.main.bounds.height / 5 * 2) // ✅ 화면의 절반 높이만 사용
+                
+                Divider()
+                    .frame(width: 300, height: 2) // ✅ 200px만 표시
+                    .background(Color.primary) // ✅ 파란색 Divider
+                
                 Spacer()
 
-                Text(displayWordName)
-                    .font(.system(size: 80))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .padding()
-
-                Spacer()
-
+                // ✅ "뜻 보기" 버튼은 계속 유지
                 Button {
-                    showDictionary(for: displayWordName)
+                    showMeaning = true // ✅ 버튼을 누르면 뜻 표시
                 } label: {
                     Text("뜻 보기")
                         .font(.largeTitle)
+                        .padding()
+                        .foregroundColor(.blue)
+                        .cornerRadius(10)
                 }
 
                 Spacer()
@@ -64,6 +97,7 @@ struct PlayV2: View {
         }
 
         displayWordName = randomWord.name ?? "단어 없음"
+        displayWordPronunciation = randomWord.pronunciation ?? "발음기호 없음"
         shownWords.append(randomWord) // 선택된 단어 기록
     }
 
