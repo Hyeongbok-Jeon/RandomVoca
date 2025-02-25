@@ -12,7 +12,7 @@ import GoogleMobileAds
 struct RandomVocaApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate  // ✅ AppDelegate 연결
     
-    @StateObject private var modelData = ModelDataV2()
+    @StateObject private var modelData = ModelData()
     
     var body: some Scene {
         WindowGroup {

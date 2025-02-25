@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // ✅ 최신 AdMob 초기화 코드
         MobileAds.shared.start(completionHandler: nil)
         print("✅ Google Mobile Ads SDK 초기화 완료")
-        UNUserNotificationCenter.current().delegate = self
-        NotificationManager.shared.requestNotificationPermission() // ✅ 앱 실행 시 알림 권한 요청 및 설정
+//        UNUserNotificationCenter.current().delegate = self
+//        NotificationManager.shared.requestNotificationPermission() // ✅ 앱 실행 시 알림 권한 요청 및 설정
         return true
     }
     

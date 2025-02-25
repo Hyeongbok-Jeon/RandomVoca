@@ -123,8 +123,8 @@ struct Play: View {
             }
         }
         
-        BannerAdView() // ✅ 배너 광고 추가
-            .frame(height: 50)
+//        BannerAdView() // ✅ 배너 광고 추가
+//            .frame(height: 50)
     }
     
     private func startTimer() {

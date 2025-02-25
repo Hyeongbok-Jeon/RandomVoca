@@ -173,8 +173,8 @@ struct VocaList: View {
                     }
                 }
                 
-                BannerAdView() // ✅ 배너 광고 추가
-                    .frame(height: 50)
+//                BannerAdView() // ✅ 배너 광고 추가
+//                    .frame(height: 50)
             }
             
             // 버튼 활성화 여부 계산
