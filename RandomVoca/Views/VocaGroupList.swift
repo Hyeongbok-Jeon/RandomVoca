@@ -4,17 +4,24 @@ struct VocaGroupList: View {
     @EnvironmentObject var modelData: ModelData
     @State private var showAddGroupPopup = false
     @State private var newGroupName: String = ""
-    @State private var showEmptyNameAlert = false // 그룹명이 비어있을 때 얼럿 상태
+    @State private var showEmptyNameAlert = false
 
-    // 그룹명 수정 시 사용되는 상태 변수
     @State private var editingGroup: VocaGroup?
     @State private var newEditedGroupName: String = ""
+
+    // 삭제 확인 팝업 상태 변수
+    @State private var showDeleteConfirmation = false
+    @State private var groupToDelete: VocaGroup?
+    
+    // 🚨 빈칸 체크 상태 변수
+    @State private var isNameEmpty = false
+    @State private var isEditedNameEmpty = false
 
     var body: some View {
         NavigationStack {
             VStack {
                 ScrollView {
-                    Spacer().frame(height: 40) // 상단 여백 추가
+                    Spacer().frame(height: 40)
                     
                     if modelData.groups.isEmpty {
                         VStack(spacing: 20) {
@@ -77,7 +84,8 @@ struct VocaGroupList: View {
                                         newEditedGroupName = group.name
                                     }
                                     Button("그룹 삭제", role: .destructive) {
-                                        deleteGroup(group: group)
+                                        groupToDelete = group
+                                        showDeleteConfirmation = true
                                     }
                                 }
                             }
@@ -100,19 +108,25 @@ struct VocaGroupList: View {
             }
             .alert("새 그룹 추가", isPresented: $showAddGroupPopup) {
                 TextField("그룹 이름", text: $newGroupName)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(isNameEmpty ? Color.red : Color.clear, lineWidth: 2) // 🚨 빈칸일 때 빨간 테두리
+                    )
                 
                 Button("추가") {
-                    let newGroup = VocaGroup(name: newGroupName, words: [])
-                    modelData.groups.append(newGroup)
-                    modelData.saveGroups()
+                    if newGroupName.trimmingCharacters(in: .whitespaces).isEmpty {
+                        isNameEmpty = true // 🚨 빈칸일 때 빨간 테두리
+                    } else {
+                        let newGroup = VocaGroup(name: newGroupName, words: [])
+                        modelData.groups.append(newGroup)
+                        modelData.saveGroups()
+                        newGroupName = ""
+                    }
+                }
+                Button("취소", role: .cancel) {
                     newGroupName = ""
                 }
-                Button("취소", role: .cancel) {}
             }
-//            .alert("알림", isPresented: $showEmptyNameAlert) { // 🚨 빈 그룹명 입력 시 얼럿
-//                Text("그룹명을 입력해주세요.")
-//                Button("확인", role: .cancel) {}
-//            }
             .alert("그룹명 변경", isPresented: Binding<Bool>(
                 get: { editingGroup != nil },
                 set: { if !$0 { editingGroup = nil } }
@@ -131,6 +145,19 @@ struct VocaGroupList: View {
                 }
             } message: {
                 Text("새 그룹명을 입력해주세요")
+            }
+            // 🌟 삭제 확인 팝업
+            .alert("그룹 삭제", isPresented: $showDeleteConfirmation) {
+                Button("삭제", role: .destructive) {
+                    if let group = groupToDelete {
+                        deleteGroup(group: group)
+                    }
+                }
+                Button("취소", role: .cancel) {
+                    groupToDelete = nil
+                }
+            } message: {
+                Text("정말로 삭제하시겠습니까?")
             }
         }
     }
