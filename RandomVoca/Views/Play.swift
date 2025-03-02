@@ -39,11 +39,21 @@ struct Play: View {
                     VStack {
                         Spacer()
                         
-                        Text(displayWordName)
-                            .font(.system(size: 80)) // 원하는 크기로 설정
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                            .padding()
+                        GeometryReader { geometry in
+                            VStack {
+                                Text(displayWordName)
+                                    .font(.system(size: 80))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                            }
+                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.6)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                            .position(x: geometry.size.width / 2, y: geometry.size.height / 3 * 2)
+                        }
                     }
                     .onAppear {
                         if playMode == "part" {
@@ -51,12 +61,16 @@ struct Play: View {
                         }
                         showRandomWord()
                     }
-                    .frame(height: UIScreen.main.bounds.height / 4) // 화면 높이의 절반으로 고정
+                    .frame(height: UIScreen.main.bounds.height / 3) // 화면 높이의 절반으로 고정
                     
                     Text(showMeaning ? displayWordMeaning : " ")
                         .foregroundColor(.orange)
                         .font(.system(size: 40))
                         .frame(height: 80)
+                    
+//                    Divider()
+//                        .frame(height: 2) // Divider의 높이를 2로 설정
+//                        .background(Color.gray) // Divider의 색상 설정
                     
                     Spacer()
                     
@@ -200,11 +214,15 @@ struct playViewButton: View {
                 .font(.title2)
                 .foregroundColor(.primary)
                 .padding()
-                .frame(maxWidth: .infinity)
+//                .frame(maxWidth: .infinity)
 //                .background(
 //                    RoundedRectangle(cornerRadius: 8)
 //                        .stroke(Color.primary, lineWidth: 2)
 //                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.white, lineWidth: 2)
+                )
         }
     }
 }

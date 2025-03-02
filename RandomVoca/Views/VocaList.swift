@@ -268,7 +268,7 @@ struct PlayOptionsView: View {
             Button {
                 onSelect("all")
             } label: {
-                Text("전체 재생")
+                Text("전체 학습")
                     .font(.title)
             }
             
@@ -283,7 +283,7 @@ struct PlayOptionsView: View {
             Button {
                 onSelect("part")
             } label: {
-                Text("모르는 단어만 재생")
+                Text("모르는 단어만 학습")
                     .font(.title)
             }
             .disabled(!modelData.words.contains(where: { !$0.isKnowWord }))

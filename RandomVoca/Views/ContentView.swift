@@ -11,12 +11,12 @@ struct ContentView: View {
     @State private var isActive = false
     
     var body: some View {
-        VocaGroupList()
+        PlayV2()
     }
 }
 
 #Preview {
     ContentView()
-        .environmentObject(ModelData())
+        .environmentObject(ModelDataV2())
         .preferredColorScheme(.dark)
 }
