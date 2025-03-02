@@ -11,10 +11,10 @@ struct PlayV2: View {
     @State private var textOpacity: Double = 1.0 // 단어/발음 텍스트의 opacity 제어
     
     // 초기 단어를 받을 수 있도록 init 추가
-    init(initialWord: String = "단어 없음") {
+    init(initialWord: String = "") {
         _displayWordName = State(initialValue: initialWord)
-        _displayWordPronunciation = State(initialValue: "")
-        _displayWordMeaning = State(initialValue: "")
+        _displayWordPronunciation = State(initialValue: initialWord)
+        _displayWordMeaning = State(initialValue: initialWord)
     }
 
     var body: some View {
@@ -29,6 +29,7 @@ struct PlayV2: View {
             .contentShape(Rectangle()) // 터치 가능 영역을 전체 화면으로 설정
             .onTapGesture {
                 withAnimation(.easeInOut(duration: 0.3)) {
+                    showMeaning = false
                     showRandomWord() // 새로운 단어 표시 (애니메이션 적용)
                 }
             }
@@ -46,11 +47,6 @@ struct PlayV2: View {
                             .shadow(radius: 10)
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    showMeaning.toggle() // 단어 터치 시 뜻 토글
-                                }
-                            }
                         
                         // 발음기호 (반투명 배경 추가)
                         Text(displayWordPronunciation)
@@ -60,11 +56,6 @@ struct PlayV2: View {
                             .padding(.vertical, 5)
                             .background(Color.white.opacity(0.2))
                             .clipShape(Capsule())
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    showMeaning.toggle() // 발음기호 터치 시 뜻 토글
-                                }
-                            }
                     }
                     .opacity(textOpacity)
                     
@@ -77,7 +68,7 @@ struct PlayV2: View {
                 // 고정된 공간을 예약하는 ZStack: 뜻 텍스트는 opacity로 제어
                 ZStack {
                     Text(displayWordMeaning)
-                        .font(.title)
+                        .font(.largeTitle)
                         .foregroundColor(.white.opacity(0.9))
                         .padding(.top, 10)
                         .opacity(showMeaning ? 1 : 0)
@@ -110,22 +101,24 @@ struct PlayV2: View {
             }
         }
         .onAppear {
-            if displayWordName == "단어 없음" {
+            if displayWordName == "" {
                 showRandomWord()
             }
         }
     }
 
     private func showRandomWord() {
-        // 뜻 표시를 초기화
-        showMeaning = false
+        // 즉시 뜻을 빈 문자열로 설정하고, 애니메이션 없이 showMeaning을 false로 만듭니다.
+        withAnimation(.none) {
+            showMeaning = false
+            displayWordMeaning = ""
+        }
         
-        // 먼저 fade out 효과 적용
+        // 단어와 발음 영역 fade out 애니메이션
         withAnimation(.easeOut(duration: 0.3)) {
             textOpacity = 0.0
         }
         
-        // 0.3초 후에 단어 업데이트 및 fade in 효과
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             guard !modelData.words.isEmpty else { return }
             
@@ -134,18 +127,20 @@ struct PlayV2: View {
             }
             
             let availableWords = modelData.words.filter { !shownWords.contains($0) }
-            guard let randomWord = availableWords.randomElement() else {
-                return
-            }
+            guard let randomWord = availableWords.randomElement() else { return }
             
-            displayWordName = randomWord.name ?? "단어 없음"
+            displayWordName = randomWord.name ?? ""
             displayWordPronunciation = randomWord.pronunciation ?? "발음기호 없음"
-            displayWordMeaning = randomWord.meaning ?? "뜻 없음"
-            
             shownWords.append(randomWord)
             
+            // 단어와 발음 fade in 애니메이션 실행
             withAnimation(.easeIn(duration: 0.3)) {
                 textOpacity = 1.0
+            }
+            
+            // fade in 애니메이션이 완료된 후, 뜻을 업데이트합니다.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                displayWordMeaning = randomWord.meaning ?? "뜻 없음"
             }
         }
     }
