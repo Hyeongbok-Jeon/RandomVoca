@@ -1,487 +1,102 @@
 [
-  {
-    "name": "basket",
-    "pronunciation": "/ˈbæskɪt/",
-    "meaning": "바구니"
-  },
-  {
-    "name": "apple",
-    "pronunciation": "/ˈæp.əl/",
-    "meaning": "사과"
-  },
-  {
-    "name": "book",
-    "pronunciation": "/bʊk/",
-    "meaning": "책"
-  },
-  {
-    "name": "cat",
-    "pronunciation": "/kæt/",
-    "meaning": "고양이"
-  },
-  {
-    "name": "dog",
-    "pronunciation": "/dɔːɡ/",
-    "meaning": "개"
-  },
-  {
-    "name": "house",
-    "pronunciation": "/haʊs/",
-    "meaning": "집"
-  },
-  {
-    "name": "tree",
-    "pronunciation": "/triː/",
-    "meaning": "나무"
-  },
-  {
-    "name": "water",
-    "pronunciation": "/ˈwɔː.tər/",
-    "meaning": "물"
-  },
-  {
-    "name": "car",
-    "pronunciation": "/kɑːr/",
-    "meaning": "자동차"
-  },
-  {
-    "name": "sun",
-    "pronunciation": "/sʌn/",
-    "meaning": "태양"
-  },
-  {
-    "name": "moon",
-    "pronunciation": "/muːn/",
-    "meaning": "달"
-  },
-  {
-    "name": "star",
-    "pronunciation": "/stɑːr/",
-    "meaning": "별"
-  },
-  {
-    "name": "river",
-    "pronunciation": "/ˈrɪv.ər/",
-    "meaning": "강"
-  },
-  {
-    "name": "mountain",
-    "pronunciation": "/ˈmaʊn.tən/",
-    "meaning": "산"
-  },
-  {
-    "name": "flower",
-    "pronunciation": "/ˈflaʊ.ər/",
-    "meaning": "꽃"
-  },
-  {
-    "name": "rain",
-    "pronunciation": "/reɪn/",
-    "meaning": "비"
-  },
-  {
-    "name": "wind",
-    "pronunciation": "/wɪnd/",
-    "meaning": "바람"
-  },
-  {
-    "name": "forest",
-    "pronunciation": "/ˈfɒr.ɪst/",
-    "meaning": "숲"
-  },
-  {
-    "name": "beach",
-    "pronunciation": "/biːtʃ/",
-    "meaning": "해변"
-  },
-  {
-    "name": "valley",
-    "pronunciation": "/ˈvæl.i/",
-    "meaning": "계곡"
-  },
-  {
-    "name": "computer",
-    "pronunciation": "/kəmˈpjuː.tər/",
-    "meaning": "컴퓨터"
-  },
-  {
-    "name": "phone",
-    "pronunciation": "/fəʊn/",
-    "meaning": "전화기"
-  },
-  {
-    "name": "table",
-    "pronunciation": "/ˈteɪ.bəl/",
-    "meaning": "테이블"
-  },
-  {
-    "name": "chair",
-    "pronunciation": "/tʃeər/",
-    "meaning": "의자"
-  },
-  {
-    "name": "window",
-    "pronunciation": "/ˈwɪn.doʊ/",
-    "meaning": "창문"
-  },
-  {
-    "name": "door",
-    "pronunciation": "/dɔːr/",
-    "meaning": "문"
-  },
-  {
-    "name": "pencil",
-    "pronunciation": "/ˈpen.səl/",
-    "meaning": "연필"
-  },
-  {
-    "name": "paper",
-    "pronunciation": "/ˈpeɪ.pər/",
-    "meaning": "종이"
-  },
-  {
-    "name": "school",
-    "pronunciation": "/skuːl/",
-    "meaning": "학교"
-  },
-  {
-    "name": "teacher",
-    "pronunciation": "/ˈtiː.tʃər/",
-    "meaning": "교사"
-  },
-  {
-    "name": "student",
-    "pronunciation": "/ˈstjuː.dənt/",
-    "meaning": "학생"
-  },
-  {
-    "name": "friend",
-    "pronunciation": "/frɛnd/",
-    "meaning": "친구"
-  },
-  {
-    "name": "love",
-    "pronunciation": "/lʌv/",
-    "meaning": "사랑"
-  },
-  {
-    "name": "food",
-    "pronunciation": "/fuːd/",
-    "meaning": "음식"
-  },
-  {
-    "name": "drink",
-    "pronunciation": "/drɪŋk/",
-    "meaning": "음료"
-  },
-  {
-    "name": "coffee",
-    "pronunciation": "/ˈkɒf.i/",
-    "meaning": "커피"
-  },
-  {
-    "name": "tea",
-    "pronunciation": "/tiː/",
-    "meaning": "차"
-  },
-  {
-    "name": "bread",
-    "pronunciation": "/brɛd/",
-    "meaning": "빵"
-  },
-  {
-    "name": "butter",
-    "pronunciation": "/ˈbʌt.ər/",
-    "meaning": "버터"
-  },
-  {
-    "name": "cheese",
-    "pronunciation": "/tʃiːz/",
-    "meaning": "치즈"
-  },
-  {
-    "name": "meat",
-    "pronunciation": "/miːt/",
-    "meaning": "고기"
-  },
-  {
-    "name": "fish",
-    "pronunciation": "/fɪʃ/",
-    "meaning": "생선"
-  },
-  {
-    "name": "egg",
-    "pronunciation": "/ɛɡ/",
-    "meaning": "달걀"
-  },
-  {
-    "name": "sugar",
-    "pronunciation": "/ˈʃʊɡ.ər/",
-    "meaning": "설탕"
-  },
-  {
-    "name": "salt",
-    "pronunciation": "/sɔːlt/",
-    "meaning": "소금"
-  },
-  {
-    "name": "pepper",
-    "pronunciation": "/ˈpep.ər/",
-    "meaning": "후추"
-  },
-  {
-    "name": "garden",
-    "pronunciation": "/ˈɡɑː.dən/",
-    "meaning": "정원"
-  },
-  {
-    "name": "plant",
-    "pronunciation": "/plænt/",
-    "meaning": "식물"
-  },
-  {
-    "name": "leaf",
-    "pronunciation": "/liːf/",
-    "meaning": "잎"
-  },
-  {
-    "name": "sky",
-    "pronunciation": "/skaɪ/",
-    "meaning": "하늘"
-  },
-  {
-    "name": "cloud",
-    "pronunciation": "/klaʊd/",
-    "meaning": "구름"
-  },
-  {
-    "name": "snow",
-    "pronunciation": "/snoʊ/",
-    "meaning": "눈"
-  },
-  {
-    "name": "ice",
-    "pronunciation": "/aɪs/",
-    "meaning": "얼음"
-  },
-  {
-    "name": "fire",
-    "pronunciation": "/ˈfaɪər/",
-    "meaning": "불"
-  },
-  {
-    "name": "earth",
-    "pronunciation": "/ɜːrθ/",
-    "meaning": "지구"
-  },
-  {
-    "name": "storm",
-    "pronunciation": "/stɔːrm/",
-    "meaning": "폭풍"
-  },
-  {
-    "name": "rainbow",
-    "pronunciation": "/ˈreɪn.boʊ/",
-    "meaning": "무지개"
-  },
-  {
-    "name": "music",
-    "pronunciation": "/ˈmjuː.zɪk/",
-    "meaning": "음악"
-  },
-  {
-    "name": "song",
-    "pronunciation": "/sɒŋ/",
-    "meaning": "노래"
-  },
-  {
-    "name": "dance",
-    "pronunciation": "/dæns/",
-    "meaning": "춤"
-  },
-  {
-    "name": "art",
-    "pronunciation": "/ɑːrt/",
-    "meaning": "예술"
-  },
-  {
-    "name": "movie",
-    "pronunciation": "/ˈmuː.vi/",
-    "meaning": "영화"
-  },
-  {
-    "name": "photo",
-    "pronunciation": "/ˈfoʊ.t̬oʊ/",
-    "meaning": "사진"
-  },
-  {
-    "name": "novel",
-    "pronunciation": "/ˈnɒv.əl/",
-    "meaning": "소설"
-  },
-  {
-    "name": "story",
-    "pronunciation": "/ˈstɔːr.i/",
-    "meaning": "이야기"
-  },
-  {
-    "name": "poem",
-    "pronunciation": "/ˈpoʊ.ɪm/",
-    "meaning": "시"
-  },
-  {
-    "name": "letter",
-    "pronunciation": "/ˈlet.ər/",
-    "meaning": "편지"
-  },
-  {
-    "name": "clock",
-    "pronunciation": "/klɒk/",
-    "meaning": "시계"
-  },
-  {
-    "name": "watch",
-    "pronunciation": "/wɒtʃ/",
-    "meaning": "시계(손목시계)"
-  },
-  {
-    "name": "time",
-    "pronunciation": "/taɪm/",
-    "meaning": "시간"
-  },
-  {
-    "name": "space",
-    "pronunciation": "/speɪs/",
-    "meaning": "우주"
-  },
-  {
-    "name": "planet",
-    "pronunciation": "/ˈplæn.ɪt/",
-    "meaning": "행성"
-  },
-  {
-    "name": "galaxy",
-    "pronunciation": "/ˈɡæl.ək.si/",
-    "meaning": "은하"
-  },
-  {
-    "name": "universe",
-    "pronunciation": "/ˈjuː.nɪ.vɜːrs/",
-    "meaning": "우주"
-  },
-  {
-    "name": "ocean",
-    "pronunciation": "/ˈoʊ.ʃən/",
-    "meaning": "대양"
-  },
-  {
-    "name": "lake",
-    "pronunciation": "/leɪk/",
-    "meaning": "호수"
-  },
-  {
-    "name": "stream",
-    "pronunciation": "/striːm/",
-    "meaning": "시내"
-  },
-  {
-    "name": "hill",
-    "pronunciation": "/hɪl/",
-    "meaning": "언덕"
-  },
-  {
-    "name": "road",
-    "pronunciation": "/roʊd/",
-    "meaning": "도로"
-  },
-  {
-    "name": "bridge",
-    "pronunciation": "/brɪdʒ/",
-    "meaning": "다리"
-  },
-  {
-    "name": "city",
-    "pronunciation": "/ˈsɪt.i/",
-    "meaning": "도시"
-  },
-  {
-    "name": "country",
-    "pronunciation": "/ˈkʌn.tri/",
-    "meaning": "나라"
-  },
-  {
-    "name": "world",
-    "pronunciation": "/wɜːrld/",
-    "meaning": "세계"
-  },
-  {
-    "name": "flag",
-    "pronunciation": "/flæɡ/",
-    "meaning": "깃발"
-  },
-  {
-    "name": "money",
-    "pronunciation": "/ˈmʌn.i/",
-    "meaning": "돈"
-  },
-  {
-    "name": "bank",
-    "pronunciation": "/bæŋk/",
-    "meaning": "은행"
-  },
-  {
-    "name": "shop",
-    "pronunciation": "/ʃɒp/",
-    "meaning": "가게"
-  },
-  {
-    "name": "market",
-    "pronunciation": "/ˈmɑːr.kɪt/",
-    "meaning": "시장"
-  },
-  {
-    "name": "bus",
-    "pronunciation": "/bʌs/",
-    "meaning": "버스"
-  },
-  {
-    "name": "train",
-    "pronunciation": "/treɪn/",
-    "meaning": "기차"
-  },
-  {
-    "name": "airplane",
-    "pronunciation": "/ˈɛərˌpleɪn/",
-    "meaning": "비행기"
-  },
-  {
-    "name": "ship",
-    "pronunciation": "/ʃɪp/",
-    "meaning": "배"
-  },
-  {
-    "name": "bike",
-    "pronunciation": "/baɪk/",
-    "meaning": "자전거"
-  },
-  {
-    "name": "street",
-    "pronunciation": "/striːt/",
-    "meaning": "거리"
-  },
-  {
-    "name": "park",
-    "pronunciation": "/pɑːrk/",
-    "meaning": "공원"
-  },
-  {
-    "name": "hospital",
-    "pronunciation": "/ˈhɒs.pɪ.təl/",
-    "meaning": "병원"
-  },
-  {
-    "name": "church",
-    "pronunciation": "/tʃɜːtʃ/",
-    "meaning": "교회"
-  }
+  {"name": "I like to travel.", "meaning": "나는 여행을 좋아해요."},
+  {"name": "My name is John.", "meaning": "제 이름은 존입니다."},
+  {"name": "Nice to meet you.", "meaning": "만나서 반갑습니다."},
+  {"name": "How are you?", "meaning": "어떻게 지내세요?"},
+  {"name": "I am fine, thank you.", "meaning": "저는 잘 지내요, 감사합니다."},
+  {"name": "Where is the bathroom?", "meaning": "화장실이 어디에 있나요?"},
+  {"name": "How much is this?", "meaning": "이것은 얼마인가요?"},
+  {"name": "I don't understand.", "meaning": "이해가 안 돼요."},
+  {"name": "Please speak slowly.", "meaning": "천천히 말해 주세요."},
+  {"name": "I am hungry.", "meaning": "배가 고파요."},
+  {"name": "The food is delicious.", "meaning": "음식이 맛있어요."},
+  {"name": "What time is it?", "meaning": "몇 시인가요?"},
+  {"name": "I need help.", "meaning": "도움이 필요해요."},
+  {"name": "Can you help me?", "meaning": "저를 도와주실 수 있나요?"},
+  {"name": "I am lost.", "meaning": "길을 잃었어요."},
+  {"name": "I want to go shopping.", "meaning": "쇼핑하러 가고 싶어요."},
+  {"name": "Do you speak English?", "meaning": "영어를 하시나요?"},
+  {"name": "I speak a little Korean.", "meaning": "한국어를 조금 할 수 있어요."},
+  {"name": "I live in Seoul.", "meaning": "저는 서울에 살아요."},
+  {"name": "I am from America.", "meaning": "저는 미국에서 왔어요."},
+  {"name": "I like Korean food.", "meaning": "한국 음식을 좋아해요."},
+  {"name": "What is your favorite color?", "meaning": "당신이 가장 좋아하는 색은 무엇인가요?"},
+  {"name": "My favorite color is blue.", "meaning": "제가 가장 좋아하는 색은 파란색이에요."},
+  {"name": "I have a question.", "meaning": "질문이 있어요."},
+  {"name": "I'm sorry.", "meaning": "죄송합니다."},
+  {"name": "Thank you very much.", "meaning": "정말 감사합니다."},
+  {"name": "You're welcome.", "meaning": "천만에요."},
+  {"name": "See you tomorrow.", "meaning": "내일 봐요."},
+  {"name": "I love you.", "meaning": "사랑해요."},
+  {"name": "I miss you.", "meaning": "보고 싶어요."},
+  {"name": "Happy birthday!", "meaning": "생일 축하해요!"},
+  {"name": "Congratulations!", "meaning": "축하합니다!"},
+  {"name": "Good luck!", "meaning": "행운을 빌어요!"},
+  {"name": "I need to go now.", "meaning": "이제 가야 해요."},
+  {"name": "What's your phone number?", "meaning": "전화번호가 뭐예요?"},
+  {"name": "Can I have the bill, please?", "meaning": "계산서 주세요."},
+  {"name": "It's too expensive.", "meaning": "너무 비싸요."},
+  {"name": "Can you give me a discount?", "meaning": "할인해 주실 수 있나요?"},
+  {"name": "I'm looking for the subway station.", "meaning": "지하철역을 찾고 있어요."},
+  {"name": "I want to rent a car.", "meaning": "차를 렌트하고 싶어요."},
+  {"name": "What's the weather like today?", "meaning": "오늘 날씨가 어때요?"},
+  {"name": "It's raining.", "meaning": "비가 오고 있어요."},
+  {"name": "It's sunny today.", "meaning": "오늘은 맑아요."},
+  {"name": "I have a cold.", "meaning": "감기에 걸렸어요."},
+  {"name": "I need to see a doctor.", "meaning": "의사를 봐야 해요."},
+  {"name": "I'm allergic to peanuts.", "meaning": "저는 땅콩 알레르기가 있어요."},
+  {"name": "Can I pay by credit card?", "meaning": "신용카드로 결제할 수 있나요?"},
+  {"name": "I'd like to make a reservation.", "meaning": "예약을 하고 싶어요."},
+  {"name": "What do you do for a living?", "meaning": "직업이 뭐예요?"},
+  {"name": "I am a teacher.", "meaning": "저는 선생님이에요."},
+  {"name": "I'm studying Korean.", "meaning": "한국어를 공부하고 있어요."},
+  {"name": "How long have you been in Korea?", "meaning": "한국에 얼마나 오래 있었어요?"},
+  {"name": "I've been here for two years.", "meaning": "여기 2년 동안 있었어요."},
+  {"name": "Do you have any siblings?", "meaning": "형제자매가 있나요?"},
+  {"name": "I have one brother and one sister.", "meaning": "오빠 한 명과 여동생 한 명이 있어요."},
+  {"name": "Are you married?", "meaning": "결혼하셨나요?"},
+  {"name": "I'm single.", "meaning": "저는 미혼이에요."},
+  {"name": "What kind of movies do you like?", "meaning": "어떤 영화를 좋아하세요?"},
+  {"name": "I like action movies.", "meaning": "저는 액션 영화를 좋아해요."},
+  {"name": "What's your hobby?", "meaning": "취미가 뭐예요?"},
+  {"name": "I like playing the piano.", "meaning": "피아노 치는 것을 좋아해요."},
+  {"name": "I need to buy a ticket.", "meaning": "표를 사야 해요."},
+  {"name": "What time does the movie start?", "meaning": "영화가 몇 시에 시작하나요?"},
+  {"name": "I'd like a window seat, please.", "meaning": "창가 자리 주세요."},
+  {"name": "Could you take a photo of me?", "meaning": "제 사진을 찍어 주실 수 있나요?"},
+  {"name": "I want to go to the beach.", "meaning": "해변에 가고 싶어요."},
+  {"name": "How far is it from here?", "meaning": "여기서 얼마나 멀어요?"},
+  {"name": "It's about 10 minutes by car.", "meaning": "차로 약 10분 거리예요."},
+  {"name": "I want to learn Korean.", "meaning": "한국어를 배우고 싶어요."},
+  {"name": "How do you say this in Korean?", "meaning": "이것을 한국어로 어떻게 말하나요?"},
+  {"name": "Could you repeat that?", "meaning": "다시 말씀해 주시겠어요?"},
+  {"name": "I don't feel well.", "meaning": "몸이 안 좋아요."},
+  {"name": "I'm tired.", "meaning": "피곤해요."},
+  {"name": "I'm excited.", "meaning": "신이 나요."},
+  {"name": "I'm nervous.", "meaning": "긴장돼요."},
+  {"name": "I'm happy.", "meaning": "행복해요."},
+  {"name": "I'm sad.", "meaning": "슬퍼요."},
+  {"name": "I'm busy these days.", "meaning": "요즘 바빠요."},
+  {"name": "Let's meet next week.", "meaning": "다음 주에 만나요."},
+  {"name": "That sounds good.", "meaning": "좋은 것 같아요."},
+  {"name": "I agree with you.", "meaning": "당신에 동의해요."},
+  {"name": "I disagree.", "meaning": "동의하지 않아요."},
+  {"name": "What do you think?", "meaning": "어떻게 생각하세요?"},
+  {"name": "I think so too.", "meaning": "저도 그렇게 생각해요."},
+  {"name": "I'm not sure.", "meaning": "잘 모르겠어요."},
+  {"name": "Let me think about it.", "meaning": "생각해 볼게요."},
+  {"name": "I'll call you later.", "meaning": "나중에 전화할게요."},
+  {"name": "Please leave a message.", "meaning": "메시지를 남겨 주세요."},
+  {"name": "Do you have Wi-Fi here?", "meaning": "여기 와이파이가 있나요?"},
+  {"name": "What's the Wi-Fi password?", "meaning": "와이파이 비밀번호가 뭐예요?"},
+  {"name": "Can I borrow your pen?", "meaning": "펜 좀 빌릴 수 있을까요?"},
+  {"name": "I forgot my wallet.", "meaning": "지갑을 잊어버렸어요."},
+  {"name": "Could you lend me some money?", "meaning": "돈 좀 빌려주실 수 있나요?"},
+  {"name": "I'll pay you back tomorrow.", "meaning": "내일 돌려드릴게요."},
+  {"name": "What are your plans for the weekend?", "meaning": "주말 계획이 어떻게 되세요?"},
+  {"name": "I have no plans yet.", "meaning": "아직 계획이 없어요."},
+  {"name": "Would you like to join us?", "meaning": "저희와 함께 하시겠어요?"},
+  {"name": "That was fun!", "meaning": "재미있었어요!"},
+  {"name": "I had a great time.", "meaning": "정말 즐거웠어요."},
+  {"name": "Let's do this again sometime.", "meaning": "다음에 또 해요."}
 ]

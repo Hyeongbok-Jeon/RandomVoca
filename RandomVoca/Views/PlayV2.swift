@@ -1,16 +1,32 @@
 import SwiftUI
+import AVFoundation  // AVFoundation 임포트 (발음 재생용)
 
 struct PlayV2: View {
     @EnvironmentObject var modelData: ModelDataV2
+    @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
+    @Environment(\.colorScheme) var colorScheme
 
+    // Word display states
     @State private var displayWordName: String
     @State private var displayWordPronunciation: String
     @State private var displayWordMeaning: String
-    @State private var shownWords: [WordEntity] = [] // 이미 보여준 단어를 추적하는 배열
-    @State private var showMeaning: Bool = false // 뜻 표시 여부
-    @State private var textOpacity: Double = 1.0 // 단어/발음 텍스트의 opacity 제어
+    @State private var currentWordIndex: Int = -1
+    @State private var randomIndices: [Int] = []
     
-    // 초기 단어를 받을 수 있도록 init 추가
+    // UI states
+    @State private var showMeaning: Bool = false
+    @State private var textOpacity: Double = 1.0
+    @State private var isWordChanging: Bool = false
+    
+    // Animation settings
+    private let fadeDuration: Double = 0.2
+    
+    // Feedback generator
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    
+    // Speech synthesizer
+    private let speechSynthesizer = AVSpeechSynthesizer()
+    
     init(initialWord: String = "") {
         _displayWordName = State(initialValue: initialWord)
         _displayWordPronunciation = State(initialValue: initialWord)
@@ -19,130 +35,188 @@ struct PlayV2: View {
 
     var body: some View {
         ZStack {
-            // 그라디언트 배경 추가 (블루 & 퍼플 계열)
-            LinearGradient(
-                gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.9)]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            .contentShape(Rectangle()) // 터치 가능 영역을 전체 화면으로 설정
-            .onTapGesture {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    showMeaning = false
-                    showRandomWord() // 새로운 단어 표시 (애니메이션 적용)
-                }
-            }
+            Color(UIColor.systemBackground)
+                .ignoresSafeArea()
             
-            VStack {
-                VStack {
-                    Spacer()
-                    
-                    // 단어와 발음 텍스트를 감싸는 컨테이너에 opacity 적용
-                    VStack {
-                        // 단어 표시 (큰 폰트 + 커스텀 글꼴)
-                        Text(displayWordName)
-                            .font(.system(size: 90, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
-                            .shadow(radius: 10)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                        
-                        // 발음기호 (반투명 배경 추가)
-                        Text(displayWordPronunciation)
-                            .font(.system(size: 30, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.9))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 5)
-                            .background(Color.white.opacity(0.2))
-                            .clipShape(Capsule())
-                    }
-                    .opacity(textOpacity)
-                    
+            VStack(spacing: 16) {
+//                HStack {
+//                    Text("\(currentWordIndex + 1 > 0 ? currentWordIndex + 1 : 0) / \(modelData.words.count)")
+//                        .font(.subheadline)
+//                        .foregroundColor(.secondary)
+//                    
 //                    Spacer()
-                }
-                .frame(maxHeight: UIScreen.main.bounds.height / 3)
+//                    
+//                    ProgressView(value: Double(currentWordIndex + 1) / Double(max(1, modelData.words.count)))
+//                        .progressViewStyle(LinearProgressViewStyle())
+//                        .frame(width: 100)
+//                }
+//                .padding(.horizontal)
+//                .padding(.top, 8)
                 
                 Spacer()
                 
-                // 고정된 공간을 예약하는 ZStack: 뜻 텍스트는 opacity로 제어
                 ZStack {
-                    Text(displayWordMeaning)
-                        .font(.largeTitle)
-                        .foregroundColor(.white.opacity(0.9))
-                        .padding(.top, 10)
-                        .opacity(showMeaning ? 1 : 0)
-                        .animation(.easeInOut(duration: 0.5), value: showMeaning)
-                }
-                .frame(height: 50) // 뜻 영역의 높이를 고정
-
-                Spacer()
-                
-                // "뜻 보기" 버튼 - 위치 고정을 위해 독립된 컨테이너에 배치
-                Button {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        showMeaning = true
+                    VStack(spacing: 24) {
+                        Text(showMeaning ? displayWordMeaning : displayWordName)
+                            .font(.system(size: 48, weight: .bold, design: .rounded))
+                            .foregroundColor(.primary)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.5)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                        
+                        HStack(spacing: 8) {
+//                            Text(displayWordPronunciation)
+//                                .font(.system(size: 22, design: .serif))
+//                                .foregroundColor(.secondary)
+//                                .padding(.horizontal, 16)
+//                                .padding(.vertical, 6)
+//                                .background(
+//                                    RoundedRectangle(cornerRadius: 8)
+//                                        .fill(Color(UIColor.secondarySystemBackground))
+//                                )
+                            
+                            Button(action: {
+                                playPronunciation()  // 발음 재생
+                            }) {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(.primary)
+                            }
+                        }
                     }
-                } label: {
-                    Text("뜻 보기")
-                        .font(.title)
-                        .bold()
-                        .padding()
-                        .frame(width: 200, height: 60)
-                        .background(
-                            LinearGradient(colors: [Color.blue, Color.purple], startPoint: .top, endPoint: .bottom)
-                        )
-                        .foregroundColor(.white)
-                        .cornerRadius(30)
-                        .shadow(color: .purple.opacity(0.5), radius: 10, x: 0, y: 5)
+                    .padding(30)
+                    .frame(maxWidth: .infinity, maxHeight: 300)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(UIColor.tertiarySystemBackground))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                    )
+                    .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
                 }
+                .opacity(textOpacity)
+                .padding(.horizontal)
                 
                 Spacer()
+                
+                HStack(spacing: 20) {
+                    Button(action: {
+                        flipCard()  // 뜻 보기/단어 보기 전환
+                    }) {
+                        Text(showMeaning ? "문장 보기" : "뜻 보기")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                Capsule()
+                                    .fill(Color(UIColor.secondarySystemBackground))
+                            )
+                            .shadow(radius: 2)
+                    }
+                    
+                    Button(action: {
+                        showNextWord()  // 다음 단어로 이동
+                    }) {
+                        Text("다음 문장")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                Capsule()
+                                    .fill(Color(UIColor.secondarySystemBackground))
+                            )
+                            .shadow(radius: 2)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 30)
             }
         }
         .onAppear {
-            if displayWordName == "" {
-                showRandomWord()
+            prepareHaptics()
+            if displayWordName.isEmpty {
+                initializeRandomIndices()
+                showNextWord()
             }
         }
     }
-
-    private func showRandomWord() {
-        // 즉시 뜻을 빈 문자열로 설정하고, 애니메이션 없이 showMeaning을 false로 만듭니다.
-        withAnimation(.none) {
-            showMeaning = false
-            displayWordMeaning = ""
-        }
+    
+    // MARK: - 발음 재생 함수
+    private func playPronunciation() {
+        let utterance = AVSpeechUtterance(string: displayWordName)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = 0.5
+        speechSynthesizer.speak(utterance)
+    }
+    
+    // MARK: - Prepare haptics
+    private func prepareHaptics() {
+        feedbackGenerator.prepare()
+    }
+    
+    // MARK: - Initialize random indices
+    private func initializeRandomIndices() {
+        guard !modelData.words.isEmpty else { return }
+        randomIndices = Array(0..<modelData.words.count).shuffled()
+        currentWordIndex = -1
+    }
+    
+    // MARK: - Flip card effect (뜻 보기/단어 보기 전환)
+    private func flipCard() {
+        feedbackGenerator.impactOccurred(intensity: 0.4)
+        showMeaning.toggle()
+    }
+    
+    // MARK: - Show next word (다음 단어 시 단어 보기 모드로 전환)
+    private func showNextWord() {
+        guard !isWordChanging else { return }
         
-        // 단어와 발음 영역 fade out 애니메이션
-        withAnimation(.easeOut(duration: 0.3)) {
+        isWordChanging = true
+        feedbackGenerator.impactOccurred(intensity: 0.5)
+        
+        // opacity를 0으로 설정하여 이전 단어를 숨깁니다.
+        withAnimation(.easeOut(duration: fadeDuration)) {
             textOpacity = 0.0
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            guard !modelData.words.isEmpty else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + fadeDuration) {
+            // 새로운 단어로 변경합니다.
+            updateWordContent()
             
-            if shownWords.count == modelData.words.count {
-                shownWords.removeAll()
-            }
+            // showMeaning 상태를 바꿔서 단어 보기 모드로 돌아갑니다.
+            showMeaning = false
             
-            let availableWords = modelData.words.filter { !shownWords.contains($0) }
-            guard let randomWord = availableWords.randomElement() else { return }
-            
-            displayWordName = randomWord.name ?? ""
-            displayWordPronunciation = randomWord.pronunciation ?? "발음기호 없음"
-            shownWords.append(randomWord)
-            
-            // 단어와 발음 fade in 애니메이션 실행
-            withAnimation(.easeIn(duration: 0.3)) {
+            // opacity를 1로 설정하면서 애니메이션을 적용합니다.
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                 textOpacity = 1.0
             }
             
-            // fade in 애니메이션이 완료된 후, 뜻을 업데이트합니다.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                displayWordMeaning = randomWord.meaning ?? "뜻 없음"
+            // 애니메이션 종료 후 isWordChanging을 false로 설정
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isWordChanging = false
             }
         }
+    }
+    
+    // MARK: - Update word content
+    private func updateWordContent() {
+        guard !modelData.words.isEmpty else { return }
+        
+        if currentWordIndex >= randomIndices.count - 1 || randomIndices.isEmpty {
+            initializeRandomIndices()
+        }
+        
+        currentWordIndex += 1
+        let wordIndex = randomIndices[currentWordIndex % randomIndices.count]
+        let currentWord = modelData.words[wordIndex]
+        
+        displayWordName = currentWord.name ?? ""
+        displayWordMeaning = currentWord.meaning ?? "No meaning available"
     }
 }
 

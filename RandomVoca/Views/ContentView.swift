@@ -18,5 +18,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(ModelDataV2())
-        .preferredColorScheme(.dark)
+//        .preferredColorScheme(.dark)
 }

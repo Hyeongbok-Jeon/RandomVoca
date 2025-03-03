@@ -4,6 +4,5 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="meaning" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="pronunciation" optional="YES" attributeType="String"/>
     </entity>
 </model>
