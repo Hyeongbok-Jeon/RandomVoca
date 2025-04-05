@@ -159,6 +159,9 @@ struct VocaGroupList: View {
             } message: {
                 Text("정말로 삭제하시겠습니까?")
             }
+            
+//            BannerAdView() // ✅ 배너 광고 추가
+//                .frame(height: 50)
         }
     }
 
@@ -175,5 +178,5 @@ struct VocaGroupList: View {
 #Preview {
     VocaGroupList()
         .environmentObject(ModelData())
-        .preferredColorScheme(.dark)
+//        .preferredColorScheme(.dark)
 }

@@ -70,15 +70,15 @@ struct VocaList: View {
                                         .frame(maxWidth: .infinity)
                                         .multilineTextAlignment(.center)
                                     
-                                    HStack {
-                                        Text("\(String(word.knowTime))")
-                                            .frame(maxWidth: .infinity)
-                                        
-                                        Circle()
-                                            .fill(word.isKnowWord ? Color.green : Color.red)
-                                            .frame(width: 10, height: 10)
-                                    }
-                                    .frame(maxWidth: .infinity)
+//                                    HStack {
+//                                        Text("\(String(word.knowTime))")
+//                                            .frame(maxWidth: .infinity)
+//                                        
+//                                        Circle()
+//                                            .fill(word.isKnowWord ? Color.green : Color.red)
+//                                            .frame(width: 10, height: 10)
+//                                    }
+//                                    .frame(maxWidth: .infinity)
                                     
                                 }
                                 .padding(.horizontal, 30)
@@ -156,20 +156,21 @@ struct VocaList: View {
                             }
                         }
                     }
-                    .sheet(isPresented: $showPlayOptions) {
-                        PlayOptionsView { playMode in
-                            showPlayOptions = false
-                            if !playMode.isEmpty {
-                                selectedPlayMode = playMode
-                                navigateToPlay = true
-                            }
-                        }
-                        .presentationDetents([.fraction(0.25)]) // 높이를 30% 또는 50%로 설정
-                        .presentationDragIndicator(.visible) // 드래그 바 표시
-                        .environmentObject(modelData)
-                    }
+//                    .sheet(isPresented: $showPlayOptions) {
+//                        PlayOptionsView { playMode in
+//                            showPlayOptions = false
+//                            if !playMode.isEmpty {
+//                                selectedPlayMode = playMode
+//                                navigateToPlay = true
+//                            }
+//                        }
+//                        .presentationDetents([.fraction(0.25)]) // 높이를 30% 또는 50%로 설정
+//                        .presentationDragIndicator(.visible) // 드래그 바 표시
+//                        .environmentObject(modelData)
+//                    }
                     .navigationDestination(isPresented: $navigateToPlay) {
-                        Play(playMode: selectedPlayMode)
+//                        Play(playMode: selectedPlayMode)
+                        Play(playMode: "all")
                     }
                 }
                 
@@ -188,7 +189,8 @@ struct VocaList: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        showPlayOptions = true
+//                        showPlayOptions = true
+                        navigateToPlay = true
                     }) {
                         Image(systemName: "play.fill")
                             .foregroundColor(.white)
@@ -198,12 +200,15 @@ struct VocaList: View {
                             .clipShape(Circle())
                             .shadow(radius: 6)
                     }
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 20)
                     .padding(.trailing, 50) // 오른쪽 여백 추가
                     .disabled(!isButtonEnabled)
                 }
             }
         }
+        
+//        BannerAdView() // ✅ 배너 광고 추가
+//            .frame(height: 50)
     }
     
     // 선택된 단어 ID를 토글
@@ -298,6 +303,6 @@ struct PlayOptionsView: View {
     NavigationStack {
         VocaList()
             .environmentObject(ModelData())
-            .preferredColorScheme(.dark)
+//            .preferredColorScheme(.dark)
     }
 }
