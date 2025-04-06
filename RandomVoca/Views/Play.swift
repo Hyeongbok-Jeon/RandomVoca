@@ -232,7 +232,7 @@ struct Play: View {
                 .cornerRadius(20)
                 .padding(.top, 20)
                 .padding(.horizontal, 40)
-                .padding(.bottom, 70)
+                .padding(.bottom, 90)
                 .shadow(radius: 10)
             }
         }
