@@ -20,39 +20,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        completionHandler([.banner, .sound])
-    }
-
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
-        // ✅ 알림에서 단어 정보 추출
-        let userInfo = response.notification.request.content.userInfo
-        if let word = userInfo["word"] as? String {
-            selectedWord = word
-            DispatchQueue.main.async {
-                self.navigateToPlayScreen(with: word)
-            }
-        }
-        completionHandler()
-    }
-
-    // ✅ PlayV2 화면으로 이동 + 단어 전달
-    private func navigateToPlayScreen(with word: String) {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            let modelData = ModelDataV2()
-            let rootView = PlayV2(initialWord: word) // ✅ 초기 단어 전달
-                .environmentObject(modelData)
-            window.rootViewController = UIHostingController(rootView: rootView)
-            window.makeKeyAndVisible()
-        }
-    }
+//    func userNotificationCenter(
+//        _ center: UNUserNotificationCenter,
+//        willPresent notification: UNNotification,
+//        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+//    ) {
+//        completionHandler([.banner, .sound])
+//    }
+//
+//    func userNotificationCenter(
+//        _ center: UNUserNotificationCenter,
+//        didReceive response: UNNotificationResponse,
+//        withCompletionHandler completionHandler: @escaping () -> Void
+//    ) {
+//        // ✅ 알림에서 단어 정보 추출
+//        let userInfo = response.notification.request.content.userInfo
+//        if let word = userInfo["word"] as? String {
+//            selectedWord = word
+//            DispatchQueue.main.async {
+//                self.navigateToPlayScreen(with: word)
+//            }
+//        }
+//        completionHandler()
+//    }
+//
+//    // ✅ PlayV2 화면으로 이동 + 단어 전달
+//    private func navigateToPlayScreen(with word: String) {
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let window = windowScene.windows.first {
+//            let modelData = ModelDataV2()
+//            let rootView = PlayV2(initialWord: word) // ✅ 초기 단어 전달
+//                .environmentObject(modelData)
+//            window.rootViewController = UIHostingController(rootView: rootView)
+//            window.makeKeyAndVisible()
+//        }
+//    }
 }

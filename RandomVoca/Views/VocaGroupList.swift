@@ -21,8 +21,6 @@ struct VocaGroupList: View {
         NavigationStack {
             VStack {
                 ScrollView {
-                    Spacer().frame(height: 40)
-                    
                     if modelData.groups.isEmpty {
                         VStack(spacing: 20) {
                             Image(systemName: "book.fill")
@@ -64,16 +62,16 @@ struct VocaGroupList: View {
                                             .foregroundColor(.primary)
                                             .padding()
                                     }
-                                    .frame(width: 160, height: 160)
+                                    .frame(width: 160, height: 100)
                                     .background(
-                                        RoundedRectangle(cornerRadius: 20)
+                                        RoundedRectangle(cornerRadius: 10)
                                             .fill(Color(UIColor.systemBackground))
                                             .shadow(color: Color.primary.opacity(0.2), radius: 5, x: 2, y: 2)
                                     )
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .stroke(Color.primary.opacity(0.7), lineWidth: 2)
-                                    )
+//                                    .overlay(
+//                                        RoundedRectangle(cornerRadius: 10)
+//                                            .stroke(Color.primary.opacity(0.7), lineWidth: 2)
+//                                    )
                                 }
                                 .simultaneousGesture(TapGesture().onEnded {
                                     modelData.selectedGroup = group
@@ -90,18 +88,29 @@ struct VocaGroupList: View {
                                 }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, -30)
                     }
                 }
+//                .padding(.top, -20)
+                BannerAdView() // ✅ 배너 광고 추가
+                    .frame(height: 50)
             }
-            .navigationTitle("단어 그룹")
+            .background(Color(UIColor.systemGray6).ignoresSafeArea())
+//            .ignoresSafeArea(.container, edges: .top)
+//            .navigationTitle("홈")
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("홈")
+                        .font(.title2) // 또는 .title, .title2 등
+                }
+                
                 if !modelData.groups.isEmpty {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: { showAddGroupPopup = true }) {
                             Image(systemName: "plus.circle.fill")
                                 .font(.title)
-                                .foregroundColor(.blue)
+                                .foregroundColor(.primary)
                         }
                     }
                 }
@@ -159,9 +168,6 @@ struct VocaGroupList: View {
             } message: {
                 Text("정말로 삭제하시겠습니까?")
             }
-            
-//            BannerAdView() // ✅ 배너 광고 추가
-//                .frame(height: 50)
         }
     }
 

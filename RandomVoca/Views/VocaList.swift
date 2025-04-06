@@ -63,6 +63,9 @@ struct VocaList: View {
                                         .textFieldStyle(.roundedBorder)
                                         .frame(maxWidth: .infinity)
                                         .multilineTextAlignment(.center)
+                                        .onSubmit {
+                                            focusedField = .meaning(word.id) // 엔터 누르면 뜻 칸으로 이동
+                                        }
                                     
                                     TextField("뜻", text: $word.meaning)
                                         .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
@@ -70,15 +73,16 @@ struct VocaList: View {
                                         .frame(maxWidth: .infinity)
                                         .multilineTextAlignment(.center)
                                     
-//                                    HStack {
-//                                        Text("\(String(word.knowTime))")
-//                                            .frame(maxWidth: .infinity)
-//                                        
-//                                        Circle()
-//                                            .fill(word.isKnowWord ? Color.green : Color.red)
-//                                            .frame(width: 10, height: 10)
-//                                    }
-//                                    .frame(maxWidth: .infinity)
+                                    HStack {
+                                        Text("\(String(word.knowTime))")
+                                            .frame(maxWidth: .infinity)
+                                        Spacer()
+                                        Circle()
+                                            .fill(word.isKnowWord ? Color.green : Color.red)
+                                            .frame(width: 10, height: 10)
+//                                        Spacer()
+                                    }
+//                                    .frame(width: 30)
                                     
                                 }
                                 .padding(.horizontal, 30)
@@ -156,26 +160,24 @@ struct VocaList: View {
                             }
                         }
                     }
-//                    .sheet(isPresented: $showPlayOptions) {
-//                        PlayOptionsView { playMode in
-//                            showPlayOptions = false
-//                            if !playMode.isEmpty {
-//                                selectedPlayMode = playMode
-//                                navigateToPlay = true
-//                            }
-//                        }
-//                        .presentationDetents([.fraction(0.25)]) // 높이를 30% 또는 50%로 설정
-//                        .presentationDragIndicator(.visible) // 드래그 바 표시
-//                        .environmentObject(modelData)
-//                    }
+                    .sheet(isPresented: $showPlayOptions) {
+                        PlayOptionsView { playMode in
+                            showPlayOptions = false
+                            if !playMode.isEmpty {
+                                selectedPlayMode = playMode
+                                navigateToPlay = true
+                            }
+                        }
+                        .presentationDetents([.fraction(0.2)]) // 높이를 30% 또는 50%로 설정
+                        .presentationDragIndicator(.visible) // 드래그 바 표시
+                        .environmentObject(modelData)
+                    }
                     .navigationDestination(isPresented: $navigateToPlay) {
-//                        Play(playMode: selectedPlayMode)
-                        Play(playMode: "all")
+                        NavigationStack {
+                            Play(playMode: selectedPlayMode)
+                        }
                     }
                 }
-                
-//                BannerAdView() // ✅ 배너 광고 추가
-//                    .frame(height: 50)
             }
             
             // 버튼 활성화 여부 계산
@@ -189,26 +191,26 @@ struct VocaList: View {
                 HStack {
                     Spacer()
                     Button(action: {
-//                        showPlayOptions = true
-                        navigateToPlay = true
+                        showPlayOptions = true
                     }) {
                         Image(systemName: "play.fill")
                             .foregroundColor(.white)
-                            .font(.system(size: 50)) // 폰트 크기 증가
+                            .font(.system(size: 35)) // 폰트 크기 증가
                             .padding(20)             // 내부 패딩 증가
                             .background(isButtonEnabled ? Color.blue : Color.gray)
                             .clipShape(Circle())
                             .shadow(radius: 6)
                     }
                     .padding(.bottom, 20)
-                    .padding(.trailing, 50) // 오른쪽 여백 추가
+                    .padding(.trailing, 30) // 오른쪽 여백 추가
                     .disabled(!isButtonEnabled)
                 }
+                
+                BannerAdView() // ✅ 배너 광고 추가
+                    .frame(height: 50)
             }
         }
-        
-//        BannerAdView() // ✅ 배너 광고 추가
-//            .frame(height: 50)
+        .background(Color(UIColor.systemGray6).ignoresSafeArea())
     }
     
     // 선택된 단어 ID를 토글
@@ -274,7 +276,7 @@ struct PlayOptionsView: View {
                 onSelect("all")
             } label: {
                 Text("전체 학습")
-                    .font(.title)
+                    .font(.title2)
             }
             
             Spacer()
@@ -289,7 +291,7 @@ struct PlayOptionsView: View {
                 onSelect("part")
             } label: {
                 Text("모르는 단어만 학습")
-                    .font(.title)
+                    .font(.title2)
             }
             .disabled(!modelData.words.contains(where: { !$0.isKnowWord }))
             
