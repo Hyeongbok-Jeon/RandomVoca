@@ -167,7 +167,7 @@ struct Play: View {
                 
                 Spacer()
                 
-                BannerAdView() // ✅ 배너 광고 추가
+                BannerAdView()
                     .frame(height: 50)
             }
             

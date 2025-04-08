@@ -22,162 +22,172 @@ struct VocaList: View {
     
     var body: some View {
         ZStack {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack {
-                        if modelData.words.isEmpty {
-                            Spacer()
-                                .frame(height: 50)
-                            
-                            HStack {
+            VStack(spacing: 0) {
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack {
+                            if modelData.words.isEmpty {
                                 Spacer()
-                                Text("단어를 추가해주세요.")
-                                Spacer()
-                            }
-                        } else {
-                            ForEach($modelData.words) { $word in
+                                    .frame(height: 50)
+                                
                                 HStack {
-                                    if isEditing {
-                                        Button(action: {
-                                            toggleSelection(for: word.id)
-                                        }) {
-                                            Image(systemName: selectedWords.contains(word.id) ? "checkmark.circle.fill" : "circle")
-                                                .imageScale(.large) // 체크마크 크기 조절
-                                        }
-                                    }
-                                    
-                                    TextField("단어", text: $word.name)
-                                        .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-                                        .autocapitalization(.none)  // 대문자 자동 입력 비활성화
-                                        .onChange(of: focusedField) { oldFocus, newFocus in
-                                            if newFocus != .word(word.id) && word.name.isEmpty {
-                                                removeEmptyWord(for: word.id)
-                                            } else if newFocus == nil {
-                                                modelData.loadWords()
+                                    Spacer()
+                                    Text("단어를 추가해주세요.")
+                                    Spacer()
+                                }
+                            } else {
+                                ForEach($modelData.words) { $word in
+                                    HStack {
+                                        if isEditing {
+                                            Button(action: {
+                                                toggleSelection(for: word.id)
+                                            }) {
+                                                Image(systemName: selectedWords.contains(word.id) ? "checkmark.circle.fill" : "circle")
+                                                    .imageScale(.large) // 체크마크 크기 조절
                                             }
                                         }
-                                        .onChange(of: word.name, { oldValue, newValue in
-                                            word.isKnowWord = false
-                                            word.knowTime = 0
-                                        })
-                                        .textFieldStyle(.roundedBorder)
-                                        .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.center)
-                                        .onSubmit {
-                                            focusedField = .meaning(word.id) // 엔터 누르면 뜻 칸으로 이동
-                                        }
-                                    
-                                    TextField("뜻", text: $word.meaning)
-                                        .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                        .textFieldStyle(.roundedBorder)
-                                        .frame(maxWidth: .infinity)
-                                        .multilineTextAlignment(.center)
-                                    
-                                    HStack {
-                                        Text("\(String(word.knowTime))")
+                                        
+                                        TextField("단어", text: $word.name)
+                                            .focused($focusedField, equals: .word(word.id))  // 포커스 설정
+                                            .autocapitalization(.none)  // 대문자 자동 입력 비활성화
+                                            .onChange(of: focusedField) { oldFocus, newFocus in
+                                                if newFocus != .word(word.id) && word.name.isEmpty {
+                                                    removeEmptyWord(for: word.id)
+                                                } else if newFocus == nil {
+                                                    modelData.loadWords()
+                                                }
+                                            }
+                                            .onChange(of: word.name, { oldValue, newValue in
+                                                word.isKnowWord = false
+                                                word.knowTime = 0
+                                            })
+                                            .textFieldStyle(.roundedBorder)
                                             .frame(maxWidth: .infinity)
-                                        Spacer()
-                                        Circle()
-                                            .fill(word.isKnowWord ? Color.green : Color.red)
-                                            .frame(width: 10, height: 10)
-//                                        Spacer()
+                                            .multilineTextAlignment(.center)
+                                            .onSubmit {
+                                                focusedField = .meaning(word.id) // 엔터 누르면 뜻 칸으로 이동
+                                            }
+                                        
+                                        TextField("뜻", text: $word.meaning)
+                                            .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
+                                            .textFieldStyle(.roundedBorder)
+                                            .frame(maxWidth: .infinity)
+                                            .multilineTextAlignment(.center)
+                                            .onSubmit {
+                                                // 뜻 입력 후 새 단어 추가 + 그 단어로 포커스 이동
+                                                addWord(proxy: proxy)
+                                            }
+                                        
+                                        HStack {
+                                            Text("\(String(word.knowTime))")
+                                                .frame(maxWidth: .infinity)
+                                            Spacer()
+                                            Circle()
+                                                .fill(word.isKnowWord ? Color.green : Color.red)
+                                                .frame(width: 10, height: 10)
+                                            //                                        Spacer()
+                                        }
+                                        //                                    .frame(width: 30)
+                                        
                                     }
-//                                    .frame(width: 30)
-                                    
+                                    .padding(.horizontal, 30)
                                 }
-                                .padding(.horizontal, 30)
+                                .onDelete(perform: deleteWord)
                             }
-                            .onDelete(perform: deleteWord)
                         }
-                    }
-                    .onAppear(perform: modelData.loadWords)
-                    .onTapGesture {
-                        focusedField = nil
-                    }
-                    .navigationTitle(modelData.selectedGroup?.name ?? "그룹명")
-                    .toolbar {
+                        .onAppear(perform: modelData.loadWords)
+                        .onTapGesture {
+                            focusedField = nil
+                        }
+                        .navigationTitle(modelData.selectedGroup?.name ?? "그룹명")
+                        .toolbar {
 #if DEBUG
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                modelData.words = modelData.getSampleWords()
-                                modelData.loadWords()
-                            } label: {
-                                Text("샘플")
-                            }
-                        }
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                focusedField = nil
-                                
-                                DispatchQueue.main.async {
-                                    modelData.words.removeAll()
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button {
+                                    modelData.words = modelData.getSampleWords()
+                                    modelData.loadWords()
+                                } label: {
+                                    Text("샘플")
                                 }
-                            } label: {
-                                Text("모두 삭제")
                             }
-                        }
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button {
+                                    focusedField = nil
+                                    
+                                    DispatchQueue.main.async {
+                                        modelData.words.removeAll()
+                                    }
+                                } label: {
+                                    Text("모두 삭제")
+                                }
+                            }
 #endif
-//                            ToolbarItem(placement: .navigationBarTrailing) {
-//                                Button {
-//                                    showPlayOptions = true
-//                                } label: {
-//                                    Image(systemName: "play.fill")
-//                                }
-//                                .disabled(
-//                                    modelData.words.isEmpty
-//                                    || modelData.words.contains(where: { $0.name.isEmpty })
-//                                    || isEditing
-//                                )
-//                            }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button {
-                                focusedField = nil
-                                
-                                isEditing.toggle()
-                                if !isEditing {
-                                    selectedWords.removeAll() // 편집 종료 시 선택 초기화
+                            //                            ToolbarItem(placement: .navigationBarTrailing) {
+                            //                                Button {
+                            //                                    showPlayOptions = true
+                            //                                } label: {
+                            //                                    Image(systemName: "play.fill")
+                            //                                }
+                            //                                .disabled(
+                            //                                    modelData.words.isEmpty
+                            //                                    || modelData.words.contains(where: { $0.name.isEmpty })
+                            //                                    || isEditing
+                            //                                )
+                            //                            }
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    focusedField = nil
+                                    
+                                    isEditing.toggle()
+                                    if !isEditing {
+                                        selectedWords.removeAll() // 편집 종료 시 선택 초기화
+                                    }
+                                } label: {
+                                    Text(isEditing ? "완료" : "편집")
                                 }
-                            } label: {
-                                Text(isEditing ? "완료" : "편집")
+                                .disabled(
+                                    modelData.words.isEmpty
+                                    || modelData.words.contains(where: { $0.name.isEmpty })
+                                )
                             }
-                            .disabled(
-                                modelData.words.isEmpty
-                                || modelData.words.contains(where: { $0.name.isEmpty })
-                            )
-                        }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            if isEditing {
-                                Button(action: deleteSelectedWords) {
-                                    Text("삭제")
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                if isEditing {
+                                    Button(action: deleteSelectedWords) {
+                                        Text("삭제")
+                                    }
+                                    .disabled(selectedWords.isEmpty) // 선택된 항목 없을 시 비활성화
+                                } else {
+                                    Button(action: {
+                                        addWord(proxy: proxy)
+                                    }) {
+                                        Image(systemName: "plus")
+                                    }
                                 }
-                                .disabled(selectedWords.isEmpty) // 선택된 항목 없을 시 비활성화
-                            } else {
-                                Button(action: {
-                                    addWord(proxy: proxy)
-                                }) {
-                                    Image(systemName: "plus")
-                                }
-                            }
-                        }
-                    }
-                    .sheet(isPresented: $showPlayOptions) {
-                        PlayOptionsView { playMode in
-                            showPlayOptions = false
-                            if !playMode.isEmpty {
-                                selectedPlayMode = playMode
-                                navigateToPlay = true
                             }
                         }
-                        .presentationDetents([.fraction(0.2)]) // 높이를 30% 또는 50%로 설정
-                        .presentationDragIndicator(.visible) // 드래그 바 표시
-                        .environmentObject(modelData)
-                    }
-                    .navigationDestination(isPresented: $navigateToPlay) {
-                        NavigationStack {
-                            Play(playMode: selectedPlayMode)
+                        .sheet(isPresented: $showPlayOptions) {
+                            PlayOptionsView { playMode in
+                                showPlayOptions = false
+                                if !playMode.isEmpty {
+                                    selectedPlayMode = playMode
+                                    navigateToPlay = true
+                                }
+                            }
+                            .presentationDetents([.fraction(0.2)]) // 높이를 30% 또는 50%로 설정
+                            .presentationDragIndicator(.visible) // 드래그 바 표시
+                            .environmentObject(modelData)
+                        }
+                        .navigationDestination(isPresented: $navigateToPlay) {
+                            NavigationStack {
+                                Play(playMode: selectedPlayMode)
+                            }
                         }
                     }
                 }
+                
+                // ✅ 광고 배치 위치
+                BannerAdView()
+                    .frame(height: 50)
             }
             
             // 버튼 활성화 여부 계산
@@ -188,6 +198,7 @@ struct VocaList: View {
             // 오른쪽 아래 플로팅 재생 버튼
             VStack {
                 Spacer()
+                
                 HStack {
                     Spacer()
                     Button(action: {
@@ -195,19 +206,16 @@ struct VocaList: View {
                     }) {
                         Image(systemName: "play.fill")
                             .foregroundColor(.white)
-                            .font(.system(size: 35)) // 폰트 크기 증가
-                            .padding(20)             // 내부 패딩 증가
+                            .font(.system(size: 35))
+                            .padding(20)
                             .background(isButtonEnabled ? Color.blue : Color.gray)
                             .clipShape(Circle())
                             .shadow(radius: 6)
                     }
-                    .padding(.bottom, 20)
-                    .padding(.trailing, 30) // 오른쪽 여백 추가
+                    .padding(.bottom, 90)
+                    .padding(.trailing, 30)
                     .disabled(!isButtonEnabled)
                 }
-                
-                BannerAdView() // ✅ 배너 광고 추가
-                    .frame(height: 50)
             }
         }
         .background(Color(UIColor.systemGray6).ignoresSafeArea())
@@ -259,6 +267,16 @@ struct VocaList: View {
     // 단어 삭제 함수
     func deleteWord(at offsets: IndexSet) {
         modelData.words.remove(atOffsets: offsets) // 기본 리스트에서 삭제
+    }
+    
+    func addWordAndFocus() {
+        let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
+        modelData.words.append(newWord)
+
+        // 약간 지연시켜 포커스를 자연스럽게 이동
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            focusedField = .word(newWord.id)
+        }
     }
 }
 

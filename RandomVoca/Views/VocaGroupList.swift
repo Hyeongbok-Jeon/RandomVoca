@@ -19,7 +19,7 @@ struct VocaGroupList: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 ScrollView {
                     if modelData.groups.isEmpty {
                         VStack(spacing: 20) {
@@ -38,7 +38,7 @@ struct VocaGroupList: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.gray)
                                 .padding(.horizontal, 30)
-
+                            
                             Button(action: { showAddGroupPopup = true }) {
                                 Label("새 그룹 만들기", systemImage: "plus.circle.fill")
                                     .font(.title3)
@@ -68,10 +68,10 @@ struct VocaGroupList: View {
                                             .fill(Color(UIColor.systemBackground))
                                             .shadow(color: Color.primary.opacity(0.2), radius: 5, x: 2, y: 2)
                                     )
-//                                    .overlay(
-//                                        RoundedRectangle(cornerRadius: 10)
-//                                            .stroke(Color.primary.opacity(0.7), lineWidth: 2)
-//                                    )
+                                    //                                    .overlay(
+                                    //                                        RoundedRectangle(cornerRadius: 10)
+                                    //                                            .stroke(Color.primary.opacity(0.7), lineWidth: 2)
+                                    //                                    )
                                 }
                                 .simultaneousGesture(TapGesture().onEnded {
                                     modelData.selectedGroup = group
@@ -92,13 +92,12 @@ struct VocaGroupList: View {
                         .padding(.vertical, -30)
                     }
                 }
-//                .padding(.top, -20)
-                BannerAdView() // ✅ 배너 광고 추가
+                
+                BannerAdView() // ✅ 하단 고정 광고
                     .frame(height: 50)
+//                    .background(Color(UIColor.systemGray6))
             }
-            .background(Color(UIColor.systemGray6).ignoresSafeArea())
-//            .ignoresSafeArea(.container, edges: .top)
-//            .navigationTitle("홈")
+            //            .navigationTitle("홈")
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("홈")
@@ -168,6 +167,7 @@ struct VocaGroupList: View {
             } message: {
                 Text("정말로 삭제하시겠습니까?")
             }
+            .background(Color(UIColor.systemGray6).ignoresSafeArea())
         }
     }
 
