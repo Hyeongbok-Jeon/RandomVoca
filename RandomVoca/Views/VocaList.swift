@@ -16,6 +16,7 @@ struct VocaList: View {
     @State private var navigateToPlay: Bool = false
     @State private var selectedPlayMode: String = ""
     @State private var isEditing = false // 편집 모드 상태 변수
+    @State private var isAdding = false // 추가 모드 상태 변수
     @State private var selectedWords = Set<UUID>() // 선택된 단어 ID 저장
     
     @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
@@ -57,11 +58,12 @@ struct VocaList: View {
                                                 .focused($focusedField, equals: .word(word.id))  // 포커스 설정
                                                 .autocapitalization(.none)  // 대문자 자동 입력 비활성화
                                                 .onChange(of: focusedField) { oldFocus, newFocus in
-                                                    if newFocus != .word(word.id) && word.name.isEmpty {
-                                                        removeEmptyWord(for: word.id)
-                                                    } else if newFocus == nil {
-                                                        modelData.loadWords()
-                                                    }
+//                                                    if newFocus != .word(word.id) && word.name.isEmpty {
+//                                                        removeEmptyWord(for: word.id)
+//                                                    } else if newFocus == nil {
+//                                                        modelData.loadWords()
+//                                                    }
+                                                    isAdding = newFocus != nil
                                                 }
                                                 .onChange(of: word.name, { oldValue, newValue in
                                                     word.isKnowWord = false
@@ -73,6 +75,9 @@ struct VocaList: View {
                                                 .onSubmit {
                                                     focusedField = .meaning(word.id) // 엔터 누르면 뜻 칸으로 이동
                                                 }
+                                                .onChange(of: focusedField) { oldFocus, newFocus in
+                                                    isAdding = newFocus != nil
+                                                }
                                             
                                             TextField("뜻", text: $word.meaning)
                                                 .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
@@ -81,7 +86,7 @@ struct VocaList: View {
                                                 .multilineTextAlignment(.center)
                                                 .onSubmit {
                                                     // 뜻 입력 후 새 단어 추가 + 그 단어로 포커스 이동
-                                                    //                                                addWord(proxy: proxy)
+                                                                                                    addWord(proxy: proxy)
                                                 }
                                             
                                             HStack {
@@ -157,11 +162,25 @@ struct VocaList: View {
                                     )
                                 }
                                 ToolbarItem(placement: .navigationBarTrailing) {
-                                    if isEditing {
-                                        Button(action: deleteSelectedWords) {
-                                            Text("삭제")
+//                                    if isEditing {
+//                                        Button(action: deleteSelectedWords) {
+//                                            Text("삭제")
+//                                        }
+//                                        .disabled(selectedWords.isEmpty) // 선택된 항목 없을 시 비활성화
+//                                    } else {
+//                                        Button(action: {
+//                                            addWord(proxy: proxy)
+//                                        }) {
+//                                            Image(systemName: "plus")
+//                                        }
+//                                    }
+                                    
+                                    if isAdding {
+                                        Button(action: {
+                                            removeEmptyWords()
+                                        }) {
+                                            Text("완료")
                                         }
-                                        .disabled(selectedWords.isEmpty) // 선택된 항목 없을 시 비활성화
                                     } else {
                                         Button(action: {
                                             addWord(proxy: proxy)
@@ -189,6 +208,7 @@ struct VocaList: View {
                                 }
                             }
                         }
+                        .padding(.bottom, 50)
                     }
                 }
                 
@@ -214,14 +234,14 @@ struct VocaList: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 6)
                         }
-                        .padding(.bottom, 90)
+                        .padding(.bottom, 30)
                         .padding(.trailing, 30)
                         .disabled(!isButtonEnabled)
                     }
                 }
             }
             
-            if !keyboard.isKeyboardVisible {
+            if !isAdding {
                 BannerAdView()
                     .frame(height: 50)
             }
@@ -249,11 +269,11 @@ struct VocaList: View {
     }
     
     // 빈 단어 제거 함수
-    func removeEmptyWord(for id: UUID) {
+    func removeEmptyWords() {
         focusedField = nil
         
         DispatchQueue.main.async {
-            modelData.words.removeAll { $0.id == id } // 해당 id만 삭제
+            modelData.words.removeAll { $0.name.isEmpty }
         }
     }
     
