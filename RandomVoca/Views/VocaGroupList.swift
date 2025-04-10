@@ -19,7 +19,7 @@ struct VocaGroupList: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            VStack {
                 ScrollView {
                     if modelData.groups.isEmpty {
                         VStack(spacing: 20) {
@@ -95,7 +95,6 @@ struct VocaGroupList: View {
                 
                 BannerAdView() // ✅ 하단 고정 광고
                     .frame(height: 50)
-//                    .background(Color(UIColor.systemGray6))
             }
             //            .navigationTitle("홈")
             .toolbar {
@@ -108,7 +107,7 @@ struct VocaGroupList: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: { showAddGroupPopup = true }) {
                             Image(systemName: "plus.circle.fill")
-                                .font(.title)
+                                .font(.title3)
                                 .foregroundColor(.primary)
                         }
                     }
