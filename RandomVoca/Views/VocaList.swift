@@ -204,12 +204,11 @@ struct VocaList: View {
                         removeEmptyWords()
                     }
                 }
+                
                 if !isAdding {
                     BannerAdView()
                         .frame(height: 50)
                 }
-                
-                
             }
             
             // 버튼 활성화 여부 계산
@@ -217,26 +216,28 @@ struct VocaList: View {
                                     modelData.words.contains(where: { $0.name.isEmpty }) ||
                                     isEditing)
             
-            // 오른쪽 아래 플로팅 재생 버튼
-            VStack {
-                Spacer()
-                
-                HStack {
+            if !isAdding {
+                // 오른쪽 아래 플로팅 재생 버튼
+                VStack {
                     Spacer()
-                    Button(action: {
-                        showPlayOptions = true
-                    }) {
-                        Image(systemName: "play.fill")
-                            .foregroundColor(.white)
-                            .font(.system(size: 35))
-                            .padding(20)
-                            .background(isButtonEnabled ? Color.blue : Color.gray)
-                            .clipShape(Circle())
-                            .shadow(radius: 6)
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showPlayOptions = true
+                        }) {
+                            Image(systemName: "play.fill")
+                                .foregroundColor(.white)
+                                .font(.system(size: 35))
+                                .padding(20)
+                                .background(isButtonEnabled ? Color.blue : Color.gray)
+                                .clipShape(Circle())
+                                .shadow(radius: 6)
+                        }
+                        .padding(.bottom, 80)
+                        .padding(.trailing, 20)
+                        .disabled(!isButtonEnabled)
                     }
-                    .padding(.bottom, 80)
-                    .padding(.trailing, 20)
-                    .disabled(!isButtonEnabled)
                 }
             }
         }
