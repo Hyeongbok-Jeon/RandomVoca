@@ -21,7 +21,8 @@ struct VocaList: View {
     
     @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
-    @ObservedObject var keyboard = KeyboardResponder()
+    @State private var wordFirstResponder: [UUID: Bool] = [:]
+    @State private var meaningFirstResponder: [UUID: Bool] = [:]
     
     var body: some View {
         ZStack {
@@ -53,40 +54,66 @@ struct VocaList: View {
                                             }
                                         }
                                         
-                                        TextField("단어", text: $word.name)
-                                            .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-                                            .autocapitalization(.none)  // 대문자 자동 입력 비활성화
-                                            .onChange(of: focusedField) { oldFocus, newFocus in
-//                                                    if newFocus != .word(word.id) && word.name.isEmpty {
-//                                                        removeEmptyWord(for: word.id)
-//                                                    } else if newFocus == nil {
-//                                                        modelData.loadWords()
-//                                                    }
-                                                isAdding = newFocus != nil
-                                            }
-                                            .onChange(of: word.name, { oldValue, newValue in
-                                                word.isKnowWord = false
-                                                word.knowTime = 0
-                                            })
-                                            .textFieldStyle(.roundedBorder)
-                                            .frame(maxWidth: .infinity)
-                                            .multilineTextAlignment(.center)
-                                            .onSubmit {
-                                                focusedField = .meaning(word.id)
-                                            }
-                                            .onChange(of: focusedField) { oldFocus, newFocus in
-                                                isAdding = newFocus != nil
-                                            }
+//                                        TextField("단어", text: $word.name)
+//                                            .focused($focusedField, equals: .word(word.id))  // 포커스 설정
+//                                            .autocapitalization(.none)  // 대문자 자동 입력 비활성화
+//                                            .onChange(of: focusedField) { oldFocus, newFocus in
+//                                                isAdding = newFocus != nil
+//                                            }
+//                                            .onChange(of: word.name, { oldValue, newValue in
+//                                                word.isKnowWord = false
+//                                                word.knowTime = 0
+//                                            })
+//                                            .textFieldStyle(.roundedBorder)
+//                                            .frame(maxWidth: .infinity)
+//                                            .multilineTextAlignment(.center)
+//                                            .onSubmit {
+//                                                // 비동기적으로 포커스를 뜻 필드로 이동
+//                                                DispatchQueue.main.async {
+//                                                    focusedField = .meaning(word.id)
+//                                                }
+//                                            }
+//                                            .keyboardType(.default)
+//                                            .submitLabel(.next) // return 키를 "Next"로 설정
+//                                        
+//                                        TextField("뜻", text: $word.meaning)
+//                                            .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
+//                                            .textFieldStyle(.roundedBorder)
+//                                            .frame(maxWidth: .infinity)
+//                                            .multilineTextAlignment(.center)
+//                                            .onSubmit {
+//                                                // 뜻 입력 후 새 단어 추가 + 그 단어로 포커스 이동
+//                                                addWord(proxy: proxy)
+//                                            }
                                         
-                                        TextField("뜻", text: $word.meaning)
-                                            .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-                                            .textFieldStyle(.roundedBorder)
-                                            .frame(maxWidth: .infinity)
-                                            .multilineTextAlignment(.center)
-                                            .onSubmit {
-                                                // 뜻 입력 후 새 단어 추가 + 그 단어로 포커스 이동
+                                        CustomUITextField(
+                                            text: $word.name,
+                                            placeholder: "단어",
+                                            onCommit: {
+                                                // 다음 포커스 설정
+                                                wordFirstResponder[word.id] = false
+                                                meaningFirstResponder[word.id] = true
+                                            },
+                                            isFirstResponder: Binding(
+                                                get: { wordFirstResponder[word.id] ?? false },
+                                                set: { wordFirstResponder[word.id] = $0 }
+                                            )
+                                        )
+                                        .frame(maxWidth: .infinity)
+                                        
+                                        CustomUITextField(
+                                            text: $word.meaning,
+                                            placeholder: "뜻",
+                                            onCommit: {
+                                                meaningFirstResponder[word.id] = false
                                                 addWord(proxy: proxy)
-                                            }
+                                            },
+                                            isFirstResponder: Binding(
+                                                get: { meaningFirstResponder[word.id] ?? false },
+                                                set: { meaningFirstResponder[word.id] = $0 }
+                                            )
+                                        )
+                                        .frame(maxWidth: .infinity)
                                         
                                         HStack {
                                             Text("\(String(word.knowTime))")
@@ -95,10 +122,7 @@ struct VocaList: View {
                                             Circle()
                                                 .fill(word.isKnowWord ? Color.green : Color.red)
                                                 .frame(width: 10, height: 10)
-                                            //                                        Spacer()
                                         }
-                                        //                                    .frame(width: 30)
-                                        
                                     }
                                     .padding(.horizontal, 30)
                                 }
@@ -275,14 +299,14 @@ struct VocaList: View {
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord(proxy: ScrollViewProxy) {
         if let lastWord = modelData.words.last, lastWord.name.isEmpty {
-            // 이미 빈 단어가 있을 경우 그 단어에 포커스 맞추기
-            focusedField = .word(lastWord.id)
+            // 기존 빈 단어에 포커스
+            wordFirstResponder[lastWord.id] = true
+            meaningFirstResponder[lastWord.id] = false
         } else {
-            // 새 단어 추가
             let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
-//            modelData.words.insert(newWord, at: 0)
             modelData.words.append(newWord)
-            focusedField = .word(newWord.id)
+            wordFirstResponder[newWord.id] = true
+            meaningFirstResponder[newWord.id] = false
         }
     }
     
