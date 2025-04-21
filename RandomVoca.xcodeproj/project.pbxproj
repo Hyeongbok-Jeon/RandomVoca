@@ -26,6 +26,7 @@
 		13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2310C2D56352B00684E92 /* AppDelegate.swift */; };
 		13BD30E92DB3AB76009BF198 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD30E82DB3AB76009BF198 /* CustomTextField.swift */; };
 		13BD30ED2DB3AF20009BF198 /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD30EC2DB3AF20009BF198 /* CustomUITextField.swift */; };
+		13BD30EF2DB70917009BF198 /* VocaList 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD30EE2DB70917009BF198 /* VocaList 2.swift */; };
 		13CE173A2D6235C3009CB4F9 /* WordModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13CE17382D6235C3009CB4F9 /* WordModel.xcdatamodeld */; };
 		13CE17412D669C13009CB4F9 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CE17402D669C13009CB4F9 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		13A2310C2D56352B00684E92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13BD30E82DB3AB76009BF198 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		13BD30EC2DB3AF20009BF198 /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
+		13BD30EE2DB70917009BF198 /* VocaList 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocaList 2.swift"; sourceTree = "<group>"; };
 		13CE17392D6235C3009CB4F9 /* WordModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordModel.xcdatamodel; sourceTree = "<group>"; };
 		13CE17402D669C13009CB4F9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		13E0D4692D10EA1900DFE47B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			children = (
 				135BBF562C8E673800F3A27D /* ContentView.swift */,
 				135BBF682C8EF9F600F3A27D /* VocaList.swift */,
+				13BD30EE2DB70917009BF198 /* VocaList 2.swift */,
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
 				132D20362D5EB77C00CE789C /* PlayV2.swift */,
 				130651372D538454005BCDEC /* VocaGroupList.swift */,
@@ -225,6 +228,7 @@
 				135BBF6F2C917BD900F3A27D /* Word.swift in Sources */,
 				13CE173A2D6235C3009CB4F9 /* WordModel.xcdatamodeld in Sources */,
 				13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */,
+				13BD30EF2DB70917009BF198 /* VocaList 2.swift in Sources */,
 				132D20372D5EB77C00CE789C /* PlayV2.swift in Sources */,
 				13BD30ED2DB3AF20009BF198 /* CustomUITextField.swift in Sources */,
 				135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */,

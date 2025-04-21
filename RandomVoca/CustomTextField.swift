@@ -1,18 +1,11 @@
-//
-//  CustomTextField.swift
-//  RandomVoca
-//
-//  Created by Hyeongbok Jeon on 4/19/25.
-//
-
-import Foundation
-import UIKit
 import SwiftUI
+import UIKit
 
 struct CustomTextField: UIViewRepresentable {
     @Binding var text: String
     var placeholder: String
     var onSubmit: () -> Void
+    @Binding var isFirstResponder: Bool // ✅ 추가
 
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
@@ -25,6 +18,14 @@ struct CustomTextField: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            if isFirstResponder && !uiView.isFirstResponder {
+                uiView.becomeFirstResponder()
+            } else if !isFirstResponder && uiView.isFirstResponder {
+                uiView.resignFirstResponder()
+            }
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -44,7 +45,7 @@ struct CustomTextField: UIViewRepresentable {
 
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             parent.onSubmit()
-            return true
+            return false // 키보드 내리지 않음
         }
     }
 }

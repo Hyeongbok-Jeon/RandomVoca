@@ -90,23 +90,25 @@ struct VocaList: View {
                                             text: $word.name,
                                             placeholder: "단어",
                                             onCommit: {
-                                                // 다음 포커스 설정
-                                                wordFirstResponder[word.id] = false
-                                                meaningFirstResponder[word.id] = true
+                                                DispatchQueue.main.async {
+                                                    wordFirstResponder[word.id] = false
+                                                    meaningFirstResponder[word.id] = true
+                                                }
                                             },
                                             isFirstResponder: Binding(
                                                 get: { wordFirstResponder[word.id] ?? false },
                                                 set: { wordFirstResponder[word.id] = $0 }
                                             )
                                         )
-                                        .frame(maxWidth: .infinity)
                                         
                                         CustomUITextField(
                                             text: $word.meaning,
                                             placeholder: "뜻",
                                             onCommit: {
-                                                meaningFirstResponder[word.id] = false
-                                                addWord(proxy: proxy)
+                                                DispatchQueue.main.async {
+                                                    meaningFirstResponder[word.id] = false
+                                                    addWord(proxy: proxy)
+                                                }
                                             },
                                             isFirstResponder: Binding(
                                                 get: { meaningFirstResponder[word.id] ?? false },
