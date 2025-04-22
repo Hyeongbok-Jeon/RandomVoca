@@ -319,7 +319,7 @@ struct VocaList2: View {
 }
 
 // PlayOptionsView 구현
-struct PlayOptionsView: View {
+struct PlayOptionsView2: View {
     @EnvironmentObject var modelData: ModelData
     
     var onSelect: (String) -> Void

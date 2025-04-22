@@ -10,8 +10,8 @@ struct CustomUITextField: UIViewRepresentable {
         }
 
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            parent.onCommit?() // 키보드 내려가지 않게 false 반환
-            return false
+            parent.onCommit?()
+            return false // 키보드 내리지 않음
         }
 
         func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -23,6 +23,12 @@ struct CustomUITextField: UIViewRepresentable {
     var placeholder: String
     var onCommit: (() -> Void)? = nil
     @Binding var isFirstResponder: Bool
+
+    // ✅ UIView 내부 포커스 상태 추적용 플래그
+    private class FocusStateHolder {
+        var isFocused: Bool = false
+    }
+    private let focusStateHolder = FocusStateHolder()
 
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
@@ -37,14 +43,24 @@ struct CustomUITextField: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
-        if isFirstResponder && !uiView.isFirstResponder {
-            uiView.becomeFirstResponder()
-        } else if !isFirstResponder && uiView.isFirstResponder {
-            uiView.resignFirstResponder()
+
+        // ✅ 중복 호출 방지를 위해 현재 포커스 상태 비교 후 제어
+        DispatchQueue.main.async {
+            if isFirstResponder {
+                if !focusStateHolder.isFocused {
+                    uiView.becomeFirstResponder()
+                    focusStateHolder.isFocused = true
+                }
+            } else {
+                if focusStateHolder.isFocused {
+                    uiView.resignFirstResponder()
+                    focusStateHolder.isFocused = false
+                }
+            }
         }
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
+        Coordinator(self)
     }
 }

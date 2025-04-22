@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct VocaList: View {
-    enum FocusField: Hashable {
-        case word(UUID)
-        case meaning(UUID)
-    }
+//    enum FocusField: Hashable {
+//        case word(UUID)
+//        case meaning(UUID)
+//    }
 
     @EnvironmentObject var modelData: ModelData
     
@@ -19,7 +19,7 @@ struct VocaList: View {
     @State private var isAdding = false // 추가 모드 상태 변수
     @State private var selectedWords = Set<UUID>() // 선택된 단어 ID 저장
     
-    @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
+//    @FocusState private var focusedField: FocusField?  // 포커스 관리용 변수
     
     @State private var wordFirstResponder: [UUID: Bool] = [:]
     @State private var meaningFirstResponder: [UUID: Bool] = [:]
@@ -90,32 +90,30 @@ struct VocaList: View {
                                             text: $word.name,
                                             placeholder: "단어",
                                             onCommit: {
-                                                DispatchQueue.main.async {
-                                                    wordFirstResponder[word.id] = false
+                                                wordFirstResponder[word.id] = false
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                                                     meaningFirstResponder[word.id] = true
                                                 }
                                             },
-                                            isFirstResponder: Binding(
-                                                get: { wordFirstResponder[word.id] ?? false },
-                                                set: { wordFirstResponder[word.id] = $0 }
-                                            )
+                                            isFirstResponder: bindingForWord(word.id, isMeaning: false)
                                         )
-                                        
+                                        .onChange(of: wordFirstResponder[word.id] ?? false) { newValue in
+                                            updateIsAddingState()
+                                        }
+
                                         CustomUITextField(
                                             text: $word.meaning,
                                             placeholder: "뜻",
                                             onCommit: {
-                                                DispatchQueue.main.async {
-                                                    meaningFirstResponder[word.id] = false
-                                                    addWord(proxy: proxy)
-                                                }
+                                                meaningFirstResponder[word.id] = false
+                                                addWord(proxy: proxy)
                                             },
-                                            isFirstResponder: Binding(
-                                                get: { meaningFirstResponder[word.id] ?? false },
-                                                set: { meaningFirstResponder[word.id] = $0 }
-                                            )
+                                            isFirstResponder: bindingForWord(word.id, isMeaning: true)
                                         )
                                         .frame(maxWidth: .infinity)
+                                        .onChange(of: meaningFirstResponder[word.id] ?? false) { newValue in
+                                            updateIsAddingState()
+                                        }
                                         
                                         HStack {
                                             Text("\(String(word.knowTime))")
@@ -145,7 +143,7 @@ struct VocaList: View {
                             }
                             ToolbarItem(placement: .navigationBarLeading) {
                                 Button {
-                                    focusedField = nil
+//                                    focusedField = nil
                                     
                                     DispatchQueue.main.async {
                                         modelData.words.removeAll()
@@ -169,7 +167,7 @@ struct VocaList: View {
                             //                            }
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 Button {
-                                    focusedField = nil
+//                                    focusedField = nil
                                     
                                     isEditing.toggle()
                                     if !isEditing {
@@ -226,7 +224,7 @@ struct VocaList: View {
                         }
                     }
                     .onTapGesture {
-                        focusedField = nil
+//                        focusedField = nil
                         removeEmptyWords()
                     }
                 }
@@ -289,10 +287,19 @@ struct VocaList: View {
         }
     }
     
-    // 빈 단어 제거 함수
     func removeEmptyWords() {
-        focusedField = nil
+        // 모든 포커스 해제
+        for key in wordFirstResponder.keys {
+            wordFirstResponder[key] = false
+        }
+        for key in meaningFirstResponder.keys {
+            meaningFirstResponder[key] = false
+        }
         
+        // 상태 업데이트
+        isAdding = false
+
+        // 빈 단어 제거는 비동기 처리
         DispatchQueue.main.async {
             modelData.words.removeAll { $0.name.isEmpty }
         }
@@ -301,7 +308,6 @@ struct VocaList: View {
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord(proxy: ScrollViewProxy) {
         if let lastWord = modelData.words.last, lastWord.name.isEmpty {
-            // 기존 빈 단어에 포커스
             wordFirstResponder[lastWord.id] = true
             meaningFirstResponder[lastWord.id] = false
         } else {
@@ -310,11 +316,39 @@ struct VocaList: View {
             wordFirstResponder[newWord.id] = true
             meaningFirstResponder[newWord.id] = false
         }
+
+        // ✅ 포커스 상태 반영되도록 isAdding 강제 업데이트
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            updateIsAddingState()
+        }
     }
     
     // 단어 삭제 함수
     func deleteWord(at offsets: IndexSet) {
         modelData.words.remove(atOffsets: offsets) // 기본 리스트에서 삭제
+    }
+    
+    // ✅ 뷰 본문 내에 Binding 생성 함수 추가
+    func bindingForWord(_ id: UUID, isMeaning: Bool) -> Binding<Bool> {
+        Binding(
+            get: {
+                isMeaning ? (meaningFirstResponder[id] ?? false) : (wordFirstResponder[id] ?? false)
+            },
+            set: {
+                if isMeaning {
+                    meaningFirstResponder[id] = $0
+                } else {
+                    wordFirstResponder[id] = $0
+                }
+            }
+        )
+    }
+    
+    func updateIsAddingState() {
+        // 어떤 필드라도 포커스 되어있으면 true
+        let anyWordFocused = wordFirstResponder.values.contains(true)
+        let anyMeaningFocused = meaningFirstResponder.values.contains(true)
+        isAdding = anyWordFocused || anyMeaningFocused
     }
 }
 
