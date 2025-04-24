@@ -24,6 +24,8 @@ struct VocaList: View {
     @State private var wordFirstResponder: [UUID: Bool] = [:]
     @State private var meaningFirstResponder: [UUID: Bool] = [:]
     
+    @State private var isTextFieldDisabled = true // 텍스트필드 전체 활성/비활성 제어용
+    
     var body: some View {
         ZStack {
             Color(UIColor.systemGray6)
@@ -63,9 +65,10 @@ struct VocaList: View {
                                             },
                                             isFirstResponder: bindingForWord(word.id, isMeaning: false)
                                         )
-                                        .onChange(of: wordFirstResponder[word.id] ?? false) { updateIsAddingState()
+                                        .onChange(of: wordFirstResponder[word.id] ?? false) {
+//                                            updateIsAddingState()
                                         }
-                                        .disabled(!isAdding)
+                                        .disabled(isTextFieldDisabled)
 
                                         CustomUITextField(
                                             text: $word.meaning,
@@ -78,9 +81,9 @@ struct VocaList: View {
                                         )
                                         .frame(maxWidth: .infinity)
                                         .onChange(of: meaningFirstResponder[word.id] ?? false) {
-                                            updateIsAddingState()
+//                                            updateIsAddingState()
                                         }
-                                        .disabled(!isAdding)
+                                        .disabled(isTextFieldDisabled)
                                         
                                         HStack {
                                             Text("\(String(word.knowTime))")
@@ -104,14 +107,14 @@ struct VocaList: View {
                                 Button {
                                     modelData.words = modelData.getSampleWords()
                                     modelData.loadWords()
-                                    isAdding = false
+//                                    isAdding = false
                                 } label: {
                                     Text("샘플")
                                 }
                             }
                             ToolbarItem(placement: .navigationBarLeading) {
                                 Button {
-                                    isAdding = false
+//                                    isAdding = false
                                     
                                     DispatchQueue.main.async {
                                         modelData.words.removeAll()
@@ -147,7 +150,7 @@ struct VocaList: View {
                                 .disabled(
                                     modelData.words.isEmpty
 //                                        || modelData.words.contains(where: { $0.name.isEmpty })
-                                    || isAdding
+                                    || !isTextFieldDisabled
                                 )
                             }
                             ToolbarItem(placement: .navigationBarTrailing) {
@@ -157,7 +160,7 @@ struct VocaList: View {
                                     }
                                     .disabled(selectedWords.isEmpty) // 선택된 항목 없을 시 비활성화
                                 } else {
-                                    if isAdding {
+                                    if !isTextFieldDisabled {
                                         Button(action: {
                                             removeEmptyWords()
                                         }) {
@@ -191,9 +194,9 @@ struct VocaList: View {
                             }
                         }
                     }
-                    .onTapGesture {
-                        removeEmptyWords()
-                    }
+//                    .onTapGesture {
+//                        removeEmptyWords()
+//                    }
                 }
                 
                 if !isAdding {
@@ -255,21 +258,22 @@ struct VocaList: View {
     }
     
     func removeEmptyWords() {
-        // 모든 포커스 해제
-        
-        for key in wordFirstResponder.keys {
-            wordFirstResponder[key] = false
-        }
-        for key in meaningFirstResponder.keys {
-            meaningFirstResponder[key] = false
-        }
-        
-        // 상태 업데이트
-        isAdding = false
+        // 1단계: 모든 포커스 해제
+//        for key in wordFirstResponder.keys {
+//            wordFirstResponder[key] = false
+//        }
+//        for key in meaningFirstResponder.keys {
+//            meaningFirstResponder[key] = false
+//        }
 
-        // 빈 단어 제거는 비동기 처리
-        DispatchQueue.main.async {
+        // 2단계: 입력 상태 비활성화 + 텍스트필드 잠시 비활성화
+//        isAdding = false
+        isTextFieldDisabled = true
+
+        // 3단계: 살짝 기다린 후 단어 제거 및 텍스트필드 다시 활성화
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             modelData.words.removeAll { $0.name.isEmpty }
+            isTextFieldDisabled = false
         }
     }
     
@@ -281,7 +285,8 @@ struct VocaList: View {
         meaningFirstResponder[newWord.id] = false
 
         // ✅ 포커스 상태 반영되도록 isAdding 강제 업데이트
-        updateIsAddingState()
+//        updateIsAddingState()
+        isTextFieldDisabled = false
     }
     
     // 단어 삭제 함수
@@ -310,6 +315,7 @@ struct VocaList: View {
         let anyWordFocused = wordFirstResponder.values.contains(true)
         let anyMeaningFocused = meaningFirstResponder.values.contains(true)
         isAdding = anyWordFocused || anyMeaningFocused
+        isTextFieldDisabled = false
     }
 }
 
