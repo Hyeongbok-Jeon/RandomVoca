@@ -215,9 +215,8 @@ struct Play: View {
                     .font(.body)
 
                     Button("확인했어요") {
-                        withAnimation {
-                            showExplanation = false
-                        }
+                        showExplanation = false
+                        startTimer()
                     }
 //                    .padding(.top, 10)
                     .padding(.horizontal)
@@ -240,6 +239,7 @@ struct Play: View {
             ToolbarItem {
                 Button {
                     showExplanation = true
+                    stopTimer()
                 } label: {
                     Image(systemName: "info.circle")
                         .font(.title3)

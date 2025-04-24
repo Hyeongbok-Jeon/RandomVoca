@@ -53,39 +53,7 @@ struct VocaList: View {
                                                     .imageScale(.large) // 체크마크 크기 조절
                                             }
                                         }
-                                        
-//                                        TextField("단어", text: $word.name)
-//                                            .focused($focusedField, equals: .word(word.id))  // 포커스 설정
-//                                            .autocapitalization(.none)  // 대문자 자동 입력 비활성화
-//                                            .onChange(of: focusedField) { oldFocus, newFocus in
-//                                                isAdding = newFocus != nil
-//                                            }
-//                                            .onChange(of: word.name, { oldValue, newValue in
-//                                                word.isKnowWord = false
-//                                                word.knowTime = 0
-//                                            })
-//                                            .textFieldStyle(.roundedBorder)
-//                                            .frame(maxWidth: .infinity)
-//                                            .multilineTextAlignment(.center)
-//                                            .onSubmit {
-//                                                // 비동기적으로 포커스를 뜻 필드로 이동
-//                                                DispatchQueue.main.async {
-//                                                    focusedField = .meaning(word.id)
-//                                                }
-//                                            }
-//                                            .keyboardType(.default)
-//                                            .submitLabel(.next) // return 키를 "Next"로 설정
-//                                        
-//                                        TextField("뜻", text: $word.meaning)
-//                                            .focused($focusedField, equals: .meaning(word.id))  // 포커스 설정
-//                                            .textFieldStyle(.roundedBorder)
-//                                            .frame(maxWidth: .infinity)
-//                                            .multilineTextAlignment(.center)
-//                                            .onSubmit {
-//                                                // 뜻 입력 후 새 단어 추가 + 그 단어로 포커스 이동
-//                                                addWord(proxy: proxy)
-//                                            }
-                                        
+                                                                                
                                         CustomUITextField(
                                             text: $word.name,
                                             placeholder: "단어",
@@ -95,9 +63,9 @@ struct VocaList: View {
                                             },
                                             isFirstResponder: bindingForWord(word.id, isMeaning: false)
                                         )
-                                        .onChange(of: wordFirstResponder[word.id] ?? false) { newValue in
-                                            updateIsAddingState()
+                                        .onChange(of: wordFirstResponder[word.id] ?? false) { updateIsAddingState()
                                         }
+                                        .disabled(!isAdding)
 
                                         CustomUITextField(
                                             text: $word.meaning,
@@ -109,9 +77,10 @@ struct VocaList: View {
                                             isFirstResponder: bindingForWord(word.id, isMeaning: true)
                                         )
                                         .frame(maxWidth: .infinity)
-                                        .onChange(of: meaningFirstResponder[word.id] ?? false) { newValue in
+                                        .onChange(of: meaningFirstResponder[word.id] ?? false) {
                                             updateIsAddingState()
                                         }
+                                        .disabled(!isAdding)
                                         
                                         HStack {
                                             Text("\(String(word.knowTime))")
@@ -135,13 +104,14 @@ struct VocaList: View {
                                 Button {
                                     modelData.words = modelData.getSampleWords()
                                     modelData.loadWords()
+                                    isAdding = false
                                 } label: {
                                     Text("샘플")
                                 }
                             }
                             ToolbarItem(placement: .navigationBarLeading) {
                                 Button {
-//                                    focusedField = nil
+                                    isAdding = false
                                     
                                     DispatchQueue.main.async {
                                         modelData.words.removeAll()
@@ -222,7 +192,6 @@ struct VocaList: View {
                         }
                     }
                     .onTapGesture {
-//                        focusedField = nil
                         removeEmptyWords()
                     }
                 }
@@ -287,6 +256,7 @@ struct VocaList: View {
     
     func removeEmptyWords() {
         // 모든 포커스 해제
+        
         for key in wordFirstResponder.keys {
             wordFirstResponder[key] = false
         }
