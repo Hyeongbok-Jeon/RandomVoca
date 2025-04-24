@@ -90,10 +90,8 @@ struct VocaList: View {
                                             text: $word.name,
                                             placeholder: "단어",
                                             onCommit: {
+                                                meaningFirstResponder[word.id] = true
                                                 wordFirstResponder[word.id] = false
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                                                    meaningFirstResponder[word.id] = true
-                                                }
                                             },
                                             isFirstResponder: bindingForWord(word.id, isMeaning: false)
                                         )
@@ -307,20 +305,13 @@ struct VocaList: View {
     
     // 단어 추가 함수: 빈 단어를 리스트의 맨 아래에 추가
     func addWord(proxy: ScrollViewProxy) {
-        if let lastWord = modelData.words.last, lastWord.name.isEmpty {
-            wordFirstResponder[lastWord.id] = true
-            meaningFirstResponder[lastWord.id] = false
-        } else {
-            let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
-            modelData.words.append(newWord)
-            wordFirstResponder[newWord.id] = true
-            meaningFirstResponder[newWord.id] = false
-        }
+        let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
+        modelData.words.append(newWord)
+        wordFirstResponder[newWord.id] = true
+        meaningFirstResponder[newWord.id] = false
 
         // ✅ 포커스 상태 반영되도록 isAdding 강제 업데이트
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            updateIsAddingState()
-        }
+        updateIsAddingState()
     }
     
     // 단어 삭제 함수
