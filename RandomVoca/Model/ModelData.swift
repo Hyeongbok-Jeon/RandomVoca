@@ -39,7 +39,7 @@ class ModelData: ObservableObject {
         let key = "words_\(group.id.uuidString)" // 그룹별 단어 저장 키
         if let savedData = UserDefaults.standard.data(forKey: key),
            let decodedWords = try? JSONDecoder().decode([Word].self, from: savedData) {
-//            words = decodedWords.sorted { $0.name < $1.name }
+            words = decodedWords
         } else {
             words = [] // 데이터가 없으면 빈 배열로 초기화
         }

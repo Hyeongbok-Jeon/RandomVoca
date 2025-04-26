@@ -18,7 +18,6 @@ struct RandomVocaApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(modelData)
-//                .preferredColorScheme(.dark)
         }
     }
 }

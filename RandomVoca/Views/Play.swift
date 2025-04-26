@@ -76,24 +76,7 @@ struct Play: View {
                 }
                 .frame(height: UIScreen.main.bounds.height / 100 * 39) // 화면 높이의 절반으로 고정
                 
-//                    Divider()
-//                        .frame(height: 2) // Divider의 높이를 2로 설정
-//                        .background(Color.gray) // Divider의 색상 설정
-                
                 Spacer()
-                
-//                    ZStack(alignment: .leading) {
-//                        Capsule()
-//                            .frame(height: 20)
-//                            .foregroundColor(.gray.opacity(0.3))
-//
-//                        Capsule()
-//                            .frame(width: UIScreen.main.bounds.width * 0.8 * progress, height: 20)
-//                            .foregroundColor(.red)
-//                            .animation(.linear(duration: 0.03), value: progress)
-//                    }
-//                    .frame(width: UIScreen.main.bounds.width * 0.8)
-//                    .padding()
                 
                 // 초시계 텍스트를 정중앙에 배치하기 위해 Spacer로 조정
                 Text(String(format: "%.2f", Double(timerMilliseconds) / 100))
@@ -103,16 +86,6 @@ struct Play: View {
                     }
                 
                 Spacer()
-                
-//                    VStack {
-//                        if showNextWordButton {
-//                            playViewButton(action: {
-//                                showRandomWord()
-//                                showNextWordButton = false
-//                            }, systemIconName: "arrow.right.circle", accessibilityLabel: "다음 단어")
-//                        }
-//                    }
-//                    .frame(height: 80) // 항상 동일 높이 유지
                 
                 if showKnowWordButton {
                     HStack {
@@ -277,7 +250,6 @@ struct Play: View {
         shownWords.append(randomWord) // 선택된 단어를 기록
 
         startTimer()
-//        startGauge() // ✅ 게이지 시작 추가
         
         showKnowWordButton = false
         showMeaning = false
@@ -287,7 +259,9 @@ struct Play: View {
     private func setIsKnowWord(isKnowWord: Bool) {
         modelData.words[currentIndex].isKnowWord = isKnowWord
         modelData.words[currentIndex].knowTime = isKnowWord ? Double(timerMilliseconds) / 100 : 0
-        modelData.saveWords() // 속성 변경 할때는 didset이 호출되지 않으므로 따로 호출
+        
+        // ✅ words 배열 강제 변경 트리거
+        modelData.words = modelData.words
     }
     
     private func startCountdown() {
@@ -319,11 +293,6 @@ struct Play: View {
                 setIsKnowWord(isKnowWord: false)
             }
         }
-    }
-
-    private func stopGauge() {
-        gaugeTimer?.invalidate()
-        gaugeTimer = nil
     }
 }
 

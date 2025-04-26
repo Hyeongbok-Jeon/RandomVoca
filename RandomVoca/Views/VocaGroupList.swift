@@ -46,7 +46,7 @@ struct VocaGroupList: View {
                                     .frame(width: 200)
                                     .background(Color.blue)
                                     .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
                                     .shadow(radius: 3)
                             }
                         }
@@ -99,7 +99,7 @@ struct VocaGroupList: View {
             //            .navigationTitle("홈")
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("홈")
+                    Text("단어 그룹")
                         .font(.title2) // 또는 .title, .title2 등
                 }
                 
@@ -116,7 +116,7 @@ struct VocaGroupList: View {
             .alert("새 그룹 추가", isPresented: $showAddGroupPopup) {
                 TextField("그룹 이름", text: $newGroupName)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 8)
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(isNameEmpty ? Color.red : Color.clear, lineWidth: 2) // 🚨 빈칸일 때 빨간 테두리
                     )
                 
@@ -164,7 +164,7 @@ struct VocaGroupList: View {
                     groupToDelete = nil
                 }
             } message: {
-                Text("정말로 삭제하시겠습니까?")
+                Text("그룹 내 단어가 모두 삭제됩니다.")
             }
             .background(Color(UIColor.systemGray6).ignoresSafeArea())
         }
