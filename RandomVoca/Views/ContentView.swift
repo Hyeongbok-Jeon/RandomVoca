@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isActive = false
-    
-    var body: some View {
-        VocaGroupList()
-    }
+  @State private var isActive = false
+  
+  var body: some View {
+    VocaGroupList()
+  }
 }
 
 #Preview {
-    ContentView()
-        .environmentObject(ModelData())
+  ContentView()
+    .environmentObject(ModelData())
 }

@@ -9,21 +9,21 @@ import Foundation
 
 // Word 객체 정의 (Codable 채택)
 class Word: Codable, Identifiable, Equatable {
-    var id = UUID()  // List에서 고유 식별자로 사용
-    var name: String
-    var meaning: String
-    var isKnowWord: Bool
-    var knowTime: Double
-    
-    init(name: String, meaning: String, isKnowWord: Bool, knowTime: Double) {
-        self.name = name
-        self.meaning = meaning
-        self.isKnowWord = isKnowWord
-        self.knowTime = knowTime
-    }
-    
-    // Equatable 채택을 위한 메서드
-    static func == (lhs: Word, rhs: Word) -> Bool {
-        return lhs.id == rhs.id
-    }
+  var id = UUID()  // List에서 고유 식별자로 사용
+  var name: String
+  var meaning: String
+  var isKnowWord: Bool
+  var knowTime: Double
+  
+  init(name: String, meaning: String, isKnowWord: Bool, knowTime: Double) {
+    self.name = name
+    self.meaning = meaning
+    self.isKnowWord = isKnowWord
+    self.knowTime = knowTime
+  }
+  
+  // Equatable 채택을 위한 메서드
+  static func == (lhs: Word, rhs: Word) -> Bool {
+    return lhs.id == rhs.id
+  }
 }
