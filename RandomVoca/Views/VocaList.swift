@@ -24,6 +24,8 @@ struct VocaList: View {
   @State private var wordFirstResponder: [UUID: Bool] = [:]
   @State private var meaningFirstResponder: [UUID: Bool] = [:]
   
+  @State private var isKeyboardVisible = false
+  
   var body: some View {
     ZStack {
       Color(UIColor.systemGray6)
@@ -97,6 +99,12 @@ struct VocaList: View {
               }
             }
             .onAppear {
+              NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                isKeyboardVisible = true
+              }
+              NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                isKeyboardVisible = false
+              }
               modelData.loadWords()
             }
             .navigationTitle(modelData.selectedGroup?.name ?? "그룹명")
@@ -182,10 +190,10 @@ struct VocaList: View {
           }
         }
         
-        if !isAdding {
-          BannerAdView()
-            .frame(height: 50)
-        }
+//        if !isAdding {
+//          BannerAdView()
+//            .frame(height: 50)
+//        }
       }
       
       // 버튼 활성화 여부 계산
@@ -211,7 +219,7 @@ struct VocaList: View {
                 .clipShape(Circle())
                 .shadow(radius: 6)
             }
-            .padding(.bottom, 80)
+            .padding(.bottom, 20)
             .padding(.trailing, 20)
             .disabled(!isButtonEnabled)
           }

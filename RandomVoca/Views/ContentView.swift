@@ -8,10 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State private var isActive = false
+  @StateObject private var keyboard = KeyboardResponder()
   
   var body: some View {
-    VocaGroupList()
+    TabView {
+      VocaGroupList()
+        .tabItem {
+          Label("단어 그룹", systemImage: "books.vertical.fill")
+        }
+      
+      Setting()
+        .tabItem {
+          Label("설정", systemImage: "gearshape.fill")
+        }
+    }
+
+    if !keyboard.isKeyboardVisible {
+      BannerAdView()
+        .frame(height: 50)
+        .transition(.move(edge: .bottom))
+    }
   }
 }
 

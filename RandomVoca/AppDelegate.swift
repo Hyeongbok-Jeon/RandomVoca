@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import GoogleMobileAds
 import UserNotifications
+import FirebaseCore
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
   
@@ -17,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     print("✅ Google Mobile Ads SDK 초기화 완료")
     //        UNUserNotificationCenter.current().delegate = self
     //        NotificationManager.shared.requestNotificationPermission() // ✅ 앱 실행 시 알림 권한 요청 및 설정
+    FirebaseApp.configure()
+    print("✅ FirebaseApp configured: \(FirebaseApp.app() != nil)")
     return true
   }
   

@@ -93,8 +93,8 @@ struct VocaGroupList: View {
           }
         }
         
-        BannerAdView() // ✅ 하단 고정 광고
-          .frame(height: 50)
+//        BannerAdView() // ✅ 하단 고정 광고
+//          .frame(height: 50)
       }
       //            .navigationTitle("홈")
       .toolbar {
