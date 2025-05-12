@@ -34,6 +34,8 @@ struct Play: View {
   
   @AppStorage("hasSeenPlayExplanation") private var hasSeenExplanation: Bool = false
   
+  @State private var interstitialAd = AdMobInterstitial()
+  
   var body: some View {
     ZStack {
       VStack {
@@ -254,6 +256,8 @@ struct Play: View {
     showKnowWordButton = false
     showMeaning = false
     showNextWordButton = false
+    
+    showAdWithProbability()
   }
   
   private func setIsKnowWord(isKnowWord: Bool) {
@@ -291,6 +295,17 @@ struct Play: View {
         showDontKnowWordButton = true
         showNextWordButton = true
         setIsKnowWord(isKnowWord: false)
+      }
+    }
+  }
+  
+  func showAdWithProbability() {
+    let probability = 0.05
+    if Double.random(in: 0...1) < probability {
+      if let rootVC = UIApplication.shared.connectedScenes
+        .compactMap({ ($0 as? UIWindowScene)?.keyWindow?.rootViewController })
+        .first {
+        interstitialAd.showAdIfAvailable(from: rootVC)
       }
     }
   }

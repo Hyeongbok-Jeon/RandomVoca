@@ -23,11 +23,11 @@ struct ContentView: View {
         }
     }
 
-    if !keyboard.isKeyboardVisible {
-      BannerAdView()
-        .frame(height: 50)
-        .transition(.move(edge: .bottom))
-    }
+//    if !keyboard.isKeyboardVisible {
+//      BannerAdView()
+//        .frame(height: 50)
+//        .transition(.move(edge: .bottom))
+//    }
   }
 }
 
