@@ -8,7 +8,7 @@
 import Foundation
 
 struct VocaGroup: Identifiable, Codable {
-  var id: UUID = UUID()
+  var id: UUID = UUID() 
   var name: String
-  var words: [Word]
+  var words: [Word] = []
 }

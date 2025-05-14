@@ -15,7 +15,8 @@ class Word: Codable, Identifiable, Equatable {
   var isKnowWord: Bool
   var knowTime: Double
   
-  init(name: String, meaning: String, isKnowWord: Bool, knowTime: Double) {
+  init(id: UUID = UUID(), name: String, meaning: String, isKnowWord: Bool, knowTime: Double) {
+    self.id = id
     self.name = name
     self.meaning = meaning
     self.isKnowWord = isKnowWord

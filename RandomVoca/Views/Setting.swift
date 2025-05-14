@@ -17,55 +17,55 @@ struct Setting: View {
   var body: some View {
     NavigationStack {
       Form {
-//        Section(header: Text("계정")) {
-//          if isLoggedIn {
-//            Text("Apple 계정으로 로그인됨")
-//              .foregroundColor(.green)
-//            Button("로그아웃") {
-//              signOut()
-//            }
-//          } else {
-//            SignInWithAppleButton(.signIn, onRequest: { request in
-//              let nonce = randomNonceString()
-//              currentNonce = nonce
-//              request.requestedScopes = [.fullName, .email]
-//              request.nonce = sha256(nonce)
-//            }, onCompletion: { result in
-//              switch result {
-//              case .success(let authResults):
-//                if let appleIDCredential = authResults.credential as? ASAuthorizationAppleIDCredential {
-//                  guard let nonce = currentNonce else {
-//                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
-//                  }
-//                  guard let appleIDToken = appleIDCredential.identityToken,
-//                        let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-//                    print("Unable to fetch identity token")
-//                    return
-//                  }
-//
-//                  let credential = OAuthProvider.credential(
-//                    withProviderID: "apple.com",
-//                    idToken: idTokenString,
-//                    rawNonce: nonce
-//                  )
-//
-//                  Auth.auth().signIn(with: credential) { (authResult, error) in
-//                    if let error = error {
-//                      print("Error authenticating: \(error.localizedDescription)")
-//                      return
-//                    }
-//                    print("Login Success")
-//                    isLoggedIn = true
-//                  }
-//                }
-//              case .failure(let error):
-//                print("Authorization failed: \(error.localizedDescription)")
-//              }
-//            })
-//            .signInWithAppleButtonStyle(.black)
-//            .frame(height: 45)
-//          }
-//        }
+        Section(header: Text("계정")) {
+          if isLoggedIn {
+            Text("Apple 계정으로 로그인됨")
+              .foregroundColor(.green)
+            Button("로그아웃") {
+              signOut()
+            }
+          } else {
+            SignInWithAppleButton(.signIn, onRequest: { request in
+              let nonce = randomNonceString()
+              currentNonce = nonce
+              request.requestedScopes = [.fullName, .email]
+              request.nonce = sha256(nonce)
+            }, onCompletion: { result in
+              switch result {
+              case .success(let authResults):
+                if let appleIDCredential = authResults.credential as? ASAuthorizationAppleIDCredential {
+                  guard let nonce = currentNonce else {
+                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                  }
+                  guard let appleIDToken = appleIDCredential.identityToken,
+                        let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                    print("Unable to fetch identity token")
+                    return
+                  }
+
+                  let credential = OAuthProvider.credential(
+                    withProviderID: "apple.com",
+                    idToken: idTokenString,
+                    rawNonce: nonce
+                  )
+
+                  Auth.auth().signIn(with: credential) { (authResult, error) in
+                    if let error = error {
+                      print("Error authenticating: \(error.localizedDescription)")
+                      return
+                    }
+                    print("Login Success")
+                    isLoggedIn = true
+                  }
+                }
+              case .failure(let error):
+                print("Authorization failed: \(error.localizedDescription)")
+              }
+            })
+            .signInWithAppleButtonStyle(.black)
+            .frame(height: 45)
+          }
+        }
 
         Section {
           Text("앱 버전 1.0.40")
