@@ -416,6 +416,9 @@ struct VocaList: View {
                       }
                     }
                     .cornerRadius(10)
+                    .onChange(of: word.name) { _, _ in
+                      modelData.saveWord(word) // ✅ Firestore에 저장
+                    }
 
                     CustomUITextField(
                       text: $word.meaning,
@@ -430,6 +433,9 @@ struct VocaList: View {
                       }
                     }
                     .cornerRadius(10)
+                    .onChange(of: word.meaning) { _, _ in
+                      modelData.saveWord(word) // ✅ Firestore에 저장
+                    }
 
                     HStack {
                       Text("\(String(word.knowTime))")

@@ -3,6 +3,7 @@ import SwiftUI
 import GoogleMobileAds
 import UserNotifications
 import FirebaseCore
+import FirebaseAuth
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
   
@@ -13,13 +14,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    
     // ✅ 최신 AdMob 초기화 코드
     MobileAds.shared.start(completionHandler: nil)
     print("✅ Google Mobile Ads SDK 초기화 완료")
     //        UNUserNotificationCenter.current().delegate = self
     //        NotificationManager.shared.requestNotificationPermission() // ✅ 앱 실행 시 알림 권한 요청 및 설정
+    
+    // ✅ Firebase 초기화
     FirebaseApp.configure()
     print("✅ FirebaseApp configured: \(FirebaseApp.app() != nil)")
+    
+    // ✅ 익명 로그인 수행
+    signInAnonymouslyIfNeeded()
+    
     return true
   }
   
@@ -58,4 +66,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
   //            window.makeKeyAndVisible()
   //        }
   //    }
+
+  func signInAnonymouslyIfNeeded() {
+    if Auth.auth().currentUser == nil {
+      Auth.auth().signInAnonymously { result, error in
+        if let error = error {
+          print("익명 로그인 실패: \(error)")
+          return
+        }
+        print("익명 로그인 성공, UID: \(result?.user.uid ?? "")")
+      }
+    } else {
+      print("이미 로그인된 UID: \(Auth.auth().currentUser?.uid ?? "")")
+    }
+  }
 }
