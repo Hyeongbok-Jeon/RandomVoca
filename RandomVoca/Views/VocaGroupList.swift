@@ -210,36 +210,50 @@ struct VocaGroupList: View {
     NavigationStack {
       VStack {
         ScrollView {
-          if modelData.groups.isEmpty {
+          if modelData.isGroupLoading {
             VStack(spacing: 20) {
-              Image(systemName: "book.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.gray)
-
-              Text("단어 그룹을 추가하고 학습을 시작하세요!")
-                .font(.title2)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.primary)
-                .padding(.horizontal, 30)
-
-              Text("단어 그룹을 만들면, 원하는 단어들을 저장하고 랜덤으로 학습할 수 있습니다.")
-                .font(.body)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.gray)
-                .padding(.horizontal, 30)
-
-              Button(action: { showAddGroupPopup = true }) {
-                Label("새 그룹 만들기", systemImage: "plus.circle.fill")
-                  .font(.title3)
-                  .padding()
-                  .frame(width: 200)
-                  .background(Color.blue)
-                  .foregroundColor(.white)
-                  .clipShape(RoundedRectangle(cornerRadius: 10))
-                  .shadow(radius: 3)
-              }
+              ProgressView()
             }
-            .padding(.top, 50)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.top, 100)
+//          } else if modelData.groups.isEmpty {
+//            VStack {
+//              Image(systemName: "book.fill")
+//                .font(.system(size: 60))
+//                .foregroundColor(.gray)
+
+//              Text("단어 그룹을 추가하고 학습을 시작하세요!")
+//                .font(.title2)
+//                .multilineTextAlignment(.center)
+//                .foregroundColor(.primary)
+////                .padding(.horizontal, 30)
+//
+//              Text("단어 그룹을 만들면, 원하는 단어들을 저장하고 랜덤으로 학습할 수 있습니다.")
+//                .font(.body)
+//                .multilineTextAlignment(.center)
+//                .foregroundColor(.gray)
+////                .padding(.horizontal, 30)
+//
+//              Button(action: { showAddGroupPopup = true }) {
+//                Label("새 그룹 만들기", systemImage: "plus.circle.fill")
+//                  .font(.title3)
+//                  .padding()
+//                  .frame(width: 200)
+//                  .background(Color.blue)
+//                  .foregroundColor(.white)
+//                  .clipShape(RoundedRectangle(cornerRadius: 10))
+//                  .shadow(radius: 3)
+//              }
+//            }
+//            .padding(.top, 50)
+            
+//            Spacer().frame(height: 50)
+//
+//            HStack {
+//              Spacer()
+//              Text("그룹을 추가해주세요.")
+//              Spacer()
+//            }
           } else {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 20) {
               ForEach($modelData.groups) { $group in
@@ -272,6 +286,26 @@ struct VocaGroupList: View {
                   }
                 }
               }
+              
+              // ➕ 새 그룹 추가 버튼
+              Button(action: {
+                showAddGroupPopup = true
+              }) {
+                VStack(spacing: 8) {
+                  Image(systemName: "plus")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.white) // ✅ 흰색 아이콘
+
+//                  Text("새 그룹")
+//                    .font(.subheadline)
+//                    .foregroundColor(.white) // ✅ 흰색 텍스트
+                }
+                .frame(width: 160, height: 100)
+                .background(
+                  RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.white) // ✅ 흰색 dashed 테두리
+                )
+              }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, -30)
@@ -284,15 +318,15 @@ struct VocaGroupList: View {
             .font(.title2)
         }
 
-        if !modelData.groups.isEmpty {
-          ToolbarItem(placement: .navigationBarTrailing) {
-            Button(action: { showAddGroupPopup = true }) {
-              Image(systemName: "plus.circle.fill")
-                .font(.title3)
-                .foregroundColor(.primary)
-            }
-          }
-        }
+//        if !modelData.groups.isEmpty {
+//          ToolbarItem(placement: .navigationBarTrailing) {
+//            Button(action: { showAddGroupPopup = true }) {
+//              Image(systemName: "plus.circle.fill")
+//                .font(.title3)
+//                .foregroundColor(.primary)
+//            }
+//          }
+//        }
       }
       .alert("새 그룹 추가", isPresented: $showAddGroupPopup) {
         TextField("그룹 이름", text: $newGroupName)

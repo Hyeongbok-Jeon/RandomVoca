@@ -82,6 +82,7 @@ class ModelData: ObservableObject {
       }
     }
   }
+  @Published var isGroupLoading = true
 
   private var db = Firestore.firestore()
   private var uid: String? {
@@ -160,11 +161,14 @@ class ModelData: ObservableObject {
 
   func fetchGroups() {
     guard let uid else { return }
+    isGroupLoading = true
 
     db.collection("users")
       .document(uid)
       .collection("groups")
       .getDocuments { snapshot, error in
+        self.isGroupLoading = false  // ✅ 여기!
+        
         if let error = error {
           print("[Error] 그룹 불러오기 실패: \(error.localizedDescription)")
           self.groups = []
@@ -202,6 +206,7 @@ class ModelData: ObservableObject {
       .document(group.id.uuidString)
 
     groupRef.delete()
+    
     groups.removeAll { $0.id == group.id }
     if selectedGroup?.id == group.id {
       selectedGroup = nil

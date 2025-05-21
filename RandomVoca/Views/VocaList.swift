@@ -465,7 +465,14 @@ struct VocaList: View {
               ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                   modelData.words = modelData.getSampleWords()
+                  modelData.words.forEach { modelData.saveWord($0) }
                   isAdding = false
+                  
+                  // ✅ Firestore에 샘플 단어 저장
+//                  for word in modelData.words {
+//                    modelData.saveWord(word)
+//                  }
+                  
                 } label: {
                   Text("샘플")
                 }
