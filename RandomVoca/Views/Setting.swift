@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import AuthenticationServices
 import CryptoKit
+import FirebaseFirestore
 
 struct Setting: View {
   @State private var isLoggedIn = false
@@ -44,18 +45,36 @@ struct Setting: View {
                   }
 
                   let credential = OAuthProvider.credential(
-                    withProviderID: "apple.com",
+                    providerID: .apple,                // ✅ 여기!
                     idToken: idTokenString,
-                    rawNonce: nonce
+                    rawNonce: nonce,
+                    accessToken: nil
                   )
 
-                  Auth.auth().signIn(with: credential) { (authResult, error) in
-                    if let error = error {
-                      print("Error authenticating: \(error.localizedDescription)")
-                      return
+                  if let user = Auth.auth().currentUser {
+                    user.link(with: credential) { authResult, error in
+                      if let error = error as NSError?,
+                         error.code == AuthErrorCode.credentialAlreadyInUse.rawValue {
+
+                        print("⚠️ 이미 연동된 Apple 계정 → 그냥 로그인 시도")
+                        
+                        // 익명 계정은 버리고 기존 Apple 계정으로 로그인 전환
+                        Auth.auth().signIn(with: credential) { result, error in
+                          if let user = result?.user {
+                            print("✅ 기존 Apple 계정으로 로그인 완료: \(user.uid)")
+                            
+                            // 🔁 Firestore 데이터 자동 fetch 됨 (ModelData에서 uid 사용하니까)
+                          } else {
+                            print("❌ 로그인 실패: \(error?.localizedDescription ?? "")")
+                          }
+                        }
+
+                      } else if let authResult = authResult {
+                        print("✅ Apple 계정으로 익명 계정 link 성공: \(authResult.user.uid)")
+                      } else {
+                        print("❌ link 실패: \(error?.localizedDescription ?? "")")
+                      }
                     }
-                    print("Login Success")
-                    isLoggedIn = true
                   }
                 }
               case .failure(let error):
