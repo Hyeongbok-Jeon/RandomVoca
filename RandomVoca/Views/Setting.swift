@@ -22,10 +22,14 @@ struct Setting: View {
           if isLoggedIn {
             Text("Apple 계정으로 로그인됨")
               .foregroundColor(.green)
+            
             Button("로그아웃") {
               signOut()
             }
           } else {
+            Button("계정 탈퇴", role: .destructive) {
+              deleteAccount()
+            }
             SignInWithAppleButton(.signIn, onRequest: { request in
               let nonce = randomNonceString()
               currentNonce = nonce
@@ -144,6 +148,18 @@ struct Setting: View {
     let inputData = Data(input.utf8)
     let hashedData = SHA256.hash(data: inputData)
     return hashedData.compactMap { String(format: "%02x", $0) }.joined()
+  }
+  
+  func deleteAccount() {
+    guard let user = Auth.auth().currentUser else { return }
+    user.delete { error in
+      if let error = error {
+        print("❌ 계정 삭제 실패: \(error.localizedDescription)")
+      } else {
+        print("✅ 계정이 삭제되었습니다.")
+        isLoggedIn = false
+      }
+    }
   }
 }
 

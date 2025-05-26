@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     FirebaseApp.configure()
     print("✅ FirebaseApp configured: \(FirebaseApp.app() != nil)")
     
-    // ✅ 익명 로그인 수행
-    signInAnonymouslyIfNeeded()
+    // ✅ 현재 인증 상태 확인 후 처리
+    checkAuthValidity()
     
     return true
   }
@@ -67,6 +67,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
   //        }
   //    }
 
+  /// ✅ 현재 인증 상태 확인
+  func checkAuthValidity() {
+    if let user = Auth.auth().currentUser {
+      user.getIDTokenResult { _, error in
+        if let error = error {
+          print("❌ 인증 유효성 실패 → 로그아웃 및 재로그인: \(error.localizedDescription)")
+          try? Auth.auth().signOut()
+          self.signInAnonymouslyIfNeeded()
+        } else {
+          print("✅ 유효한 로그인 상태, UID: \(user.uid)")
+        }
+      }
+    } else {
+      print("🔓 로그인되어 있지 않음 → 익명 로그인 시도")
+      signInAnonymouslyIfNeeded()
+    }
+  }
+
+  /// ✅ 익명 로그인 수행
   func signInAnonymouslyIfNeeded() {
     if Auth.auth().currentUser == nil {
       Auth.auth().signInAnonymously { result, error in
@@ -75,9 +94,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
           return
         }
         print("익명 로그인 성공, UID: \(result?.user.uid ?? "")")
+        self.checkIfUserExistsInFirestore() // ✅ 로그인 후 Firestore 확인
       }
     } else {
       print("이미 로그인된 UID: \(Auth.auth().currentUser?.uid ?? "")")
+      self.checkIfUserExistsInFirestore() // ✅ 앱 재실행 시에도 Firestore 확인
+    }
+  }
+  
+  func checkIfUserExistsInFirestore() {
+    guard let uid = Auth.auth().currentUser?.uid else { return }
+
+    let userDocRef = Firestore.firestore().collection("users").document(uid)
+    userDocRef.getDocument { snapshot, error in
+      if let error = error {
+        print("❌ Firestore 유저 확인 실패: \(error.localizedDescription)")
+        return
+      }
+
+      if snapshot?.exists == true {
+        print("✅ Firestore에 사용자 문서 존재 → 유효한 로그인 상태")
+      } else {
+        print("⚠️ Firestore에 사용자 문서 없음 → 삭제된 계정일 수 있음")
+        // 로그아웃 후 익명 로그인
+        try? Auth.auth().signOut()
+        self.signInAnonymouslyIfNeeded()
+      }
     }
   }
 }
