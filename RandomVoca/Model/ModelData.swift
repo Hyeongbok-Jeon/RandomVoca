@@ -160,7 +160,13 @@ class ModelData: ObservableObject {
   // MARK: - 그룹 저장 및 불러오기 (Firestore)
 
   func fetchGroups() {
-    guard let uid else { return }
+    guard let uid else {
+      print("[Error] 로그인되지 않음 → 그룹 불러오기 건너뜀")
+      self.groups = []
+      self.isGroupLoading = false // ✅ 이 줄 추가!
+      return
+    }
+    
     isGroupLoading = true
 
     db.collection("users")

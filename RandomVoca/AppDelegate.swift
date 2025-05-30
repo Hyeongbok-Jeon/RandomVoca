@@ -4,6 +4,7 @@ import GoogleMobileAds
 import UserNotifications
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
   
@@ -94,15 +95,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
           return
         }
         print("익명 로그인 성공, UID: \(result?.user.uid ?? "")")
-        self.checkIfUserExistsInFirestore() // ✅ 로그인 후 Firestore 확인
+        self.createUserDocumentIfNeeded() // ✅ 문서 생성으로 변경
       }
     } else {
       print("이미 로그인된 UID: \(Auth.auth().currentUser?.uid ?? "")")
-      self.checkIfUserExistsInFirestore() // ✅ 앱 재실행 시에도 Firestore 확인
+      self.createUserDocumentIfNeeded() // ✅ 문서 생성으로 변경
     }
   }
   
-  func checkIfUserExistsInFirestore() {
+  func createUserDocumentIfNeeded() {
     guard let uid = Auth.auth().currentUser?.uid else { return }
 
     let userDocRef = Firestore.firestore().collection("users").document(uid)
@@ -113,12 +114,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
       }
 
       if snapshot?.exists == true {
-        print("✅ Firestore에 사용자 문서 존재 → 유효한 로그인 상태")
+        print("✅ Firestore에 사용자 문서 존재")
       } else {
-        print("⚠️ Firestore에 사용자 문서 없음 → 삭제된 계정일 수 있음")
-        // 로그아웃 후 익명 로그인
-        try? Auth.auth().signOut()
-        self.signInAnonymouslyIfNeeded()
+        print("📄 Firestore에 사용자 문서 없음 → 새로 생성")
+        userDocRef.setData(["createdAt": FieldValue.serverTimestamp()]) { error in
+          if let error = error {
+            print("❌ 사용자 문서 생성 실패: \(error.localizedDescription)")
+          } else {
+            print("✅ 사용자 문서 생성 완료")
+          }
+        }
       }
     }
   }
