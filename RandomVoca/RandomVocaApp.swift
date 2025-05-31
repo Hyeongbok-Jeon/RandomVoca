@@ -20,3 +20,7 @@ struct RandomVocaApp: App {
     }
   }
 }
+
+extension Notification.Name {
+  static let didMigrateLocalData = Notification.Name("didMigrateLocalData")
+}

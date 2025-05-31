@@ -56,10 +56,6 @@ struct Play: View {
                 .frame(height: 80)
             }
             .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.6)
-            //                            .overlay(
-            //                                RoundedRectangle(cornerRadius: 10)
-            //                                    .stroke(Color.primary, lineWidth: 2)
-            //                            )
             .position(x: geometry.size.width / 2, y: geometry.size.height / 3 * 2)
           }
         }
@@ -319,7 +315,6 @@ struct Play: View {
   }
   return Play(playMode: "part")
     .environmentObject(modelData)
-  //        .preferredColorScheme(.dark)
 }
 #endif
 
@@ -338,10 +333,6 @@ struct playViewButton: View {
         .padding()
         .foregroundColor(color) // ✅ 전달받은 색상 사용
         .accessibilityLabel(accessibilityLabel)
-      //                .overlay(
-      //                    RoundedRectangle(cornerRadius: 10)
-      //                        .stroke(Color.primary, lineWidth: 2)
-      //                )
     }
   }
 }

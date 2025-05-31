@@ -1,73 +1,3 @@
-//import Foundation
-//
-//class ModelData: ObservableObject {
-//  @Published var words: [Word] = [] {
-//    didSet {
-//      saveWords() // words가 변경될 때마다 자동으로 저장
-//    }
-//  }
-//  
-//  @Published var groups: [VocaGroup] = [] {
-//    didSet {
-//      saveGroups() // groups가 변경될 때 자동으로 저장
-//    }
-//  }
-//  
-//  @Published var selectedGroup: VocaGroup? {
-//    didSet {
-//      loadWords() // 그룹이 변경될 때 해당 그룹의 단어 불러오기
-//    }
-//  }
-//  
-//  init() {
-//    loadWords()
-//    loadGroups()
-//  }
-//  
-//  // ✅ 현재 선택된 그룹의 단어를 저장
-//  func saveWords() {
-//    guard let group = selectedGroup else { return } // 그룹이 선택되지 않았다면 저장하지 않음
-//    let key = "words_\(group.id.uuidString)" // 그룹별 단어 저장 키
-//    if let encoded = try? JSONEncoder().encode(words) {
-//      UserDefaults.standard.set(encoded, forKey: key)
-//    }
-//  }
-//  
-//  // ✅ 현재 선택된 그룹의 단어를 불러오기
-//  func loadWords() {
-//    guard let group = selectedGroup else { return } // 그룹이 선택되지 않았다면 불러오지 않음
-//    let key = "words_\(group.id.uuidString)" // 그룹별 단어 저장 키
-//    if let savedData = UserDefaults.standard.data(forKey: key),
-//       let decodedWords = try? JSONDecoder().decode([Word].self, from: savedData) {
-//      words = decodedWords
-//    } else {
-//      words = [] // 데이터가 없으면 빈 배열로 초기화
-//    }
-//  }
-//  
-//  // ✅ 그룹 데이터 저장 함수
-//  func saveGroups() {
-//    let key = "groups"
-//    if let encoded = try? JSONEncoder().encode(groups) {
-//      UserDefaults.standard.set(encoded, forKey: key)
-//    }
-//  }
-//  
-//  // ✅ 그룹 데이터 불러오기 함수
-//  func loadGroups() {
-//    let key = "groups"
-//    if let savedData = UserDefaults.standard.data(forKey: key),
-//       let decodedGroups = try? JSONDecoder().decode([VocaGroup].self, from: savedData) {
-//      groups = decodedGroups
-//    }
-//  }
-//  
-//  // ✅ 특정 그룹 선택 시 `selectedGroup` 변경
-//  func selectGroup(_ group: VocaGroup) {
-//    selectedGroup = group
-//  }
-  
-  
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
@@ -90,9 +20,12 @@ class ModelData: ObservableObject {
   }
 
   init() {
-    fetchGroups()
+    NotificationCenter.default.addObserver(self, selector: #selector(handleMigration), name: .didMigrateLocalData, object: nil)
   }
 
+  @objc func handleMigration() {
+    fetchGroups()
+  }
   // MARK: - 단어 저장 및 불러오기 (Firestore)
 
   func fetchWords(for group: VocaGroup) {

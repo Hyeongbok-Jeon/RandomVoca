@@ -122,9 +122,72 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("❌ 사용자 문서 생성 실패: \(error.localizedDescription)")
           } else {
             print("✅ 사용자 문서 생성 완료")
+            
+            /// ✅ 마이그레이션 시작
+            if self.hasLocalData() {
+              self.migrateLocalDataToFirestore(uid: uid)
+            } else {
+              print("📦 로컬 데이터 없음 → 마이그레이션 생략")
+              NotificationCenter.default.post(name: .didMigrateLocalData, object: nil) // ✅ 강제 리프레시 유도
+            }
           }
         }
       }
     }
+  }
+  
+  func hasLocalData() -> Bool {
+    let groupKey = "groups"
+    if let data = UserDefaults.standard.data(forKey: groupKey),
+       let groups = try? JSONDecoder().decode([VocaGroup].self, from: data) {
+      return !groups.isEmpty
+    }
+    return false
+  }
+  
+  func migrateLocalDataToFirestore(uid: String) {
+    let db = Firestore.firestore()
+    let groupKey = "groups"
+
+    guard let groupData = UserDefaults.standard.data(forKey: groupKey),
+          let groups = try? JSONDecoder().decode([VocaGroup].self, from: groupData) else {
+      print("❌ 그룹 로컬 데이터 없음")
+      return
+    }
+
+    for group in groups {
+      let groupRef = db.collection("users").document(uid).collection("groups").document(group.id.uuidString)
+      groupRef.setData([
+        "id": group.id.uuidString,
+        "name": group.name,
+        "createdAt": FieldValue.serverTimestamp()
+      ]) { error in
+        if let error = error {
+          print("❌ 그룹 \(group.name) 업로드 실패: \(error.localizedDescription)")
+        } else {
+          print("✅ 그룹 \(group.name) 업로드 완료")
+        }
+      }
+
+      // 각 단어 저장
+      let wordKey = "words_\(group.id.uuidString)"
+      if let wordData = UserDefaults.standard.data(forKey: wordKey),
+         let words = try? JSONDecoder().decode([Word].self, from: wordData) {
+        for word in words {
+          let wordRef = groupRef.collection("words").document(word.id.uuidString)
+          wordRef.setData([
+            "id": word.id.uuidString,
+            "name": word.name,
+            "meaning": word.meaning,
+            "isKnowWord": word.isKnowWord,
+            "createdAt": FieldValue.serverTimestamp()
+          ])
+        }
+      }
+    }
+
+    // AppDelegate.swift 마지막에
+    print("🎉 로컬 데이터 마이그레이션 완료")
+    NotificationCenter.default.post(name: .didMigrateLocalData, object: nil)
   }
 }

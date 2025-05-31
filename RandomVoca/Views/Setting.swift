@@ -15,6 +15,9 @@ struct Setting: View {
   @State private var isLoggedIn = false
   @State private var currentNonce: String?
   @State private var showConflictDialog = false
+  @State private var pendingCredential: AuthCredential? = nil
+  @State private var showAppleRestoreAlert = false
+  @State private var showDeleteConfirmAlert = false
 
   var body: some View {
     NavigationStack {
@@ -29,7 +32,7 @@ struct Setting: View {
             }
             
             Button("계정 탈퇴", role: .destructive) {
-              deleteAccount()
+              showDeleteConfirmAlert = true
             }
           } else {
             SignInWithAppleButton(.signIn, onRequest: { request in
@@ -65,28 +68,15 @@ struct Setting: View {
                         print("⚠️ 이미 연동된 Apple 계정 → 그냥 로그인 시도")
                         
                         if let updatedCredential = error.userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? AuthCredential {
-                          // ✅ 이미 연동된 Apple 계정으로 바로 로그인
-                          Auth.auth().signIn(with: updatedCredential) { result, error in
-                            if let user = result?.user {
-                              print("✅ Apple 계정으로 로그인 완료: \(user.uid)")
-                              isLoggedIn = true
-                            } else {
-                              print("❌ 로그인 실패: \(error?.localizedDescription ?? "")")
-                            }
-                          }
+                          print("⚠️ 이미 연동된 Apple 계정 → 로그인 여부 확인 필요")
+                          pendingCredential = updatedCredential
+                          showAppleRestoreAlert = true
                         } else {
                           print("❌ 업데이트된 credential 정보가 없음")
                         }
                       } else if let authResult = authResult {
                         print("✅ Apple 계정으로 익명 계정 link 성공: \(authResult.user.uid)")
                         isLoggedIn = true  // ✅ 여기도 추가
-                        
-                        // ✅ 여기에 서버 데이터 존재 여부 체크 후, 팝업 띄우기
-//                        checkServerDataExists(uid: authResult.user.uid) { exists in
-//                          if exists {
-//                            showConflictDialog = true
-//                          }
-//                        }
                       } else {
                         print("❌ link 실패: \(error?.localizedDescription ?? "")")
                       }
@@ -100,8 +90,60 @@ struct Setting: View {
             .signInWithAppleButtonStyle(.black)
             .frame(height: 45)
           }
+          
+          // ✅ [로컬 테스트 데이터 저장] 버튼
+          Button("로컬 테스트 데이터 저장") {
+            let testGroup = VocaGroup(id: UUID(), name: "🔥 테스트 그룹")
+            let testWord = Word(
+              id: UUID(),
+              name: "apple",
+              meaning: "사과",
+              isKnowWord: false,
+              knowTime: 0.0 // ← 빠뜨렸던 부분
+            )
+            
+            let groupKey = "groups"
+            let wordKey = "words_\(testGroup.id.uuidString)"
+            
+            if let encodedGroups = try? JSONEncoder().encode([testGroup]) {
+              UserDefaults.standard.set(encodedGroups, forKey: groupKey)
+              print("✅ 그룹 저장 완료")
+            }
+            
+            if let encodedWords = try? JSONEncoder().encode([testWord]) {
+              UserDefaults.standard.set(encodedWords, forKey: wordKey)
+              print("✅ 단어 저장 완료")
+            }
+          }
+          
+          // ✅ [로컬 데이터 확인] 버튼
+          Button("로컬 데이터 콘솔 출력") {
+            let groupKey = "groups"
+            if let savedGroupData = UserDefaults.standard.data(forKey: groupKey),
+               let decodedGroups = try? JSONDecoder().decode([VocaGroup].self, from: savedGroupData) {
+              print("✅ 저장된 그룹들:")
+              decodedGroups.forEach { print("- \($0.name) (\($0.id))") }
+              
+              for group in decodedGroups {
+                let wordKey = "words_\(group.id.uuidString)"
+                if let wordData = UserDefaults.standard.data(forKey: wordKey),
+                   let decodedWords = try? JSONDecoder().decode([Word].self, from: wordData) {
+                  print("📚 그룹 \(group.name)의 단어:")
+                  decodedWords.forEach { print("  - \($0.name): \($0.meaning)") }
+                } else {
+                  print("📭 그룹 \(group.name)의 단어 없음")
+                }
+              }
+            } else {
+              print("❌ 저장된 그룹 없음")
+            }
+          }
         }
 
+        Button("계정 탈퇴 후 앱 종료", role: .destructive) {
+          deleteAccountAndTerminate()
+        }
+        
         Section {
           Text("앱 버전 1.0.40")
             .foregroundColor(.gray)
@@ -117,15 +159,33 @@ struct Setting: View {
         isLoggedIn = false
       }
     }
-    .alert("기존 데이터가 존재합니다", isPresented: $showConflictDialog) {
-      Button("로컬 데이터로 덮어쓰기", role: .destructive) {
-        uploadLocalDataToServer()
+    .alert("Apple 계정에 기존 데이터가 있습니다", isPresented: $showAppleRestoreAlert) {
+      Button("불러오기", role: .none) {
+        if let credential = pendingCredential {
+          Auth.auth().signIn(with: credential) { result, error in
+            if let user = result?.user {
+              print("✅ Apple 계정으로 로그인 완료: \(user.uid)")
+              isLoggedIn = true
+            } else {
+              print("❌ 로그인 실패: \(error?.localizedDescription ?? "")")
+            }
+          }
+        }
       }
-      Button("서버 데이터 불러오기") {
-        fetchServerDataToLocal()
+
+      Button("취소", role: .cancel) {
+        pendingCredential = nil
       }
     } message: {
-      Text("Apple 계정에 기존 데이터가 있습니다. 어떤 데이터를 사용할까요?")
+      Text("Apple 계정에 저장된 데이터로 덮어쓰시겠습니까?\n※ 현재 익명 계정 데이터는 사라집니다.")
+    }
+    .alert("정말로 계정을 삭제하시겠습니까?", isPresented: $showDeleteConfirmAlert) {
+      Button("계정 삭제", role: .destructive) {
+        deleteAccountAndCloneToAnonymous()
+      }
+      Button("취소", role: .cancel) {}
+    } message: {
+      Text("Apple 계정과 연동된 모든 단어 그룹 및 단어 정보가 삭제됩니다.\n삭제 후에는 복구가 불가능합니다.")
     }
   }
 
@@ -179,14 +239,26 @@ struct Setting: View {
     return hashedData.compactMap { String(format: "%02x", $0) }.joined()
   }
   
-  func deleteAccount() {
+  func deleteAccountAndCloneToAnonymous() {
     guard let user = Auth.auth().currentUser else { return }
+    let oldUID = user.uid
+
     user.delete { error in
       if let error = error {
         print("❌ 계정 삭제 실패: \(error.localizedDescription)")
       } else {
-        print("✅ 계정이 삭제되었습니다.")
-        isLoggedIn = false
+        print("✅ 계정 삭제 완료")
+
+        Auth.auth().signInAnonymously { result, error in
+          guard let newUID = result?.user.uid, error == nil else {
+            print("❌ 익명 로그인 실패: \(error?.localizedDescription ?? "")")
+            return
+          }
+
+          print("✅ 익명 로그인 완료: \(newUID)")
+          cloneData(from: oldUID, to: newUID)
+          isLoggedIn = false
+        }
       }
     }
   }
@@ -198,41 +270,6 @@ struct Setting: View {
         completion(true)
       } else {
         completion(false)
-      }
-    }
-  }
-  
-  func uploadLocalDataToServer() {
-    print("📝 로컬 데이터를 서버에 업로드")
-    // ModelData 기반으로 Firestore에 저장
-  }
-
-  func fetchServerDataToLocal() {
-    print("⬇️ 서버 데이터를 로컬로 불러오기")
-    // Firestore에서 데이터를 읽어서 ModelData에 반영
-  }
-  
-  func deleteAnonymousAndThenLogin(with credential: AuthCredential) {
-    guard let user = Auth.auth().currentUser, user.isAnonymous else {
-      print("❌ 현재 사용자가 익명이 아님")
-      return
-    }
-
-    user.delete { error in
-      if let error = error {
-        print("❌ 익명 계정 삭제 실패: \(error.localizedDescription)")
-        return
-      }
-
-      print("✅ 익명 계정 삭제됨. Apple 로그인 시도")
-
-      Auth.auth().signIn(with: credential) { result, error in
-        if let user = result?.user {
-          print("✅ Apple 계정으로 로그인 완료: \(user.uid)")
-          isLoggedIn = true
-        } else {
-          print("❌ 로그인 실패: \(error?.localizedDescription ?? "")")
-        }
       }
     }
   }
@@ -295,6 +332,22 @@ struct Setting: View {
           for wordDoc in wordDocs {
             wordTarget.document(wordDoc.documentID).setData(wordDoc.data())
           }
+        }
+      }
+    }
+  }
+  
+  func deleteAccountAndTerminate() {
+    guard let user = Auth.auth().currentUser else { return }
+
+    user.delete { error in
+      if let error = error {
+        print("❌ 계정 삭제 실패: \(error.localizedDescription)")
+      } else {
+        print("✅ 계정 삭제 완료 → 앱 종료")
+        // 앱 강제 종료 (테스트용)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+          fatalError("앱을 종료합니다 (테스트용 강제 종료)")
         }
       }
     }

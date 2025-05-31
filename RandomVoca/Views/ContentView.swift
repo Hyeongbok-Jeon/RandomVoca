@@ -26,18 +26,11 @@ struct ContentView: View {
         }
         .tag(1)
     }
-    .onChange(of: selectedTab) { newTab in
+    .onChange(of: selectedTab) { oldTab, newTab in
       if newTab == 0 {
-        print("📲 단어 그룹 탭 선택됨 → 그룹 다시 불러오기")
         modelData.fetchGroups()
       }
     }
-
-//    if !keyboard.isKeyboardVisible {
-//      BannerAdView()
-//        .frame(height: 50)
-//        .transition(.move(edge: .bottom))
-//    }
   }
 }
 
