@@ -90,7 +90,15 @@ struct Setting: View {
             .signInWithAppleButtonStyle(.black)
             .frame(height: 45)
           }
-          
+        }
+        
+        Section {
+          Text("앱 버전 1.0.40")
+            .foregroundColor(.gray)
+        }
+        
+#if DEBUG
+        Section(header: Text("테스트")) {
           // ✅ [로컬 테스트 데이터 저장] 버튼
           Button("로컬 테스트 데이터 저장") {
             let testGroup = VocaGroup(id: UUID(), name: "🔥 테스트 그룹")
@@ -98,8 +106,8 @@ struct Setting: View {
               id: UUID(),
               name: "apple",
               meaning: "사과",
-              isKnowWord: false,
-              knowTime: 0.0 // ← 빠뜨렸던 부분
+              isKnowWord: true,
+              knowTime: 3.22 // ← 빠뜨렸던 부분
             )
             
             let groupKey = "groups"
@@ -138,16 +146,11 @@ struct Setting: View {
               print("❌ 저장된 그룹 없음")
             }
           }
+          Button("계정 탈퇴 후 앱 종료", role: .destructive) {
+            deleteAccountAndTerminate()
+          }
         }
-
-        Button("계정 탈퇴 후 앱 종료", role: .destructive) {
-          deleteAccountAndTerminate()
-        }
-        
-        Section {
-          Text("앱 버전 1.0.40")
-            .foregroundColor(.gray)
-        }
+#endif
       }
       .navigationTitle("설정")
       .navigationBarTitleDisplayMode(.inline)

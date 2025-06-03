@@ -180,6 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             "name": word.name,
             "meaning": word.meaning,
             "isKnowWord": word.isKnowWord,
+            "knowTime": word.knowTime,
             "createdAt": FieldValue.serverTimestamp()
           ])
         }

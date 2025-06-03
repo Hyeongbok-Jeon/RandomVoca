@@ -21,6 +21,8 @@ class ModelData: ObservableObject {
 
   init() {
     NotificationCenter.default.addObserver(self, selector: #selector(handleMigration), name: .didMigrateLocalData, object: nil)
+    
+    fetchGroups()
   }
 
   @objc func handleMigration() {
@@ -49,7 +51,7 @@ class ModelData: ObservableObject {
             id: UUID(uuidString: doc.documentID) ?? UUID(),
             name: data["name"] as? String ?? "",
             meaning: data["meaning"] as? String ?? "",
-            isKnowWord: data["isKnown"] as? Bool ?? false,
+            isKnowWord: data["isKnowWord"] as? Bool ?? false,
             knowTime: data["knowTime"] as? Double ?? 0
           )
         } ?? []
@@ -69,7 +71,7 @@ class ModelData: ObservableObject {
     let data: [String: Any] = [
       "name": word.name,
       "meaning": word.meaning,
-      "isKnown": word.isKnowWord,
+      "isKnowWord": word.isKnowWord,
       "knowTime": word.knowTime
     ]
 
