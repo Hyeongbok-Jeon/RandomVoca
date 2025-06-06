@@ -92,8 +92,14 @@ struct Setting: View {
           }
         }
         
+        Section(header: Text("지원")) {
+          Button("개발자에게 문의하기") {
+            contactDeveloper()
+          }
+        }
+        
         Section {
-          Text("앱 버전 1.0.40")
+          Text("앱 버전 \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown")")
             .foregroundColor(.gray)
         }
         
@@ -353,6 +359,29 @@ struct Setting: View {
           fatalError("앱을 종료합니다 (테스트용 강제 종료)")
         }
       }
+    }
+  }
+  
+  func contactDeveloper() {
+    let email = "monomer.verb-7p@icloud.com"
+    let subject = "랜덤보카 문의사항"
+    let body = """
+    아래에 문의 내용을 작성해 주세요:
+
+    
+    
+    ----------------------
+    앱 버전: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "알 수 없음")
+    iOS 버전: \(UIDevice.current.systemVersion)
+    기기: \(UIDevice.current.model)
+    ----------------------
+    """
+
+    let urlString = "mailto:\(email)?subject=\(subject)&body=\(body)"
+      .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+
+    if let url = URL(string: urlString) {
+      UIApplication.shared.open(url)
     }
   }
 }
