@@ -31,6 +31,9 @@ struct ContentView: View {
         modelData.fetchGroups()
       }
     }
+    
+    BannerAdView()
+      .frame(height: 50)
   }
 }
 

@@ -137,9 +137,6 @@ struct Play: View {
         }
         
         Spacer()
-        
-//        BannerAdView()
-//          .frame(height: 50)
       }
       
       if showExplanation {

@@ -6,7 +6,7 @@ struct BannerAdView: UIViewRepresentable {
   
   init() {
 #if DEBUG
-    self.adUnitID = "ca-app-pub-3940256099942544/2934735716" // 테스트용 광고 ID
+    self.adUnitID = "ca-app-pub-3940256099942544/293473571" // 테스트용 광고 ID
 #else
     self.adUnitID = "ca-app-pub-9381709608642362/9421948070" // 실제 광고 ID
 #endif
@@ -16,6 +16,7 @@ struct BannerAdView: UIViewRepresentable {
     bannerView.adUnitID = adUnitID
     bannerView.rootViewController = findRootViewController()
     bannerView.load(Request())
+    bannerView.backgroundColor = .clear
     return bannerView
   }
   
