@@ -32,8 +32,8 @@ struct ContentView: View {
       }
     }
     
-    BannerAdView()
-      .frame(height: 50)
+//    BannerAdView()
+//      .frame(height: 50)
   }
 }
 
