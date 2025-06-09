@@ -31,7 +31,17 @@ struct VocaList: View {
       VStack {
         ScrollViewReader { proxy in
           List {
-            ForEach($modelData.words) { $word in
+            if modelData.words.isEmpty {
+              HStack {
+                Spacer()
+                Text("단어를 추가해주세요.")
+                  .foregroundColor(.gray)
+                  .padding()
+                Spacer()
+              }
+            }
+            
+            ForEach($modelData.words, id: \.id) { $word in
               HStack {
                 if isEditing {
                   Button(action: {
@@ -62,7 +72,7 @@ struct VocaList: View {
                 CustomUITextField(
                   text: $word.meaning,
                   placeholder: "뜻",
-                  onCommit: addWord,
+                  onCommit: { addWord(proxy: proxy) }, // 클로저 형태로 전달
                   isFocused: bindingForFocus(word.id, isWord: false)
                 )
                 .focused($focusedField, equals: .meaning(word.id))
@@ -90,89 +100,93 @@ struct VocaList: View {
             .onMove(perform: moveWord)
             .onDelete(perform: deleteWord)
           }
-        }
-        .onAppear {
-          NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-            isKeyboardVisible = true
+          .onTapGesture {
+            removeEmptyWords()
           }
-          NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-            isKeyboardVisible = false
+          .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+              isKeyboardVisible = true
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+              isKeyboardVisible = false
+            }
           }
-        }
-        .navigationTitle(modelData.selectedGroup?.name ?? "그룹명")
-        .toolbar {
+          .navigationTitle(modelData.selectedGroup?.name ?? "그룹명")
+          .toolbar {
 #if DEBUG
-          ToolbarItem(placement: .navigationBarLeading) {
-            Button {
-              modelData.words = modelData.getSampleWords()
-              modelData.words.forEach { modelData.saveWord($0) }
-              isAdding = false
-            } label: {
-              Text("샘플")
-            }
-          }
-          ToolbarItem(placement: .navigationBarLeading) {
-            Button {
-              isAdding = false
-              DispatchQueue.main.async {
-                modelData.words.forEach { modelData.deleteWord($0) }
-                modelData.words.removeAll()
+            ToolbarItem(placement: .navigationBarLeading) {
+              Button {
+                modelData.words = modelData.getSampleWords()
+                modelData.words.forEach { modelData.saveWord($0) }
+                isAdding = false
+              } label: {
+                Text("샘플")
               }
-            } label: {
-              Text("모두 삭제")
             }
-          }
+            ToolbarItem(placement: .navigationBarLeading) {
+              Button {
+                isAdding = false
+                DispatchQueue.main.async {
+                  modelData.words.forEach { modelData.deleteWord($0) }
+                  modelData.words.removeAll()
+                }
+              } label: {
+                Text("모두 삭제")
+              }
+            }
 #endif
-          ToolbarItem(placement: .navigationBarTrailing) {
-            Button {
-              isEditing.toggle()
-              if !isEditing {
-                selectedWords.removeAll()
-              }
-            } label: {
-              Text(isEditing ? "완료" : "편집")
-            }
-            .disabled(modelData.words.isEmpty || isAdding)
-          }
-          ToolbarItem(placement: .navigationBarTrailing) {
-            if isEditing {
-              Button(action: deleteSelectedWords) {
-                Text("삭제")
-              }
-              .disabled(selectedWords.isEmpty)
-            } else {
-              if isAdding {
-                Button(action: {
-                  removeEmptyWords()
-                }) {
-                  Text("완료")
+            //            ToolbarItem(placement: .navigationBarTrailing) {
+            //              Button {
+            //                isEditing.toggle()
+            //                if !isEditing {
+            //                  selectedWords.removeAll()
+            //                }
+            //              } label: {
+            //                Text(isEditing ? "완료" : "편집")
+            //              }
+            //              .disabled(modelData.words.isEmpty || isAdding)
+            //            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+              if isEditing {
+                Button(action: deleteSelectedWords) {
+                  Text("삭제")
                 }
+                .disabled(selectedWords.isEmpty)
               } else {
-                Button(action: {
-                  addWord()
-                }) {
-                  Image(systemName: "plus")
+                if isAdding {
+                  Button(action: {
+                    removeEmptyWords()
+                  }) {
+                    Text("완료")
+                  }
+                } else {
+                  Button(action: {
+                    addWord(proxy: proxy)
+                  }) {
+                    Image(systemName: "plus")
+                  }
                 }
               }
             }
           }
-        }
-        .sheet(isPresented: $showPlayOptions) {
-          PlayOptionsView { playMode in
-            showPlayOptions = false
-            if !playMode.isEmpty {
-              selectedPlayMode = playMode
-              navigateToPlay = true
+          .sheet(isPresented: $showPlayOptions) {
+            PlayOptionsView { playMode in
+              showPlayOptions = false
+              if !playMode.isEmpty {
+                selectedPlayMode = playMode
+                navigateToPlay = true
+              }
+            }
+            .presentationDetents([.fraction(0.2)])
+            .presentationDragIndicator(.visible)
+            .environmentObject(modelData)
+          }
+          .navigationDestination(isPresented: $navigateToPlay) {
+            NavigationStack {
+              Play(playMode: selectedPlayMode)
             }
           }
-          .presentationDetents([.fraction(0.2)])
-          .presentationDragIndicator(.visible)
-          .environmentObject(modelData)
-        }
-        .navigationDestination(isPresented: $navigateToPlay) {
-          NavigationStack {
-            Play(playMode: selectedPlayMode)
-          }
+          
         }
       }
       
@@ -400,7 +414,7 @@ struct VocaList: View {
     }
   }
   
-  func addWord() {
+  func addWord(proxy: ScrollViewProxy) {
     if case .meaning(let currentWordId) = focusedField {
       if let index = modelData.words.firstIndex(where: { $0.id == currentWordId }) {
         if modelData.words[index].name.isEmpty {
@@ -419,17 +433,17 @@ struct VocaList: View {
     modelData.saveWord(newWord)
     isAdding = true
     
-    DispatchQueue.main.async {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
       focusedField = .word(newWord.id)
+      proxy.scrollTo(newWord.id, anchor: .bottom) // ✅ 추가된 단어로 스크롤
     }
   }
   
   func deleteWord(at offsets: IndexSet) {
-    for index in offsets {
+    if let index = offsets.first {
       let word = modelData.words[index]
-      modelData.deleteWord(word)
+      modelData.deleteWord(word) // Firestore에서 삭제
     }
-    modelData.words.remove(atOffsets: offsets)
   }
   
   func bindingForFocus(_ id: UUID, isWord: Bool) -> Binding<Bool> {

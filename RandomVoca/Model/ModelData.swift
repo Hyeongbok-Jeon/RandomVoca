@@ -162,8 +162,8 @@ class ModelData: ObservableObject {
 #if DEBUG
   func getSampleWords() -> [Word] {
     return [
-      Word(name: "betray", meaning: "배신하다", isKnowWord: false, knowTime: 0),
-      Word(name: "apply", meaning: "지원하다", isKnowWord: false, knowTime: 0),
+      Word(name: "betray", meaning: "배신하다", isKnowWord: false, knowTime: 99.99),
+      Word(name: "apply", meaning: "지원하다", isKnowWord: false, knowTime: 999.999),
       Word(name: "celebrate", meaning: "축하하다", isKnowWord: false, knowTime: 0),
       Word(name: "choose", meaning: "선택하다", isKnowWord: false, knowTime: 0),
       Word(name: "complain", meaning: "불평하다", isKnowWord: false, knowTime: 0),
