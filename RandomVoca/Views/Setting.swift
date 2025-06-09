@@ -113,7 +113,8 @@ struct Setting: View {
               name: "apple",
               meaning: "사과",
               isKnowWord: true,
-              knowTime: 3.22 // ← 빠뜨렸던 부분
+              knowTime: 3.22, // ← 빠뜨렸던 부분
+              order: 0
             )
             
             let groupKey = "groups"

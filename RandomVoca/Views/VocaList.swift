@@ -163,7 +163,7 @@ struct VocaList: View {
                   Button(action: {
                     addWord(proxy: proxy)
                   }) {
-                    Image(systemName: "plus")
+                    Text("단어 추가")
                   }
                 }
               }
@@ -428,7 +428,8 @@ struct VocaList: View {
       }
     }
     
-    let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0)
+    let maxOrder = modelData.words.map { $0.order }.max() ?? 0
+    let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0, order: maxOrder)
     modelData.words.append(newWord)
     modelData.saveWord(newWord)
     isAdding = true
@@ -459,6 +460,12 @@ struct VocaList: View {
   
   func moveWord(from source: IndexSet, to destination: Int) {
     modelData.words.move(fromOffsets: source, toOffset: destination)
+    
+//    // ✅ 순서 재정렬
+    for (index, word) in modelData.words.enumerated() {
+      modelData.words[index].order = index
+      modelData.saveWord(modelData.words[index])
+    }
   }
 }
 

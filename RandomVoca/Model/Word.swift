@@ -14,13 +14,15 @@ class Word: Codable, Identifiable, Equatable {
   var meaning: String
   var isKnowWord: Bool
   var knowTime: Double
+  var order: Int // ✅ 추가
   
-  init(id: UUID = UUID(), name: String, meaning: String, isKnowWord: Bool, knowTime: Double) {
+  init(id: UUID = UUID(), name: String, meaning: String, isKnowWord: Bool, knowTime: Double, order: Int) {
     self.id = id
     self.name = name
     self.meaning = meaning
     self.isKnowWord = isKnowWord
     self.knowTime = knowTime
+    self.order = order
   }
   
   // Equatable 채택을 위한 메서드
