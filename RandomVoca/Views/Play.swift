@@ -210,8 +210,7 @@ struct Play: View {
           stopTimer()
         } label: {
           Image(systemName: "info.circle")
-            .font(.title3)
-            .padding()
+            .font(.body)
         }
       }
     }
@@ -257,6 +256,9 @@ struct Play: View {
     modelData.words[currentIndex].isKnowWord = isKnowWord
     modelData.words[currentIndex].knowTime = isKnowWord ? Double(timerMilliseconds) / 100 : 0
     
+    // Firestore에 저장
+    modelData.saveWord(modelData.words[currentIndex]) // Firestore에 데이터 저장
+    
     // ✅ words 배열 강제 변경 트리거
     modelData.words = modelData.words
   }
@@ -293,7 +295,7 @@ struct Play: View {
   }
   
   func showAdWithProbability() {
-    let probability = 0.05
+    let probability = 0.02
     if Double.random(in: 0...1) < probability {
       if let rootVC = UIApplication.shared.connectedScenes
         .compactMap({ ($0 as? UIWindowScene)?.keyWindow?.rootViewController })

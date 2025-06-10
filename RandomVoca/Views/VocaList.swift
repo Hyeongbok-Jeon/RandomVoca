@@ -41,16 +41,16 @@ struct VocaList: View {
               }
             }
             
-            ForEach($modelData.words, id: \.id) { $word in
+            ForEach($modelData.words) { $word in
               HStack {
-                if isEditing {
-                  Button(action: {
-                    toggleSelection(for: word.id)
-                  }) {
-                    Image(systemName: selectedWords.contains(word.id) ? "checkmark.circle.fill" : "circle")
-                      .imageScale(.large)
-                  }
-                }
+//                if isEditing {
+//                  Button(action: {
+//                    toggleSelection(for: word.id)
+//                  }) {
+//                    Image(systemName: selectedWords.contains(word.id) ? "checkmark.circle.fill" : "circle")
+//                      .imageScale(.large)
+//                  }
+//                }
                 
                 CustomUITextField(
                   text: $word.name,
@@ -88,14 +88,14 @@ struct VocaList: View {
                 
                 HStack {
                   Text("\(String(word.knowTime))")
-                    .padding(.horizontal)
+//                    .padding(.horizontal)
                     .frame(width: 80)
                   Circle()
                     .fill(word.isKnowWord ? Color.green : Color.red)
                     .frame(width: 10)
                 }
               }
-              .padding(.vertical, 4)
+//              .padding(.vertical, 4)
             }
             .onMove(perform: moveWord)
             .onDelete(perform: deleteWord)
@@ -428,8 +428,8 @@ struct VocaList: View {
       }
     }
     
-    let maxOrder = modelData.words.map { $0.order }.max() ?? 0
-    let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0, order: maxOrder)
+    let maxOrder = modelData.words.map { $0.order }.max() ?? -1
+    let newWord = Word(name: "", meaning: "", isKnowWord: false, knowTime: 0, order: maxOrder + 1)
     modelData.words.append(newWord)
     modelData.saveWord(newWord)
     isAdding = true
