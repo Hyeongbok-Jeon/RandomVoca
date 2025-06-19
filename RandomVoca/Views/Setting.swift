@@ -18,6 +18,7 @@ struct Setting: View {
   @State private var pendingCredential: AuthCredential? = nil
   @State private var showAppleRestoreAlert = false
   @State private var showDeleteConfirmAlert = false
+  @StateObject private var donationManager = DonationManager()
 
   var body: some View {
     NavigationStack {
@@ -97,6 +98,30 @@ struct Setting: View {
             contactDeveloper()
           }
         }
+        
+        if !donationManager.products.isEmpty {
+          ForEach(donationManager.products, id: \.id) { product in
+            Button("\(product.displayName) - \(product.displayPrice)") {
+              Task {
+                await donationManager.donate(product)
+              }
+            }
+          }
+        }
+        
+//        Section(header: Text("후원")) {
+//          if donationManager.products.isEmpty {
+//            Text("후원 옵션을 불러오는 중...")
+//          } else {
+//            ForEach(donationManager.products, id: \.id) { product in
+//              Button("후원하기 - \(product.displayPrice)") {
+//                Task {
+//                  await donationManager.donate(product)
+//                }
+//              }
+//            }
+//          }
+//        }
         
         Section {
           Text("앱 버전 \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown")")

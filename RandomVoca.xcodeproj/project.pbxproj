@@ -27,6 +27,8 @@
 		135BBF6F2C917BD900F3A27D /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135BBF6E2C917BD900F3A27D /* Word.swift */; };
 		139119782CCD1EE60015799D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139119772CCD1EE60015799D /* ModelData.swift */; };
 		13A2310D2D56352B00684E92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2310C2D56352B00684E92 /* AppDelegate.swift */; };
+		13BC8EEF2E03B2CF00FF433E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13BC8EEE2E03B2CE00FF433E /* StoreKit.framework */; };
+		13BC8EF12E03B2FF00FF433E /* DonationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BC8EF02E03B2FF00FF433E /* DonationManager.swift */; };
 		13BD30ED2DB3AF20009BF198 /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BD30EC2DB3AF20009BF198 /* CustomUITextField.swift */; };
 		13BFF3942DD0C793003CC087 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 13BFF3932DD0C793003CC087 /* FirebaseAuth */; };
 		13CE173A2D6235C3009CB4F9 /* WordModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13CE17382D6235C3009CB4F9 /* WordModel.xcdatamodeld */; };
@@ -54,6 +56,8 @@
 		135BBF6E2C917BD900F3A27D /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		139119772CCD1EE60015799D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		13A2310C2D56352B00684E92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		13BC8EEE2E03B2CE00FF433E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		13BC8EF02E03B2FF00FF433E /* DonationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationManager.swift; sourceTree = "<group>"; };
 		13BD30EC2DB3AF20009BF198 /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
 		13CE17392D6235C3009CB4F9 /* WordModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordModel.xcdatamodel; sourceTree = "<group>"; };
 		13CE17402D669C13009CB4F9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 				135108C42D5651A500EA781F /* GoogleMobileAds in Frameworks */,
 				13BFF3942DD0C793003CC087 /* FirebaseAuth in Frameworks */,
 				13219D282DD55CB400EE94F5 /* FirebaseFirestore in Frameworks */,
+				13BC8EEF2E03B2CF00FF433E /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +116,7 @@
 				13BD30EC2DB3AF20009BF198 /* CustomUITextField.swift */,
 				13219D222DD0D71900EE94F5 /* KeyboardResponder.swift */,
 				13219D242DD0F34C00EE94F5 /* AdMobInterstitial.swift */,
+				13BC8EF02E03B2FF00FF433E /* DonationManager.swift */,
 			);
 			path = RandomVoca;
 			sourceTree = "<group>";
@@ -148,6 +154,7 @@
 		13BFF3922DD0C793003CC087 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				13BC8EEE2E03B2CE00FF433E /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -247,6 +254,7 @@
 				13BD30ED2DB3AF20009BF198 /* CustomUITextField.swift in Sources */,
 				135BBF692C8EF9F600F3A27D /* VocaList.swift in Sources */,
 				130651382D538454005BCDEC /* VocaGroupList.swift in Sources */,
+				13BC8EF12E03B2FF00FF433E /* DonationManager.swift in Sources */,
 				139119782CCD1EE60015799D /* ModelData.swift in Sources */,
 				135BBF552C8E673800F3A27D /* RandomVocaApp.swift in Sources */,
 				13CE17412D669C13009CB4F9 /* NotificationManager.swift in Sources */,
@@ -408,7 +416,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.5;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -448,7 +456,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.5;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";

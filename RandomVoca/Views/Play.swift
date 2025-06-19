@@ -249,7 +249,7 @@ struct Play: View {
     showMeaning = false
     showNextWordButton = false
     
-    showAdWithProbability()
+//    showAdWithProbability()
   }
   
   private func setIsKnowWord(isKnowWord: Bool) {
