@@ -12,7 +12,7 @@ class DonationManager: ObservableObject {
 
   func fetchProducts() async {
     do {
-      let storeProducts = try await Product.products(for: ["donation_1100"])
+      let storeProducts = try await Product.products(for: ["dona_1100"])
       products = storeProducts
     } catch {
       print("❌ 상품 불러오기 실패: \(error)")
