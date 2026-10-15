@@ -23,7 +23,7 @@ class NotificationManager {
     for hour in 1...24 { // 하루 동안 1시간마다 알림 설정
       let randomWord = getRandomWord() // ✅ Core Data에서 랜덤 단어 가져오기
       let content = UNMutableNotificationContent()
-      content.title = "💡 영어 단어 퀴즈!"
+      content.title = String(localized: "💡 영어 단어 퀴즈!")
       content.body = randomWord
       content.sound = .default
       content.userInfo = ["word": randomWord] // ✅ 알림에 단어 정보 포함

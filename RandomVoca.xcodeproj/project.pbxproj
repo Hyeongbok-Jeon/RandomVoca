@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13AA00042E00000100C0FFEE /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 13AA00032E00000100C0FFEE /* InfoPlist.xcstrings */; };
+		13AA00022E00000100C0FFEE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 13AA00012E00000100C0FFEE /* Localizable.xcstrings */; };
 		130651382D538454005BCDEC /* VocaGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651372D538454005BCDEC /* VocaGroupList.swift */; };
 		1306513A2D538586005BCDEC /* VocaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130651392D538586005BCDEC /* VocaGroup.swift */; };
 		13219D1B2DD0CBAF00EE94F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13219D1A2DD0CBAF00EE94F5 /* GoogleService-Info.plist */; };
@@ -36,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13AA00032E00000100C0FFEE /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		13AA00012E00000100C0FFEE /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		130651372D538454005BCDEC /* VocaGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroupList.swift; sourceTree = "<group>"; };
 		130651392D538586005BCDEC /* VocaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaGroup.swift; sourceTree = "<group>"; };
 		13219D1A2DD0CBAF00EE94F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 				135BBF652C8EF82400F3A27D /* Model */,
 				135BBF5A2C8E673900F3A27D /* Preview Content */,
 				135BBF582C8E673900F3A27D /* Assets.xcassets */,
+				13AA00032E00000100C0FFEE /* InfoPlist.xcstrings */,
 				13A2310C2D56352B00684E92 /* AppDelegate.swift */,
 				135108C52D5655F600EA781F /* BannerAdView.swift */,
 				132D20412D6228DA00CE789C /* CoreCoreDataHelper.swift */,
@@ -137,6 +142,7 @@
 				135BBF6C2C915A1E00F3A27D /* Play.swift */,
 				130651372D538454005BCDEC /* VocaGroupList.swift */,
 				13219D1C2DD0CF5800EE94F5 /* Setting.swift */,
+				13AA00012E00000100C0FFEE /* Localizable.xcstrings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,6 +215,17 @@
 			knownRegions = (
 				ko,
 				Base,
+				en,
+				ja,
+				"zh-Hans",
+				"zh-Hant",
+				es,
+				fr,
+				de,
+				"pt-BR",
+				vi,
+				id,
+				th,
 			);
 			mainGroup = 135BBF482C8E673800F3A27D;
 			packageReferences = (
@@ -230,6 +247,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				132D20442D62293900CE789C /* words.json in Resources */,
+				13AA00042E00000100C0FFEE /* InfoPlist.xcstrings in Resources */,
+				13AA00022E00000100C0FFEE /* Localizable.xcstrings in Resources */,
 				13219D1B2DD0CBAF00EE94F5 /* GoogleService-Info.plist in Resources */,
 				135BBF5C2C8E673900F3A27D /* Preview Assets.xcassets in Resources */,
 				135BBF592C8E673900F3A27D /* Assets.xcassets in Resources */,
@@ -416,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.7;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -456,7 +475,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.7;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hyeongbok-Jeon.RandomVoca";
 				PRODUCT_NAME = "$(TARGET_NAME)";

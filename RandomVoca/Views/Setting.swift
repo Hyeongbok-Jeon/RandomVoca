@@ -390,9 +390,9 @@ struct Setting: View {
   
   func contactDeveloper() {
     let email = "monomer.verb-7p@icloud.com"
-    let subject = "랜덤보카 문의사항"
+    let subject = String(localized: "랜덤보카 문의사항")
     let body = """
-    아래에 문의 내용을 작성해 주세요:
+    \(String(localized: "아래에 문의 내용을 작성해 주세요:"))
 
     
     
